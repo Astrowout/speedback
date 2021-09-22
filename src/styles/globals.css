@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+	body {
+		@apply font-body bg-gray-50;
+	}
+}
+
+@layer utilities {
+	.container-spacing {
+		@apply px-4 sm:px-6 lg:px-8;
+	}
+
+	.section-spacing {
+		@apply py-8 lg:py-12;
+	}
+  }
