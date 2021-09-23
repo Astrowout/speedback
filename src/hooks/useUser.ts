@@ -18,8 +18,6 @@ const useUser = (user: MagicUserMetadata | null) => {
 	if (data && !data.authUser) {
 		createUser();
 	}
-
-	console.log(newUser);
 }
 
 export default useUser;

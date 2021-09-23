@@ -1,10 +1,10 @@
 import Head from 'next/head';
 import type { NextPage } from "next";
 
-import { Heading, NewProjectForm } from '../components';
-import { AppLayout } from '../layouts';
+import { Heading, NewProjectForm } from '../../components';
+import { AppLayout } from '../../layouts';
 
-const AppNewProject: NextPage = () => {
+const AppProjectDetail: NextPage = () => {
 	return (
 		<AppLayout>
 			<Head>
@@ -22,4 +22,4 @@ const AppNewProject: NextPage = () => {
 	)
 }
 
-export default AppNewProject;
+export default AppProjectDetail;

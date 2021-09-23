@@ -15,11 +15,24 @@ Mutations.createUser = gql`
 `;
 
 Mutations.createProject = gql`
-	 mutation ($issuer: String!, $email: String!) {
-		createProject(data: {email: $email, issuer: $issuer}) {
+	 mutation ($name: String!, $url: String!, $description: String, $issuer: String!) {
+		createProject(data: {name: $name, url: $url, description: $description, authUser: { connect: { issuer: $issuer } }}) {
 			id
 		}
-		publishProject(where: {issuer: $issuer}, to: PUBLISHED) {
+	}
+`;
+
+Mutations.updateProject = gql`
+	 mutation ($name: String!, $url: String!, $description: String) {
+		createProject(data: {name: $name, url: $url, description: $description}) {
+			id
+		}
+	}
+`;
+
+Mutations.publishProject = gql`
+	 mutation ($id: ID!) {
+		publishProject(where: {id: $id}, to: PUBLISHED) {
 			id
 		}
 	}

@@ -1,14 +1,14 @@
-import { FunctionComponent } from 'react';
-import * as heroIcons from "@heroicons/react/outline";
+import { ElementType, FunctionComponent } from 'react';
+import { ExclamationIcon } from '@heroicons/react/outline';
 
 // Types
 type EmptyStateProps = {
 	title: string,
-	icon?: keyof typeof heroIcons,
+	icon: ElementType,
 }
 
-const EmptyState: FunctionComponent<EmptyStateProps> = ({ children, title, icon = "ArrowRightIcon" }) => {
-	const Icon = heroIcons[icon];
+const EmptyState: FunctionComponent<EmptyStateProps> = ({ children, title, icon = ExclamationIcon }) => {
+	const Icon = icon;
 
 	return (
 		<div className="flex flex-col items-center space-y-8 container-spacing section-spacing">

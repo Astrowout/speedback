@@ -47,7 +47,7 @@ const ProjectsTable: FunctionComponent<ProjectsTableProps> = ({ rows }) => {
 									key={row.id}
 								>
 									<td className="p-4 whitespace-nowrap">
-										<strong className="text-sm">
+										<strong>
 											{ row.name }
 										</strong>
 									</td>

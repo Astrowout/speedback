@@ -2,7 +2,7 @@ import { FunctionComponent } from "react";
 
 import { Header } from "../components";
 
-const PlatformLayout: FunctionComponent = ({ children }) => {
+const AppLayout: FunctionComponent = ({ children }) => {
 	return (
 		<>
 			<Header />
@@ -11,4 +11,4 @@ const PlatformLayout: FunctionComponent = ({ children }) => {
 	)
 }
 
-export default PlatformLayout;
+export default AppLayout;

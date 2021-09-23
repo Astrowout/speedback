@@ -4,8 +4,6 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 const magic = new Magic(process.env.MAGIC_SECRET_KEY);
 
 const login = async (req: NextApiRequest, res: NextApiResponse) => {
-  console.log("irun");
-
     try {
       const didToken = magic.utils.parseAuthorizationHeader(req.headers.authorization!);
       await magic.token.validate(didToken);

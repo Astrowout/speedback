@@ -8,14 +8,14 @@ const AppNewProject: NextPage = () => {
 	return (
 		<AppLayout>
 			<Head>
-				<title>New project - speedback</title>
+				<title>Edit project - speedback</title>
 			</Head>
 
 			<main>
 				<Heading title="New project" />
 
 				<div className="2xl:container container-spacing section-spacing">
-					<NewProjectForm className="max-w-xl" />
+					<NewProjectForm className="max-w-xl" edit />
 				</div>
 			</main>
 		</AppLayout>

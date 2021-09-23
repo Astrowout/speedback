@@ -3,7 +3,7 @@ import { DocumentNode, gql } from "@apollo/client";
 const Queries: { [key: string]: DocumentNode } = {};
 
 Queries.getGlobals = gql`
-	query {
+	query ($issuer: String!) {
 		comments(first: 1, orderBy: createdAt_DESC) {
 			createdAt
 		}
@@ -12,6 +12,9 @@ Queries.getGlobals = gql`
 				count
 			}
 		}
+		authUser(where: { issuer: $issuer }) {
+			pricingPlan
+		}
 	}
 `;
 
@@ -19,6 +22,8 @@ Queries.getUser = gql`
 	query ($issuer: String!) {
 		authUser(where: {issuer: $issuer}) {
 			id
+			email
+			pricingPlan
 		}
 	}
 `;
