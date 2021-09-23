@@ -15,7 +15,7 @@ const Snippet: FunctionComponent<SnippetProps> = ({ children, className, id }) =
 		new ClipboardJS("#copyScriptTrigger");
 	}, []);
 
-	return (
+	return typeof window !== "undefined" ? (
 		<div className={cn(className, "rounded shadow border p-6 bg-white")}>
 			<p className="font-bold">
 				Add this script right before the closing <code className="bg-indigo-100 rounded px-1 py-0.5 text-indigo-600">&lt;/body&gt;</code> tag in your website.
@@ -36,7 +36,7 @@ const Snippet: FunctionComponent<SnippetProps> = ({ children, className, id }) =
 
 			{children}
 		</div>
-	)
+	) : null
 }
 
 export default Snippet;
