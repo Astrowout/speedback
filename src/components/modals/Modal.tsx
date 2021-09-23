@@ -13,7 +13,7 @@ type ModalProps = {
 const Modal: FC<ModalProps> = ({ children, isOpen = false, action, closeAction }) => {
 	const cancelButtonRef = useRef(null);
 
-	return typeof window !== 'undefined' && createPortal(
+	return typeof window !== 'undefined' ? createPortal(
 		<Transition.Root show={isOpen} as={Fragment}>
 			<Dialog as="div" className="fixed z-10 inset-0 overflow-y-auto" initialFocus={cancelButtonRef} onClose={closeAction}>
 				<div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20">
@@ -66,7 +66,7 @@ const Modal: FC<ModalProps> = ({ children, isOpen = false, action, closeAction }
 			</Dialog>
 		</Transition.Root>,
 		document.body
-	)
+	) : null
 }
 
 export default memo(Modal);

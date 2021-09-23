@@ -25,7 +25,7 @@ const Header = () => {
 	const router = useRouter();
 
 	return (
-		<Disclosure as="nav" className="bg-white shadow-md">
+		<Disclosure as="nav" className="bg-white shadow">
 		  {({ open }) => (
 			<>
 			  <div className="container-spacing">

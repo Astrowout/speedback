@@ -27,7 +27,7 @@ type HeadingProps = {
 
 const Heading: FunctionComponent<HeadingProps> = ({ children, title, stats, backLink }) => {
 	return (
-		<section className="shadow-md bg-white">
+		<section className="shadow bg-white">
 			<div className="2xl:container section-spacing container-spacing lg:flex lg:items-center lg:justify-between">
 				<div className="flex-1 min-w-0">
 					{backLink && (
