@@ -24,7 +24,7 @@ const Snippet: FunctionComponent<SnippetProps> = ({ children, className, id }) =
 			<div className="relative mt-4 max-w-full">
 				<pre className="p-6 pr-32 overflow-auto max-w-full bg-gray-900 rounded text-gray-100">
 					<code id="copyScript" className="text-sm">
-						{`<script src="http://127.0.0.1:5500/index.js?id=${id}" type="module" crossorigin charset="utf-8"></script>`}
+						{`<script src="${window.location.origin}/script/index.js?id=${id}" type="module" crossorigin charset="utf-8"></script>`}
 					</code>
 				</pre>
 
