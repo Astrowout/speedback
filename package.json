@@ -8,9 +8,6 @@
     "start": "next start",
     "lint": "next lint"
   },
-  "prisma": {
-    "schema": "src/prisma/schema.prisma"
-  },
   "dependencies": {
     "@apollo/client": "^3.4.13",
     "@headlessui/react": "^1.4.1",
