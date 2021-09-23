@@ -1,11 +1,10 @@
 import { LockClosedIcon } from '@heroicons/react/outline';
-import { FunctionComponent, useContext, useEffect, useState } from 'react';
+import { FunctionComponent, useContext } from 'react';
 import { useForm } from 'react-hook-form';
-import Router from 'next/router';
 import cn from "classnames";
 
-import { Input } from './index';
-import { AuthContext } from '../context';
+import { Input } from '../index';
+import { AuthContext } from '../../context';
 
 type LoginFormProps = {
 	className?: string,
@@ -16,16 +15,11 @@ type FormValues = {
 }
 
 const LoginForm: FunctionComponent<LoginFormProps> = ({ className }) => {
-	const [isLoading, setIsLoading] = useState(false);
-	const { methods } = useContext(AuthContext);
+	const { isLoading, methods } = useContext(AuthContext);
 	const { register, handleSubmit, formState: { errors } } = useForm<FormValues>();
 
 	const onSubmit = async (data: FormValues) => {
-		setIsLoading(true);
-
 		await methods.loginWithEmail(data.email);
-
-		setIsLoading(false);
 	}
 
 	return (

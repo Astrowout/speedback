@@ -6,18 +6,20 @@ import { Loader } from "../components";
 import { AuthContext } from '../context';
 
 const AppCallback: NextPage = () => {
-  const { methods } = useContext(AuthContext);
+	const { isLoading, methods } = useContext(AuthContext);
 
-  const completeLogin = async () => {
-    await methods.loginWithCredential();
-    Router.replace("/");
-  }
+	const completeLogin = async () => {
+		await methods.loginWithCredential();
+		Router.replace("/");
+	}
 
-  useEffect(() => {
-    completeLogin();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+	useEffect(() => {
+		if (!isLoading) {
+			completeLogin();
+		}
+	}, [isLoading]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  return <Loader fullscreen />;
+	return <Loader fullscreen />;
 }
 
 export default AppCallback;

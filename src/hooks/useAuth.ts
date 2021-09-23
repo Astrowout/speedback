@@ -6,7 +6,6 @@ let magic: Magic | null = null;
 const useAuth = () => {
 	const [user, setUser] = useState<MagicUserMetadata | null>(null);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
-	const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 	const [error, setError] = useState<string | null | unknown>(null);
 
 	useEffect(() => {
@@ -14,11 +13,17 @@ const useAuth = () => {
 
 		magic = new Magic(process.env.NEXT_PUBLIC_MAGIC_API_KEY || '');
 
+		const preloadMagic = async() => {
+			try {
+				await magic!.preload();
+			} catch (error) {
+				console.log(error);
+			}
+		}
+
 		const checkUser = async() => {
 			try {
 				const isLoggedIn = await magic!.user.isLoggedIn();
-
-				setIsLoggedIn(isLoggedIn);
 
 				if (isLoggedIn) {
 					const userData = await magic!.user.getMetadata();
@@ -34,28 +39,26 @@ const useAuth = () => {
 			}
 		}
 
-		const preloadMagic = async() => {
-			try {
-				await magic!.preload();
-			} catch (error) {
-				console.log(error);
-			}
-		}
-
 		preloadMagic();
 		checkUser();
 	}, []);
 
 	const loginWithEmail = async (email: string): Promise<void> => {
+		setIsLoading(true);
+
 		try {
-			await magic!.auth.loginWithMagicLink({
+			const didToken = await magic!.auth.loginWithMagicLink({
 				email,
 				redirectURI: `${window.location.origin}/callback`
 			});
 
-			// if (didToken) {
-			// 	await authenticate(didToken);
-			// }
+			if (didToken) {
+				const userData = await magic!.user.getMetadata();
+
+				setUser(userData);
+			} else {
+				setUser(null);
+			}
 		} catch (error) {
 			console.error(error);
 
@@ -69,10 +72,14 @@ const useAuth = () => {
 					break;
 				}
 			}
+		} finally {
+			setIsLoading(false);
 		}
 	}
 
 	const loginWithCredential = async (): Promise<void> => {
+		setIsLoading(true);
+
 		try {
 			const isLoggedIn = await magic!.user.isLoggedIn();
 
@@ -84,39 +91,25 @@ const useAuth = () => {
 		} catch (error) {
 			console.error(error);
 			setError(error);
-		}
-	}
-
-	const authenticate = async (didToken: string): Promise<void> => {
-		try {
-			await fetch('/api/login', {
-				headers: {
-				  'Content-Type': 'application/json',
-				  Authorization: 'Bearer ' + didToken,
-				},
-			});
-		} catch (error) {
-			console.error(error);
-			setError(error);
+		} finally {
+			setIsLoading(false);
 		}
 	}
 
 	const logout = async (): Promise<void> => {
 		await magic!.user.logout();
 		setUser(null);
-		setIsLoggedIn(false);
 	}
 
 	return {
 		user,
-		isLoggedIn,
+		isLoggedIn: !!user,
 		isLoading,
 		error,
 		methods: {
 			logout,
 			loginWithEmail,
 			loginWithCredential,
-			authenticate,
 		}
   	};
 }

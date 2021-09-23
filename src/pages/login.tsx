@@ -1,9 +1,20 @@
+import { useContext, useEffect } from 'react';
 import Head from 'next/head';
+import Router from 'next/router';
 import type { NextPage } from "next";
 
 import { LoginForm, Logo } from '../components';
+import { AuthContext } from '../context';
 
 const AppLogin: NextPage = () => {
+  const { isLoggedIn } = useContext(AuthContext);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      Router.push("/");
+    }
+  }, [isLoggedIn]);
+
   return (
     <>
       <Head>
@@ -17,12 +28,13 @@ const AppLogin: NextPage = () => {
             <Logo className="self-center" size={32} />
 
             <div>
-              <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-                Sign in with your email.
-              </h2>
-              <p className="mt-2 text-center text-sm text-gray-600">
-                We&apos;re using passwordless login for your convenience.
-              </p>
+				<h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+					Sign in with your email.
+				</h2>
+
+				<p className="mt-2 text-center text-sm text-gray-600">
+					We&apos;re using passwordless login for your convenience.
+				</p>
             </div>
 
             <LoginForm />
