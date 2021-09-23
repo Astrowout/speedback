@@ -1,3 +1,5 @@
-export default {
-	SCRIPT_URL: "http://127.0.0.1:5500"
+const config = {
+	SCRIPT_URL: "http://127.0.0.1:3000/script"
 }
+
+export default config;

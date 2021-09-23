@@ -1,4 +1,4 @@
-export default (e) => {
+const getTarget = (e) => {
 	let targetEl = e.target;
 
 	if (targetEl.tagName === "IMG" || targetEl.tagName === "svg" || targetEl.tagName === "path") {
@@ -7,3 +7,5 @@ export default (e) => {
 
 	return targetEl;
 }
+
+export default getTarget;

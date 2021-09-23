@@ -1,4 +1,4 @@
-export default (fileName) => {
+const addCss = (fileName) => {
 	const head = document.head;
 	const link = document.createElement("link");
 
@@ -8,3 +8,5 @@ export default (fileName) => {
 
 	head.appendChild(link);
 }
+
+export default addCss;
