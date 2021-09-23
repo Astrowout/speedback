@@ -107,6 +107,7 @@ const useAuth = () => {
 		isLoading,
 		error,
 		methods: {
+			setUser,
 			logout,
 			loginWithEmail,
 			loginWithCredential,

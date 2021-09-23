@@ -1,20 +1,24 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import Router from "next/router";
+import { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { CollectionIcon, EyeIcon, PencilIcon, TrashIcon } from '@heroicons/react/outline';
 import type { GetServerSideProps, InferGetServerSidePropsType, NextPage } from "next";
 
-import { AppScript, EmptyState, Heading, ProjectDataDisplay } from '../../../components';
+import { ConfirmDeleteModal, EmptyState, Heading, ProjectDataDisplay, Snippet } from '../../../components';
 import { AppLayout } from '../../../layouts';
 import { ApolloClient, Mutations, Queries } from '../../../helpers';
 
 const AppProjectDetail: NextPage = ({ project, id }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-	const [deleteProject, { loading }] = useMutation(Mutations.deleteProject, {
+	const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+	const [deleteProject] = useMutation(Mutations.deleteProject, {
 		variables: { id },
 	});
 
 	const handleDeleteProject = async (): Promise<void> => {
+		setIsConfirmModalOpen(false);
+
 		await deleteProject();
 
 		Router.push("/projects");
@@ -27,12 +31,11 @@ const AppProjectDetail: NextPage = ({ project, id }: InferGetServerSidePropsType
 			</Head>
 
 			<main>
-				<Heading title={project?.name || "Your project"}>
+				<Heading title={project?.name || "Your project"} backLink={{ url: "/projects", label: "Back to projects" }}>
 					<div className="-my-1.5 -mx-2 mt-5 flex flex-wrap lg:mt-0">
 						<button
 							type="button"
-							onClick={handleDeleteProject}
-							disabled={loading}
+							onClick={() => setIsConfirmModalOpen(true)}
 							className="my-1.5 mx-2 disabled:pointer-events-none disabled:opacity-30 inline-flex items-center px-4 py-2 border border-red-200 rounded-md shadow-sm text-sm font-medium text-red-500 bg-white hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
 						>
 							<TrashIcon className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
@@ -52,11 +55,11 @@ const AppProjectDetail: NextPage = ({ project, id }: InferGetServerSidePropsType
 
 				<section className="2xl:container container-spacing section-spacing">
 					{project ? (
-						<>
+						<div className="flex flex-col gap-8">
 							<ProjectDataDisplay className="max-w-3xl" data={project}></ProjectDataDisplay>
 
-							<AppScript />
-						</>
+							<Snippet id={id} />
+						</div>
 					) : (
 						<EmptyState title="This project was not found." icon={CollectionIcon}>
 							<Link
@@ -71,6 +74,14 @@ const AppProjectDetail: NextPage = ({ project, id }: InferGetServerSidePropsType
 					)}
 				</section>
 			</main>
+
+			<ConfirmDeleteModal
+				title={`Deleting "${project.name}"`}
+				description="Are you sure you want to delete this project? This action cannot be reversed."
+				action={handleDeleteProject}
+				closeAction={setIsConfirmModalOpen}
+				isOpen={isConfirmModalOpen}
+			/>
 		</AppLayout>
 	)
 }

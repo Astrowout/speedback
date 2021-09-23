@@ -12,7 +12,7 @@ const AppNewProject: NextPage = () => {
 			</Head>
 
 			<main>
-				<Heading title="New project" />
+				<Heading title="New project" backLink={{ url: "/projects", label: "Back to projects" }} />
 
 				<section className="2xl:container container-spacing section-spacing">
 					<NewProjectForm className="max-w-xl" />

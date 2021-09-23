@@ -11,7 +11,7 @@ import '../styles/globals.css';
 const App = ({ Component, pageProps }: AppProps) => {
 	const { user, isLoggedIn, isLoading, methods } = useAuth();
 	useRouterGuard({ isLoggedIn, isLoading });
-	useUser(user);
+	useUser(user, methods.setUser);
 
 	return (
 		<ApolloProvider client={ApolloClient}>

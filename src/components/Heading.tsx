@@ -1,8 +1,10 @@
 import { FunctionComponent } from 'react';
 import {
+	ArrowSmLeftIcon,
 	CalendarIcon,
 	ChatAltIcon,
 } from '@heroicons/react/outline';
+import Link from "next/link";
 
 import { DateUtils } from "../helpers";
 import { Stat } from './index';
@@ -12,16 +14,33 @@ type HeadingStats = {
 	lastCommentDate?: Date,
 }
 
+interface IBackLink {
+	url: string,
+	label: string,
+}
+
 type HeadingProps = {
 	title: string,
+	backLink?: IBackLink,
 	stats?: HeadingStats,
 }
 
-const Heading: FunctionComponent<HeadingProps> = ({ children, title, stats }) => {
+const Heading: FunctionComponent<HeadingProps> = ({ children, title, stats, backLink }) => {
 	return (
 		<section className="shadow-md bg-white">
 			<div className="2xl:container section-spacing container-spacing lg:flex lg:items-center lg:justify-between">
 				<div className="flex-1 min-w-0">
+					{backLink && (
+						<Link
+							href={backLink.url}
+						>
+							<a className="mb-2 inline-flex items-center text-sm text-gray-600 hover:text-black">
+								<ArrowSmLeftIcon className="block mr-1 w-5 h-5" aria-hidden="true" />
+								{backLink.label}
+							</a>
+						</Link>
+					)}
+
 					<h2 className="text-3xl font-bold text-gray-900 sm:text-4xl sm:truncate">
 						{title}
 					</h2>
