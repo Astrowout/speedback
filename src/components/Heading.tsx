@@ -1,16 +1,13 @@
 import { FunctionComponent } from 'react';
 import {
 	CalendarIcon,
-	CreditCardIcon,
 	ChatAltIcon,
 } from '@heroicons/react/outline';
 
 import { DateUtils } from "../helpers";
-import { PricingPlan } from '../enums';
+import { Stat } from './index';
 
-// Types
 type HeadingStats = {
-	pricingPlan?: PricingPlan,
 	commentCount?: number,
 	lastCommentDate?: Date,
 }
@@ -31,21 +28,14 @@ const Heading: FunctionComponent<HeadingProps> = ({ children, title, stats }) =>
 
 					{stats && (
 						<div className="mt-1 flex flex-col sm:flex-row sm:flex-wrap sm:space-x-6">
-							<div className="mt-2 flex items-center text-sm text-gray-500">
-								<ChatAltIcon className="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" aria-hidden="true" />
+							<Stat icon={ChatAltIcon} className="mt-2">
 								<strong>{stats.commentCount || 0}</strong>&nbsp;comments
-							</div>
-
-							<div className="mt-2 flex items-center text-sm text-gray-500">
-								<CreditCardIcon className="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" aria-hidden="true" />
-								<strong className="capitalize">{stats.pricingPlan || PricingPlan.free}</strong>&nbsp;plan
-							</div>
+							</Stat>
 
 							{stats.lastCommentDate && (
-								<div className="mt-2 flex items-center text-sm text-gray-500">
-									<CalendarIcon className="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" aria-hidden="true" />
+								<Stat icon={CalendarIcon} className="mt-2">
 									Last comment:&nbsp;<strong>{DateUtils.formatRelative(stats.lastCommentDate)}</strong>
-								</div>
+								</Stat>
 							)}
 						</div>
 					)}

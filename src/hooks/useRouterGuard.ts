@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import Router from "next/router";
 
-const LOGIN_URL = "/login";
+const HOME_URL = "/home";
 
 interface RouterGuardProps {
 	isLoggedIn: boolean;
@@ -11,12 +11,12 @@ interface RouterGuardProps {
 const useRouterGuard = ({ isLoggedIn, isLoading }: RouterGuardProps) => {
 	// If user is not logged in, we should redirect.
 	useEffect(() => {
-		if (isLoading || Router.pathname === "/home") {
+		if (isLoading || Router.pathname === HOME_URL) {
 			return;
 		}
 
-		if (!isLoggedIn && Router.pathname !== LOGIN_URL) {
-			Router.push(LOGIN_URL);
+		if (!isLoggedIn && Router.pathname !== HOME_URL) {
+			Router.push(HOME_URL);
 		}
 	}, [isLoading, isLoggedIn]);
 }

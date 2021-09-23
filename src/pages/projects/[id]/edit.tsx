@@ -1,8 +1,8 @@
 import Head from 'next/head';
 import type { NextPage } from "next";
 
-import { Heading, NewProjectForm } from '../components';
-import { AppLayout } from '../layouts';
+import { Heading, NewProjectForm } from '../../../components';
+import { AppLayout } from '../../../layouts';
 
 const AppNewProject: NextPage = () => {
 	return (
@@ -12,11 +12,11 @@ const AppNewProject: NextPage = () => {
 			</Head>
 
 			<main>
-				<Heading title="New project" />
+				<Heading title="Edit project" />
 
-				<div className="2xl:container container-spacing section-spacing">
+				<section className="2xl:container container-spacing section-spacing">
 					<NewProjectForm className="max-w-xl" edit />
-				</div>
+				</section>
 			</main>
 		</AppLayout>
 	)

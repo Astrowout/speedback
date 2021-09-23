@@ -1,13 +1,11 @@
-import React, { Fragment, useContext } from 'react';
+import React from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import cn from "classnames";
-import { Disclosure, Menu, Transition } from '@headlessui/react';
+import { Disclosure } from '@headlessui/react';
 import { MenuIcon, XIcon } from '@heroicons/react/outline';
-import { UserCircleIcon } from '@heroicons/react/solid';
 
-import { Logo } from "./index";
-import { AuthContext } from '../context';
+import { Logo, User } from "./index";
 
 const navigation = [
 { name: 'Dashboard', href: '/' },
@@ -15,7 +13,6 @@ const navigation = [
 ]
 
 const AppHeader = () => {
-	const { user, methods } = useContext(AuthContext);
 	const router = useRouter();
 
 	return (
@@ -34,7 +31,7 @@ const AppHeader = () => {
 												<a
 													className={cn('px-3 py-2 rounded-md font-brand', {
 														'bg-gray-900 text-white': router.pathname === item.href,
-														'text-gray-300 hover:bg-gray-700 hover:text-white': router.pathname !== item.href,
+														'text-gray-400 hover:bg-gray-700 hover:text-white': router.pathname !== item.href,
 													})}
 													aria-current={router.pathname === item.href ? 'page' : undefined}
 												>
@@ -46,51 +43,11 @@ const AppHeader = () => {
 								</div>
 							</div>
 
-							<div className="hidden md:block">
-								<div className="ml-4 flex items-center md:ml-6">
-										{user && (
-											<Menu as="div" className="ml-3 relative -mr-2">
-												<Menu.Button className="max-w-xs flex items-center px-3 py-1 rounded-full focus:bg-gray-900 focus:outline-none">
-													<span className="sr-only">Open user menu</span>
-													<UserCircleIcon className="h-10 w-10 text-gray-400 -ml-1" />
-													<span className="ml-2 text-sm font-medium leading-none text-gray-400">
-														{user.email}
-													</span>
-												</Menu.Button>
-
-												<Transition
-													as={Fragment}
-													enter="transition ease-out duration-100"
-													enterFrom="transform opacity-0 scale-95"
-													enterTo="transform opacity-100 scale-100"
-													leave="transition ease-in duration-75"
-													leaveFrom="transform opacity-100 scale-100"
-													leaveTo="transform opacity-0 scale-95"
-												>
-												<Menu.Items className="origin-top-right absolute right-0 mt-1 w-48 rounded shadow-lg py-1.5 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
-													<Menu.Item>
-														{({ active }) => (
-															<button
-																type="button"
-																onClick={methods.logout}
-																className={cn('block w-full text-left px-4 py-2 text-sm text-gray-700', {
-																	'bg-gray-100': active,
-																})}
-															>
-																Sign out
-															</button>
-														)}
-													</Menu.Item>
-												</Menu.Items>
-											</Transition>
-										</Menu>
-									)}
-								</div>
-							</div>
+							<User className="hidden md:block" />
 
 							<div className="-mr-2 flex md:hidden">
 								{/* Mobile menu button */}
-								<Disclosure.Button className="bg-gray-800 inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+								<Disclosure.Button className="bg-gray-800 inline-flex items-center justify-center p-2 rounded text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
 									<span className="sr-only">Open main menu</span>
 									{open ? (
 										<XIcon className="block h-6 w-6" aria-hidden="true" />
@@ -107,7 +64,7 @@ const AppHeader = () => {
 							{navigation.map((item) => (
 								<Link key={item.name} href={item.href}>
 									<a
-										className={cn('block px-3 py-2 rounded-md font-brand', {
+										className={cn('block px-3 py-2 rounded font-brand', {
 											'bg-gray-900 text-white': router.pathname === item.href,
 											'text-gray-300 hover:bg-gray-700 hover:text-white': router.pathname !== item.href,
 									})}
@@ -119,24 +76,7 @@ const AppHeader = () => {
 							))}
 						</div>
 
-						<div className="pt-4 pb-3 border-t border-gray-700">
-							{user && (
-								<div className="flex items-center px-5">
-									<UserCircleIcon className="h-10 w-10 text-gray-400" />
-									<span className="ml-3 text-sm font-medium leading-none text-gray-400">{user.email}</span>
-								</div>
-							)}
-
-							<div className="mt-3 px-2 space-y-1">
-								<button
-															type="button"
-															onClick={methods.logout}
-									className={cn('block px-4 py-2 text-sm text-gray-700')}
-								>
-									Sign out
-								</button>
-							</div>
-						</div>
+						<User className="md:hidden" />
 					</Disclosure.Panel>
 				</>
 			)}

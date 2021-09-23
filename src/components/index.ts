@@ -7,4 +7,8 @@ export { default as LoginForm } from "./forms/Login";
 export { default as NewProjectForm } from "./forms/NewProject";
 export { default as Input } from "./Input";
 export { default as Loader } from "./Loader";
+export { default as User } from "./User";
+export { default as AppScript } from "./AppScript";
+export { default as Stat } from "./Stat";
+export { default as ProjectDataDisplay } from "./ProjectDataDisplay";
 export { default as ProjectsTable } from "./ProjectsTable";

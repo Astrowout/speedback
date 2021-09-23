@@ -28,18 +28,34 @@ Queries.getUser = gql`
 	}
 `;
 
+Queries.getProject = gql`
+	query ($id: ID!) {
+		project(where: {id: $id}) {
+			id
+			name
+			url
+			description
+			createdByAuthUser {
+				email
+			}
+			authUser {
+				issuer
+				email
+			}
+			comments {
+				id
+			}
+		}
+	}
+`;
+
 Queries.getProjects = gql`
 	query {
 		projects {
 			id
 			name
-			slug
 			url
 			description
-			authUser {
-				issuer
-				email
-			}
 			comments {
 				id
 			}

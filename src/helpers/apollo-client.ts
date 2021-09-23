@@ -5,7 +5,12 @@ const client = new ApolloClient({
     cache: new InMemoryCache(),
     headers: {
         authorization: `Bearer ${process.env.NEXT_PUBLIC_GRAPHCMS_API_TOKEN}`,
-    }
+	},
+	defaultOptions: {
+		watchQuery: {
+			fetchPolicy: 'cache-and-network',
+		},
+	}
 });
 
 export default client;

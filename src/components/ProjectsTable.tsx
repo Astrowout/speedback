@@ -1,14 +1,24 @@
 import { ClipboardCopyIcon } from "@heroicons/react/outline";
-import { FunctionComponent } from "react";
+import { FunctionComponent, MouseEvent } from "react";
+import cn from "classnames";
+import Router from "next/router";
 
 type ProjectsTableProps = {
-	rows?: any[],
+	rows: any[],
+	className?: string,
+	compact?: boolean,
 }
 
-const ProjectsTable: FunctionComponent<ProjectsTableProps> = ({ rows }) => {
+const ProjectsTable: FunctionComponent<ProjectsTableProps> = ({ className, rows, compact = false }) => {
+
+	const handleCopy = (e: MouseEvent): void => {
+		e.stopPropagation();
+		console.log('copy shit');
+	}
+
 	return (
 		<div
-			className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8"
+			className={cn(className, "-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8")}
 		>
 			<div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
 				<div className="overflow-hidden border border-gray-200 rounded">
@@ -23,17 +33,21 @@ const ProjectsTable: FunctionComponent<ProjectsTableProps> = ({ rows }) => {
 									URL
 								</th>
 
-								<th scope="col" className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-									Description
-								</th>
+								{!compact && (
+									<>
+										<th scope="col" className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+											Description
+										</th>
 
-								<th scope="col" className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-									Comment count
-								</th>
+										<th scope="col" className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+											ID
+										</th>
 
-								<th scope="col" className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-									Status
-								</th>
+										<th scope="col" className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+											Comment count
+										</th>
+									</>
+								)}
 
 								<th scope="col" className="px-4 py-3">
 									<span className="sr-only">Copy script</span>
@@ -45,6 +59,9 @@ const ProjectsTable: FunctionComponent<ProjectsTableProps> = ({ rows }) => {
 							{rows?.map(row => (
 								<tr
 									key={row.id}
+									className="even:bg-gray-50 hover:bg-indigo-50 cursor-pointer"
+									role="button"
+									onClick={() => Router.push(`/projects/${row.id}`)}
 								>
 									<td className="p-4 whitespace-nowrap">
 										<strong>
@@ -63,22 +80,27 @@ const ProjectsTable: FunctionComponent<ProjectsTableProps> = ({ rows }) => {
 										</a>
 									</td>
 
-									<td className="p-4 whitespace-nowrap text-sm">
-										{ row.description }
-									</td>
+									{!compact && (
+										<>
+											<td className="p-4 whitespace-nowrap text-sm">
+												{ row.description }
+											</td>
 
-									<td className="p-4 whitespace-nowrap">
-										{ row.comments.length }
-									</td>
+											<td className="p-4 whitespace-nowrap text-sm">
+												{ row.id }
+											</td>
 
-									<td className="p-4 whitespace-nowrap text-sm">
-										{ row.id }
-									</td>
+											<td className="p-4 whitespace-nowrap">
+												{ row.comments.length }
+											</td>
+										</>
+									)}
 
 									<td className="p-4 whitespace-nowrap flex justify-end">
 										<button
 											type="button"
-											className="text-indigo-600 px-3 py-2 bg-indigo-50 rounded hover:bg-indigo-100 hover:text-indigo-900 flex items-center"
+											onClick={handleCopy}
+											className="text-indigo-500 px-3 py-2 bg-indigo-100 rounded hover:bg-indigo-200 hover:text-indigo-800 flex items-center"
 										>
 											<ClipboardCopyIcon className="block h-5 w-5 mr-1" aria-hidden="true" />
 											<span className="text-sm">Copy script</span>
