@@ -9,10 +9,6 @@ type ProjectDataDisplayProps = {
 
 const ProjectDataDisplay: FunctionComponent<ProjectDataDisplayProps> = ({ className, data }) => {
 
-	const handleCopy = (e: MouseEvent): void => {
-		console.log('copy shit');
-	}
-
 	return (
 		<div
 			className={cn(className, "bg-white shadow border overflow-hidden rounded")}

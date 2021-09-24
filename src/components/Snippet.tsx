@@ -12,7 +12,11 @@ type SnippetProps = {
 const Snippet: FunctionComponent<SnippetProps> = ({ children, className, id }) => {
 
 	useEffect(() => {
-		new ClipboardJS("#copyScriptTrigger");
+		const clipboard = new ClipboardJS("#copyScriptTrigger");
+
+		return () => {
+			clipboard.destroy();
+		}
 	}, []);
 
 	return typeof window !== "undefined" ? (

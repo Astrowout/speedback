@@ -1,6 +1,7 @@
 import { ClipboardCopyIcon } from "@heroicons/react/outline";
-import { FunctionComponent, MouseEvent } from "react";
+import { FunctionComponent, MouseEvent, MouseEventHandler, useEffect } from "react";
 import cn from "classnames";
+import ClipboardJS from "clipboard";
 import Router from "next/router";
 
 type ProjectsTableProps = {
@@ -11,9 +12,22 @@ type ProjectsTableProps = {
 
 const ProjectsTable: FunctionComponent<ProjectsTableProps> = ({ className, rows, compact = false }) => {
 
-	const handleCopy = (e: MouseEvent): void => {
-		e.stopPropagation();
-		console.log('copy shit');
+	useEffect(() => {
+		const clipboard = new ClipboardJS("#copyScriptTrigger");
+
+		return () => {
+			clipboard.destroy();
+		}
+	}, []);
+
+	const handleProjectDetail = (e: MouseEvent & { target: Element }, id: string) => {
+		const clickElement = e.target.closest('#copyScriptTrigger');
+
+		if (clickElement && clickElement.hasAttribute('data-clipboard-text')) {
+			return;
+		}
+
+		Router.push(`/projects/${id}`);
 	}
 
 	return (
@@ -61,7 +75,7 @@ const ProjectsTable: FunctionComponent<ProjectsTableProps> = ({ className, rows,
 									key={row.id}
 									className="hover:bg-indigo-50 cursor-pointer"
 									role="button"
-									onClick={() => Router.push(`/projects/${row.id}`)}
+									onClick={(e) => handleProjectDetail(e as any, row.id)}
 								>
 									<td className="p-4 whitespace-nowrap">
 										<strong>
@@ -99,7 +113,8 @@ const ProjectsTable: FunctionComponent<ProjectsTableProps> = ({ className, rows,
 									<td className="p-4 whitespace-nowrap flex justify-end">
 										<button
 											type="button"
-											onClick={handleCopy}
+											data-clipboard-text={`<script src="${window.location.origin}/script/index.js?id=${row.id}" type="module" crossorigin charset="utf-8"></script>`}
+											id="copyScriptTrigger"
 											className="text-indigo-500 px-3 py-2 bg-indigo-100 rounded hover:bg-indigo-200 hover:text-indigo-800 flex items-center"
 										>
 											<ClipboardCopyIcon className="block h-5 w-5 mr-1" aria-hidden="true" />
