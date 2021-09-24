@@ -14,16 +14,26 @@ Mutations.createUser = gql`
 	}
 `;
 
-Mutations.createProject = gql`
-	 mutation ($name: String!, $url: String!, $description: String, $issuer: String!) {
-		createProject(data: {
-			name: $name,
-			url: $url,
-			description:
-			$description,
-			authUser: { connect: { issuer: $issuer } },
-			createdByAuthUser: { connect: { issuer: $issuer }
-		}}) {
+Mutations.upsertProject = gql`
+	 mutation ($id: ID, $name: String!, $url: String!, $description: String, $issuer: String!) {
+		upsertProject(
+			where: { id: $id }
+			upsert: {
+				create: {
+					name: $name,
+					url: $url,
+					description: $description,
+					authUser: { connect: [{ issuer: $issuer }] },
+					createdByAuthUser: { connect: { issuer: $issuer } }
+				}
+				update: {
+					name: $name,
+					url: $url,
+					description: $description,
+					authUser: { connect: [{ where: { issuer: $issuer } }] }
+				}
+			}
+		) {
 			id
 		}
 	}
@@ -32,14 +42,6 @@ Mutations.createProject = gql`
 Mutations.deleteProject = gql`
 	 mutation ($id: ID!) {
 		deleteProject(where: { id: $id }) {
-			id
-		}
-	}
-`;
-
-Mutations.updateProject = gql`
-	 mutation ($name: String!, $url: String!, $description: String) {
-		updateProject(data: {name: $name, url: $url, description: $description}) {
 			id
 		}
 	}

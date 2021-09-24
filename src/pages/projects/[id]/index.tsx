@@ -4,16 +4,16 @@ import Router from "next/router";
 import { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { CollectionIcon, EyeIcon, PencilIcon, TrashIcon } from '@heroicons/react/outline';
-import type { GetServerSideProps, InferGetServerSidePropsType, NextPage } from "next";
+import type { GetStaticProps, InferGetStaticPropsType, NextPage } from "next";
 
 import { ConfirmDeleteModal, EmptyState, Heading, ProjectDataDisplay, Snippet } from '../../../components';
 import { AppLayout } from '../../../layouts';
 import { ApolloClient, Mutations, Queries } from '../../../helpers';
 
-const AppProjectDetail: NextPage = ({ project, id }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+const AppProjectDetail: NextPage = ({ project }: InferGetStaticPropsType<typeof getStaticProps>) => {
 	const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
 	const [deleteProject] = useMutation(Mutations.deleteProject, {
-		variables: { id },
+		variables: { id: project.id },
 	});
 
 	const handleDeleteProject = async (): Promise<void> => {
@@ -58,7 +58,7 @@ const AppProjectDetail: NextPage = ({ project, id }: InferGetServerSidePropsType
 						<div className="flex flex-col gap-8">
 							<ProjectDataDisplay className="max-w-3xl" data={project}></ProjectDataDisplay>
 
-							<Snippet id={id} />
+							<Snippet id={project.id} />
 						</div>
 					) : (
 						<EmptyState title="This project was not found." icon={CollectionIcon}>
@@ -86,7 +86,22 @@ const AppProjectDetail: NextPage = ({ project, id }: InferGetServerSidePropsType
 	)
 }
 
-export const getServerSideProps: GetServerSideProps = async({ params }) => {
+export const getStaticPaths = async () => {
+	const { data: { projects } } = await ApolloClient.query({
+		query: Queries.getProjects,
+	});
+
+	const paths = projects.map((project: any) => ({
+		params: { id: project.id },
+	}));
+
+	return {
+	  paths,
+	  fallback: 'blocking'
+	};
+}
+
+export const getStaticProps: GetStaticProps = async({ params }) => {
 	const { data: { project } } = await ApolloClient.query({
 		query: Queries.getProject,
 		variables: { id: params?.id }
@@ -95,9 +110,9 @@ export const getServerSideProps: GetServerSideProps = async({ params }) => {
 	return {
 		props: {
 			project,
-			id: params?.id
 		},
+		revalidate: 60, // In seconds
 	}
-  }
+}
 
 export default AppProjectDetail;

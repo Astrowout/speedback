@@ -9,31 +9,40 @@ import { Input } from '../index';
 import { Mutations, Queries } from '../../helpers';
 import { AuthContext } from '../../context';
 
-type NewProjectFormProps = {
-	className?: string,
-	edit?: boolean,
-}
-
-type FormValues = {
+interface IFormValues {
 	name: string;
 	url: string;
 	description?: string;
 }
 
-const NewProjectForm: FunctionComponent<NewProjectFormProps> = ({ className, edit = false }) => {
-	const { user } = useContext(AuthContext);
-	const [createProject, { loading, error }] = useMutation(edit ? Mutations.updateProject : Mutations.createProject);
-	const [publishProject] = useMutation(Mutations.publishProject);
-	const { register, handleSubmit, reset, formState: { errors: formErrors } } = useForm<FormValues>();
+type NewProjectFormProps = {
+	className?: string,
+	id?: string,
+	data?: IFormValues,
+}
 
-	const onSubmit = async (data: FormValues) => {
-		const { data: { createProject: project } } = await createProject({
-			variables: { issuer: user.issuer, ...data },
+const NewProjectForm: FunctionComponent<NewProjectFormProps> = ({ className, id, data = {} }) => {
+	const { user } = useContext(AuthContext);
+	const [upsertProject, { loading, error }] = useMutation(Mutations.upsertProject);
+	const [publishProject] = useMutation(Mutations.publishProject);
+	const { register, handleSubmit, reset, formState: { errors: formErrors } } = useForm<IFormValues>({
+		defaultValues: data
+	});
+
+	const onSubmit = async (data: IFormValues) => {
+		const { data: { upsertProject: project } } = await upsertProject({
+			variables: { issuer: user.issuer, id, ...data },
+			refetchQueries: [Queries.getProject]
 		});
 		await publishProject({ variables: { id: project.id } });
 
-		reset();
-		Router.push("/projects");
+
+		if (id) {
+			Router.push(`/projects/${id}`);
+		} else {
+			Router.push("/projects");
+			reset();
+		}
 	}
 
 	return (
@@ -76,7 +85,7 @@ const NewProjectForm: FunctionComponent<NewProjectFormProps> = ({ className, edi
 					disabled={loading}
 					className="relative w-full disabled:opacity-30 disabled:pointer-events-none flex justify-center py-3 px-4 border border-transparent rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
 				>
-					{edit ? 'Edit project' : 'Create project'}
+					{id ? 'Edit project' : 'Create project'}
 				</button>
 
 				{error && (

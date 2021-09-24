@@ -14,9 +14,9 @@ import checkElements from "./helpers/check-elements.js";
 import { mouseOver, mouseOut } from "./events/hover.js";
 
 // Globals
-const topbar = document.createElement("div");
 const button = document.createElement("button");
 const dot = document.createElement("div");
+const overlay = document.createElement("div");
 const body = document.body;
 const html = document.documentElement;
 let allElements = document.querySelector("*");
@@ -24,20 +24,18 @@ let allElements = document.querySelector("*");
 let commentMode = false;
 let editMode = false;
 
-// Content
-const updateContent = () => {
+const updateButton = () => {
 	if (commentMode) {
-		topbar.textContent = "Add comments by clicking on elements and say what we can do better.";
-		button.textContent = "View website";
+		button.textContent = "Close feedback";
+		button.classList.add("gthr-btn--comment-mode");
 	} else {
-		topbar.textContent = "Add comments to give feedback about the website.";
-		button.textContent = "Add comment";
+		button.textContent = "Give feedback";
+		button.classList.remove("gthr-btn--comment-mode");
 	}
 }
 
 const renderElements = () => {
-	topbar.appendChild(button);
-	body.insertBefore(topbar, body.firstChild);
+	body.insertBefore(button, body.firstChild);
 
 	button.addEventListener("click", toggleCommentMode);
 }
@@ -122,6 +120,8 @@ const handleCommentMode = () => {
 
 	html.classList.add("gthr-prevent-clicks");
 
+	body.insertBefore(overlay, body.firstChild);
+
 	// const interactiveEls = [...document.querySelectorAll("button:not(.gthr-btn), a")];
 	// interactiveEls.forEach(el => {
 	// 	el.addEventListener("click", (e) => {
@@ -142,6 +142,8 @@ const cleanupCommentMode = () => {
 	allElements.removeEventListener("mouseover", mouseOver, false);
 	allElements.removeEventListener("mouseout", mouseOut, false);
 
+	overlay.remove();
+
 	setTimeout(() => {
 		html.classList.remove("gthr-prevent-clicks");
 
@@ -154,20 +156,11 @@ const cleanupCommentMode = () => {
 	});
 }
 
-const updateTopbarStyling = () => {
-	if (commentMode) {
-		topbar.style.backgroundColor = "#ffd9c7";
-	} else {
-		topbar.style.backgroundColor = "#ffdd80";
-	}
-}
-
 // Events
 const toggleCommentMode = () => {
 	commentMode = !commentMode;
 
-	updateContent();
-	updateTopbarStyling();
+	updateButton();
 	renderElements();
 
 	if (commentMode) {
@@ -188,11 +181,15 @@ const init = async () => {
 	addTippy();
 	addCss(`${config.SCRIPT_URL}/main.css`);
 
+	const scriptElement = document.querySelector(`script[src^='${config.SCRIPT_URL}']`);
+	const id = scriptElement.src.split("?id=")[1];
+	console.log(id);
+
 	await getComments();
 
-	updateContent();
-	topbar.classList.add("gthr-topbar");
+	updateButton();
 	button.classList.add("gthr-btn");
+	overlay.classList.add("gthr-overlay");
 	renderElements();
 }
 

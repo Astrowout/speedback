@@ -1,12 +1,16 @@
 import Head from 'next/head';
-import { useRouter } from "next/router";
-import type { NextPage } from "next";
+import type { GetStaticProps, InferGetStaticPropsType, NextPage } from "next";
 
 import { Heading, NewProjectForm } from '../../../components';
 import { AppLayout } from '../../../layouts';
+import { ApolloClient, Queries } from '../../../helpers';
 
-const AppNewProject: NextPage = () => {
-	const router = useRouter();
+const AppNewProject: NextPage = ({ project }: InferGetStaticPropsType<typeof getStaticProps>) => {
+	const data = {
+		name: project.name,
+		url: project.url,
+		description: project.description,
+	}
 
 	return (
 		<AppLayout>
@@ -15,14 +19,42 @@ const AppNewProject: NextPage = () => {
 			</Head>
 
 			<main>
-				<Heading title="Edit project" backLink={{ url: `/projects/${router.query.id}`, label: "Back to project" }} />
+				<Heading title="Edit project" backLink={{ url: `/projects/${project.id}`, label: "Back to project" }} />
 
 				<section className="2xl:container container-spacing section-spacing">
-					<NewProjectForm className="max-w-xl" edit />
+					<NewProjectForm className="max-w-xl" data={data} id={project.id as string} />
 				</section>
 			</main>
 		</AppLayout>
 	)
+}
+
+export const getStaticPaths = async () => {
+	const { data: { projects } } = await ApolloClient.query({
+		query: Queries.getProjects,
+	});
+
+	const paths = projects.map((project: any) => ({
+		params: { id: project.id },
+	}));
+
+	return {
+	  paths,
+	  fallback: 'blocking'
+	};
+}
+
+export const getStaticProps: GetStaticProps = async({ params }) => {
+	const { data: { project } } = await ApolloClient.query({
+		query: Queries.getProject,
+		variables: { id: params?.id }
+	});
+
+	return {
+		props: {
+			project,
+		},
+	}
 }
 
 export default AppNewProject;

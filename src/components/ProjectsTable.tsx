@@ -59,7 +59,7 @@ const ProjectsTable: FunctionComponent<ProjectsTableProps> = ({ className, rows,
 							{rows?.map(row => (
 								<tr
 									key={row.id}
-									className="even:bg-gray-50 hover:bg-indigo-50 cursor-pointer"
+									className="hover:bg-indigo-50 cursor-pointer"
 									role="button"
 									onClick={() => Router.push(`/projects/${row.id}`)}
 								>
