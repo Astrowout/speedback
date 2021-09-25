@@ -1,43 +1,53 @@
+:root {
+	--primary-color: #6366F1;
+	--accent-color: #4F46E5;
+	--z-index: 999999;
+	--border-radius: 4px;
+}
+
 /* Button */
 .gthr-btn {
 	position: fixed;
 	right: 0;
-	top: 80%;
+	top: 50%;
+	transform: translate3d(0, -50%, 0);
 	color: white;
-	background-color: #6366F1;
-	padding: 10px 20px 10px;
+	display: flex;
+	align-items: center;
+	background-color: var(--primary-color);
+	padding: 10px 16px;
 	border: none;
-	border-bottom-left-radius: 4px;
-	border-top-left-radius: 4px;
+	border-bottom-left-radius: var(--border-radius);
+	border-top-left-radius: var(--border-radius);
 	cursor: pointer !important;
-	z-index: 999999;
+	z-index: calc(var(--z-index) + 1);
 	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
 
-.gthr-btn:hover {
-	background-color: #4F46E5;
+.gthr-btn > svg {
+	margin-right: 8px;
 }
 
-.gthr-btn--comment-mode {
-	background-color: #4F46E5;
+.gthr-btn:hover {
+	background-color: var(--accent-color);
 }
 
 /* Overlay */
 .gthr-overlay {
-	display: block;
 	position: fixed;
 	top: 0;
 	left: 0;
 	right: 0;
 	bottom: 0;
-	border: 6px solid #6366F1;
-	z-index: 10000;
+	border: 6px solid var(--primary-color);
+	z-index: var(--z-index);
 	cursor: crosshair !important;
 }
 
 /* Highlight */
 .gthr-highlight {
-	outline: 3px solid #6366F1;
+	outline: 3px solid var(--primary-color);
+	z-index: calc(var(--z-index) - 1);
 }
 
 /* Dot */
@@ -59,7 +69,7 @@
 	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 	border: 1px solid black;
 	border-radius: 99px;
-	z-index: 999999;
+	z-index: calc(var(--z-index) + 1);
 
 	cursor: pointer;
 
@@ -80,7 +90,7 @@
 	width: 320px;
 	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 	pointer-events: all;
-	z-index: 99999;
+	z-index: calc(var(--z-index) + 1);
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	text-transform: none;
 }
@@ -122,14 +132,19 @@
 
 .gthr-tooltip__action {
 	padding: 6px 12px;
-	border-radius: 4px;
+	border-radius: var(--border-radius);
 }
 
 .gthr-tooltip__action--primary {
-	background-color: #6366F1;
-	border: 1px solid #6366F1;
+	background-color: var(--primary-color);
+	border: 1px solid var(--primary-color);
 	color: white;
 	margin-left: 8px;
+}
+
+.gthr-tooltip__action--primary:hover {
+	background-color: var(--accent-color);
+	border-color: var(--accent-color);
 }
 
 .gthr-tooltip__action--secondary {

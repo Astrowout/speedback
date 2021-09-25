@@ -24,17 +24,27 @@ overlay.classList.add("gthr-overlay");
 const dot = document.createElement("span");
 const body = document.body;
 
-const throttledEvent = throttle((e) => mouseMove(e), 200);
+let id = null;
+
+const throttledEvent = throttle((e) => mouseMove(e), 100);
 
 let commentMode = false;
 
 const updateButton = () => {
 	if (commentMode) {
-		button.textContent = "Close feedback";
-		button.classList.add("gthr-btn--comment-mode");
+		button.innerHTML = `
+			<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+			</svg>
+			Close feedback
+		`;
 	} else {
-		button.textContent = "Give feedback";
-		button.classList.remove("gthr-btn--comment-mode");
+		button.innerHTML = `
+			<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
+			</svg>
+			Give feedback
+		`;
 	}
 }
 
@@ -142,7 +152,6 @@ const toggleCommentMode = () => {
 	commentMode = !commentMode;
 
 	updateButton();
-	renderElements();
 
 	if (commentMode) {
 		setTimeout(handleCommentMode);
@@ -153,18 +162,19 @@ const toggleCommentMode = () => {
 
 const getComments = async () => {
 	// await fetch
+	console.log(id);
 }
 
-const init = async () => {
-	await getComments();
+const init = () => {
 
-	window.addEventListener("load", () => {
+	window.addEventListener("load", async() => {
+		const scriptElement = document.querySelector(`script[src^='${config.SCRIPT_URL}']`);
+		id = scriptElement.src.split("?id=")[1];
+
+		await getComments();
+
 		addTippy();
 		addCss(`${config.SCRIPT_URL}/main.css`);
-
-		const scriptElement = document.querySelector(`script[src^='${config.SCRIPT_URL}']`);
-		const id = scriptElement.src.split("?id=")[1];
-		console.log(id);
 
 		updateButton();
 		renderElements();
