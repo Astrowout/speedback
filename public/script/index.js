@@ -6,7 +6,7 @@ import htmlTooltip from "./templates/tooltip.js";
 
 // Helpers
 import addCss from "./helpers/add-css.js";
-import addTippy from "./helpers/add-tippy.js";
+import addTippy from "./vendors/tippy.js";
 import throttle from "./helpers/throttle.js";
 
 // Events
@@ -21,13 +21,14 @@ const overlay = document.createElement("div");
 overlay.classList.add("gthr-overlay");
 
 const dot = document.createElement("span");
-const body = document.body;
+dot.classList.add("gthr-dot");
 
-let id = null;
+const body = document.body;
 
 const throttledEvent = throttle((e) => mouseMove(e), 100);
 
 let commentMode = false;
+let id = null;
 
 const updateButton = () => {
 	if (commentMode) {
@@ -67,7 +68,7 @@ const handleClose = () => {
 	tippy.hideAll();
 }
 
-const renderInput = (el) => {
+const initTippy = () => {
 	tippy(el, {
         content: htmlTooltip,
 		trigger: 'click',
@@ -89,19 +90,14 @@ const renderInput = (el) => {
 			input.addEventListener("input", handleInput);
 			cancelBtn.addEventListener("click", handleClose);
 		},
-		onMount() {
-			const input = document.querySelector(".gthr-tooltip__input");
-			const cancelBtn = document.querySelector(".gthr-tooltip__action--secondary");
-
-			input.addEventListener("input", handleInput);
-			cancelBtn.addEventListener("click", handleClose);
-		}
     });
 }
 
-const addComment = (el) => {
-	dot.classList.add("gthr-dot");
+const renderInput = (el) => {
 
+}
+
+const addComment = (el) => {
 	dot.textContent = "2";
 
 	if (!el.style.position) {
@@ -121,7 +117,8 @@ const handleCommentMode = () => {
 }
 
 const cleanupCommentMode = () => {
-	body.addEventListener("click", (e) => click(e, addComment));
+	body.removeEventListener("click", (e) => click(e, addComment));
+	body.removeEventListener("mousemove", throttledEvent, false);
 
 	const highlightedElement = document.querySelector(".gthr-highlight");
 
@@ -129,12 +126,12 @@ const cleanupCommentMode = () => {
 		highlightedElement.classList.remove("gthr-highlight");
 	}
 
-	body.removeEventListener("mousemove", throttledEvent, false);
-
 	overlay.remove();
 }
 
-const toggleCommentMode = () => {
+const toggleCommentMode = (e) => {
+	e.stopPropagation();
+
 	commentMode = !commentMode;
 
 	updateButton();

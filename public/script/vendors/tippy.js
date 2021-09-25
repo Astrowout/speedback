@@ -1,4 +1,4 @@
-import addCss from "./add-css.js";
+import addCss from "../helpers/add-css.js";
 
 const addTippy = () => {
 	const popperScript = document.createElement('script');
