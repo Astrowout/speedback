@@ -6,13 +6,12 @@ import htmlTooltip from "./templates/tooltip.js";
 
 // Helpers
 import addCss from "./helpers/add-css.js";
-import { getTargetFromEvent } from "./helpers/get-target.js";
 import addTippy from "./helpers/add-tippy.js";
-import checkElements from "./helpers/check-elements.js";
 import throttle from "./helpers/throttle.js";
 
 // Events
-import { mouseMove } from "./events/hover.js";
+import mouseMove from "./events/hover.js";
+import click from "./events/click.js";
 
 // Globals
 const button = document.createElement("button");
@@ -57,12 +56,10 @@ const renderElements = () => {
 const handleInput = (e) => {
 	const placeholder = document.querySelector(".gthr-tooltip__placeholder");
 
-	const value = e.target.value;
-
-	if (value) {
-		placeholder.style.display = "block";
+	if (e.target.value) {
+		placeholder.style.visibility = "hidden";
 	} else {
-		placeholder.style.display = "none";
+		placeholder.style.visibility = "visible";
 	}
 }
 
@@ -84,12 +81,13 @@ const renderInput = (el) => {
 		hideOnClick: 'toggle',
 		hideOnClick: true,
 		interactive: true,
-		showOnCreate: true,
-		onHidden() {
-			handleCommentMode();
-		},
-		onShow() {
-			cleanupCommentMode();
+		onMount(instance) {
+			console.log(instance);
+			const input = document.querySelector(".gthr-tooltip__input");
+			const cancelBtn = document.querySelector(".gthr-tooltip__action--secondary");
+
+			input.addEventListener("input", handleInput);
+			cancelBtn.addEventListener("click", handleClose);
 		},
 		onMount() {
 			const input = document.querySelector(".gthr-tooltip__input");
@@ -102,10 +100,6 @@ const renderInput = (el) => {
 }
 
 const addComment = (el) => {
-	if (checkElements(el)) {
-		return;
-	}
-
 	dot.classList.add("gthr-dot");
 
 	dot.textContent = "2";
@@ -119,23 +113,15 @@ const addComment = (el) => {
 	renderInput(dot);
 }
 
-const handleComment = (e) => {
-	e.preventDefault();
-	const targetEl = getTargetFromEvent(e);
-
-	addComment(targetEl);
-}
-
 const handleCommentMode = () => {
-	window.addEventListener("click", handleComment);
-
+	body.addEventListener("click", (e) => click(e, addComment));
 	body.addEventListener("mousemove", throttledEvent, false);
 
 	body.appendChild(overlay);
 }
 
 const cleanupCommentMode = () => {
-	window.removeEventListener("click", handleComment);
+	body.addEventListener("click", (e) => click(e, addComment));
 
 	const highlightedElement = document.querySelector(".gthr-highlight");
 

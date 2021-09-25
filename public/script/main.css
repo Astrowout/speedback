@@ -3,6 +3,7 @@
 	--accent-color: #4F46E5;
 	--z-index: 999999;
 	--border-radius: 4px;
+	--box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
 
 /* Button */
@@ -21,7 +22,7 @@
 	border-top-left-radius: var(--border-radius);
 	cursor: pointer !important;
 	z-index: calc(var(--z-index) + 1);
-	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+	box-shadow: var(--box-shadow);
 }
 
 .gthr-btn > svg {
@@ -47,7 +48,6 @@
 /* Highlight */
 .gthr-highlight {
 	outline: 3px solid var(--primary-color);
-	z-index: calc(var(--z-index) - 1);
 }
 
 /* Dot */
@@ -66,7 +66,7 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+	box-shadow: var(--box-shadow);
 	border: 1px solid black;
 	border-radius: 99px;
 	z-index: calc(var(--z-index) + 1);
@@ -88,7 +88,7 @@
 /* Tooltip */
 .tippy-box {
 	width: 320px;
-	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+	box-shadow: var(--box-shadow);
 	pointer-events: all;
 	z-index: calc(var(--z-index) + 1);
 	font-family: Verdana, Arial, Helvetica, sans-serif;

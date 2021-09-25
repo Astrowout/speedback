@@ -1,13 +1,11 @@
-export default `
+const tooltipTemplate = `
 	<div class="gthr-tooltip">
-		<div>
-			<div
-				contenteditable
-				role="textbox"
-				class="gthr-tooltip__input"
-			>
-				<p class="gthr-tooltip__placeholder">Add a comment</p>
-			</div>
+		<div
+			contenteditable
+			role="textbox"
+			class="gthr-tooltip__input"
+		>
+			<p class="gthr-tooltip__placeholder">Add a comment</p>
 		</div>
 
 		<div class="gthr-tooltip__actions">
@@ -21,3 +19,5 @@ export default `
 		</div>
 	</div>
 `
+
+export default tooltipTemplate;

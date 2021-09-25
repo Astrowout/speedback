@@ -2,7 +2,9 @@ import checkElements from "../helpers/check-elements.js";
 import getAllElementsFromPoint from "../helpers/get-elements-from-point.js";
 import { getTarget } from "../helpers/get-target.js";
 
-const mouseMove = (e) => {
+const click = (e, cb) => {
+	e.preventDefault();
+
 	const hoveredElements = getAllElementsFromPoint(e.clientX, e.clientY);
 	const hoveredElement = hoveredElements[hoveredElements.length - 2];
 
@@ -12,13 +14,8 @@ const mouseMove = (e) => {
 		return;
 	}
 
-	const highlightedElement = document.querySelector(".gthr-highlight");
-
-	if (highlightedElement) {
-		highlightedElement.classList.remove("gthr-highlight");
-	}
-
-	targetEl.classList.add("gthr-highlight");
+	cb(targetEl);
 }
 
-export default mouseMove;
+export default click;
+
