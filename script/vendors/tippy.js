@@ -7,10 +7,9 @@ const addTippy = () => {
 	popperScript.src = "https://unpkg.com/@popperjs/core@2";
 	tippyScript.src = "https://unpkg.com/tippy.js@6";
 
-	document.body.append(popperScript);
-	document.body.append(tippyScript);
+	document.body.appendChild(popperScript);
+	document.body.appendChild(tippyScript);
 
-	addCss("https://unpkg.com/tippy.js@6/themes/light-border.css");
 	addCss("https://unpkg.com/tippy.js@6/animations/scale-subtle.css");
 }
 
