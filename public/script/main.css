@@ -24,45 +24,20 @@
 
 /* Overlay */
 .gthr-overlay {
+	display: block;
 	position: fixed;
 	top: 0;
 	left: 0;
 	right: 0;
 	bottom: 0;
 	border: 6px solid #6366F1;
-	pointer-events: none;
-	z-index: 999999;
+	z-index: 10000;
+	cursor: crosshair !important;
 }
 
 /* Highlight */
-.gthr-highlight::after {
-	content: "";
-	position: absolute;
-	top: 50%;
-	left: 50%;
-
-	width: calc(100% + 14px);
-	height: calc(100% + 14px);
-
-	background-color: rgba(255, 255, 255, 0.3);
-	border: 2px solid #6366F1;
-	border-radius: 4px;
-
-	opacity: 0;
-	transform: translate(-50%, -50%);
-
-	pointer-events: none;
-	z-index: 99999;
-
-	transition: opacity 0.2s ease-in-out;
-}
-
-.gthr-highlight:hover {
-	position: relative !important;
-}
-
-.gthr-highlight:hover::after {
-	opacity: 1;
+.gthr-highlight {
+	outline: 3px solid #6366F1;
 }
 
 /* Dot */
@@ -159,13 +134,4 @@
 
 .gthr-tooltip__action--secondary {
 	border: 1px solid lightgrey;
-}
-
-/* Prevent clicks */
-.gthr-prevent-clicks {
-	cursor: copy;
-}
-.gthr-prevent-clicks a,
-.gthr-prevent-clicks button {
-	cursor: copy;
 }

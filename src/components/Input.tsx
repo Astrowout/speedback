@@ -47,7 +47,7 @@ const Input: FunctionComponent<InputProps> = forwardRef(({
 						ref={ref as RefObject<HTMLTextAreaElement>}
 						placeholder={placeholder}
 						rows={4}
-						className={cn("mt-1 py-3 px-4 block focus:ring-1 focus:outline-none w-full shadow rounded-md", {
+						className={cn("mt-1 py-3 px-4 block focus:ring-1 focus:outline-none w-full shadow rounded", {
 							'focus:ring-red-500': error,
 							'focus:ring-indigo-500': !error,
 							'pl-16': icon
@@ -63,7 +63,7 @@ const Input: FunctionComponent<InputProps> = forwardRef(({
 						ref={ref as RefObject<HTMLInputElement>}
 						autoComplete={autocomplete || name}
 						placeholder={placeholder}
-						className={cn("mt-1 py-3 px-4 block focus:ring-1 focus:outline-none w-full shadow rounded-md", {
+						className={cn("mt-1 py-3 px-4 block focus:ring-1 focus:outline-none w-full shadow rounded", {
 							'focus:ring-red-500': error,
 							'focus:ring-indigo-500': !error,
 							'pl-16': icon

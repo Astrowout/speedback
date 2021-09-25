@@ -6,23 +6,27 @@ import htmlTooltip from "./templates/tooltip.js";
 
 // Helpers
 import addCss from "./helpers/add-css.js";
-import getTarget from "./helpers/get-target.js";
+import { getTargetFromEvent } from "./helpers/get-target.js";
 import addTippy from "./helpers/add-tippy.js";
 import checkElements from "./helpers/check-elements.js";
+import throttle from "./helpers/throttle.js";
 
 // Events
-import { mouseOver, mouseOut } from "./events/hover.js";
+import { mouseMove } from "./events/hover.js";
 
 // Globals
 const button = document.createElement("button");
-const dot = document.createElement("div");
+button.classList.add("gthr-btn");
+
 const overlay = document.createElement("div");
+overlay.classList.add("gthr-overlay");
+
+const dot = document.createElement("span");
 const body = document.body;
-const html = document.documentElement;
-let allElements = document.querySelector("*");
+
+const throttledEvent = throttle((e) => mouseMove(e), 200);
 
 let commentMode = false;
-let editMode = false;
 
 const updateButton = () => {
 	if (commentMode) {
@@ -107,7 +111,7 @@ const addComment = (el) => {
 
 const handleComment = (e) => {
 	e.preventDefault();
-	const targetEl = getTarget(e);
+	const targetEl = getTargetFromEvent(e);
 
 	addComment(targetEl);
 }
@@ -115,48 +119,25 @@ const handleComment = (e) => {
 const handleCommentMode = () => {
 	window.addEventListener("click", handleComment);
 
-	allElements.addEventListener("mouseover", mouseOver, false);
-	allElements.addEventListener("mouseout", mouseOut, false);
+	body.addEventListener("mousemove", throttledEvent, false);
 
-	html.classList.add("gthr-prevent-clicks");
-
-	body.insertBefore(overlay, body.firstChild);
-
-	// const interactiveEls = [...document.querySelectorAll("button:not(.gthr-btn), a")];
-	// interactiveEls.forEach(el => {
-	// 	el.addEventListener("click", (e) => {
-	// 		e.preventDefault();
-	// 	})
-	// });
+	body.appendChild(overlay);
 }
 
 const cleanupCommentMode = () => {
 	window.removeEventListener("click", handleComment);
 
-	const highlightedEl = document.querySelector(".gthr-highlight");
+	const highlightedElement = document.querySelector(".gthr-highlight");
 
-	if (highlightedEl) {
-		highlightedEl.classList.remove("gthr-highlight");
+	if (highlightedElement) {
+		highlightedElement.classList.remove("gthr-highlight");
 	}
 
-	allElements.removeEventListener("mouseover", mouseOver, false);
-	allElements.removeEventListener("mouseout", mouseOut, false);
+	body.removeEventListener("mousemove", throttledEvent, false);
 
 	overlay.remove();
-
-	setTimeout(() => {
-		html.classList.remove("gthr-prevent-clicks");
-
-		// const interactiveEls = [...document.querySelectorAll("button:not(.gthr-btn), a")];
-		// interactiveEls.forEach(el => {
-		// 	el.removeEventListener("click", (e) => {
-		// 		e.preventDefault();
-		// 	})
-		// });
-	});
 }
 
-// Events
 const toggleCommentMode = () => {
 	commentMode = !commentMode;
 
@@ -175,22 +156,19 @@ const getComments = async () => {
 }
 
 const init = async () => {
-	// initialisation stuff here
-	console.log('App initialized');
-
-	addTippy();
-	addCss(`${config.SCRIPT_URL}/main.css`);
-
-	const scriptElement = document.querySelector(`script[src^='${config.SCRIPT_URL}']`);
-	const id = scriptElement.src.split("?id=")[1];
-	console.log(id);
-
 	await getComments();
 
-	updateButton();
-	button.classList.add("gthr-btn");
-	overlay.classList.add("gthr-overlay");
-	renderElements();
+	window.addEventListener("load", () => {
+		addTippy();
+		addCss(`${config.SCRIPT_URL}/main.css`);
+
+		const scriptElement = document.querySelector(`script[src^='${config.SCRIPT_URL}']`);
+		const id = scriptElement.src.split("?id=")[1];
+		console.log(id);
+
+		updateButton();
+		renderElements();
+	});
 }
 
 init();

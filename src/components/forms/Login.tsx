@@ -37,7 +37,7 @@ const LoginForm: FunctionComponent<LoginFormProps> = ({ className }) => {
             <button
 				type="submit"
 				disabled={isLoading}
-				className="relative w-full disabled:opacity-30 disabled:pointer-events-none flex justify-center py-3 px-4 border border-transparent rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+				className="relative w-full disabled:opacity-30 disabled:pointer-events-none flex justify-center py-3 px-4 border border-transparent rounded text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
 				<LockClosedIcon className="absolute left-0 top-1/2 transform -translate-y-1/2 inset-y-0 ml-3 h-5 w-5 text-indigo-400" aria-hidden="true" />
 				Sign in

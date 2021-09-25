@@ -83,7 +83,7 @@ const NewProjectForm: FunctionComponent<NewProjectFormProps> = ({ className, id,
 				<button
 					type="submit"
 					disabled={loading}
-					className="relative w-full disabled:opacity-30 disabled:pointer-events-none flex justify-center py-3 px-4 border border-transparent rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+					className="relative w-full disabled:opacity-30 disabled:pointer-events-none flex justify-center py-3 px-4 border border-transparent rounded text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
 				>
 					{id ? 'Edit project' : 'Create project'}
 				</button>

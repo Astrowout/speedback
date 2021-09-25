@@ -28,7 +28,7 @@ const Header = () => {
 		<Disclosure as="nav" className="bg-white shadow">
 		  {({ open }) => (
 			<>
-			  <div className="container-spacing">
+			  <div className="max-w-screen-lg container-spacing">
 				<div className="flex items-center justify-between h-24">
 				  <div className="flex items-center">
 					<Logo />
@@ -38,7 +38,7 @@ const Header = () => {
 						{navigation.map((item) => (
 						  <Link key={item.name} href={item.href}>
 							  <a
-								className={cn('px-3 py-2 rounded-md font-brand', {
+								className={cn('px-3 py-2 rounded font-brand', {
 									'bg-gray-100 text-black': router.pathname === item.href,
 									'text-gray-700 hover:bg-gray-200 hover:text-black': router.pathname !== item.href,
 								})}
@@ -56,7 +56,7 @@ const Header = () => {
 					<Link
 						href="/login"
 					>
-						<a className="my-1.5 mx-2 inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+						<a className="my-1.5 mx-2 inline-flex items-center px-4 py-2 border border-gray-300 rounded shadow-sm text-sm text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
 							Login
 						</a>
 					</Link>
@@ -64,7 +64,7 @@ const Header = () => {
 					<Link
 						href="/login"
 					>
-						<a className="my-1.5 mx-2 inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+						<a className="my-1.5 mx-2 inline-flex items-center px-4 py-2 border border-transparent rounded shadow-sm text-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
 							Start free trial
 						</a>
 					</Link>
@@ -72,7 +72,7 @@ const Header = () => {
 				  </div>
 				  <div className="-mr-2 flex md:hidden">
 					{/* Mobile menu button */}
-					<Disclosure.Button className="bg-gray-200 inline-flex items-center justify-center p-2 rounded-md text-gray-600 hover:text-black hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-200 focus:ring-white">
+					<Disclosure.Button className="bg-gray-200 inline-flex items-center justify-center p-2 rounded text-gray-600 hover:text-black hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-200 focus:ring-white">
 					  <span className="sr-only">Open main menu</span>
 					  {open ? (
 						<XIcon className="block h-6 w-6" aria-hidden="true" />
@@ -89,7 +89,7 @@ const Header = () => {
 				  {navigation.map((item) => (
 					<Link key={item.name} href={item.href}>
 						<a
-							className={cn('block px-3 py-2 rounded-md font-brand', {
+							className={cn('block px-3 py-2 rounded font-brand', {
 								'bg-gray-100 text-black': router.pathname === item.href,
 								'text-gray-700 hover:bg-gray-200 hover:text-black': router.pathname !== item.href,
 						  })}

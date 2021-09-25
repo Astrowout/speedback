@@ -36,7 +36,7 @@ const AppProjectDetail: NextPage = ({ project }: InferGetStaticPropsType<typeof 
 						<button
 							type="button"
 							onClick={() => setIsConfirmModalOpen(true)}
-							className="my-1.5 mx-2 disabled:pointer-events-none disabled:opacity-30 inline-flex items-center px-4 py-2 border border-red-200 rounded-md shadow-sm text-sm font-medium text-red-500 bg-white hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+							className="my-1.5 mx-2 disabled:pointer-events-none disabled:opacity-30 inline-flex items-center px-4 py-2 border border-red-200 rounded shadow-sm text-sm font-medium text-red-500 bg-white hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
 						>
 							<TrashIcon className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
 							Delete project
@@ -45,7 +45,7 @@ const AppProjectDetail: NextPage = ({ project }: InferGetStaticPropsType<typeof 
 						<Link
 							href={`/projects/${project.id}/edit`}
 						>
-							<a className="my-1.5 mx-2 inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+							<a className="my-1.5 mx-2 inline-flex items-center px-4 py-2 border border-transparent rounded shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
 								<PencilIcon className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
 								Edit project
 							</a>
@@ -65,7 +65,7 @@ const AppProjectDetail: NextPage = ({ project }: InferGetStaticPropsType<typeof 
 							<Link
 								href="/projects"
 							>
-								<a className="my-1.5 mx-2 inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+								<a className="my-1.5 mx-2 inline-flex items-center px-4 py-2 border border-gray-300 rounded shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
 									<EyeIcon className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
 									View all projects
 								</a>
@@ -111,7 +111,7 @@ export const getStaticProps: GetStaticProps = async({ params }) => {
 		props: {
 			project,
 		},
-		revalidate: 60, // In seconds
+		revalidate: 10, // In seconds
 	}
 }
 

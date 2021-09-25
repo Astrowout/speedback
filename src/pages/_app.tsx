@@ -5,6 +5,7 @@ import { ApolloProvider } from "@apollo/client";
 import { ApolloClient } from '../helpers';
 import { AuthContext, GlobalContext } from '../context';
 import { useAuth, useRouterGuard, useUser } from '../hooks';
+import { Loader } from '../components';
 
 import '../styles/globals.css';
 
@@ -29,7 +30,12 @@ const App = ({ Component, pageProps }: AppProps) => {
 						<meta name="description" content="Fast feedback from your customers with speedback." />
 						<link rel="icon" href="/favicon.ico" />
 					</Head>
-					<Component {...pageProps} />
+
+					{isLoading ? (
+						<Loader fullscreen />
+					) : (
+						<Component {...pageProps} />
+					)}
 				</AuthContext.Provider>
 			</GlobalContext.Provider>
 		</ApolloProvider>
