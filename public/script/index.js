@@ -6,8 +6,11 @@ import htmlTooltip from "./templates/tooltip.js";
 
 // Helpers
 import addCss from "./helpers/add-css.js";
-import addTippy from "./vendors/tippy.js";
+import { checkHighlightedElement } from "./helpers/check-elements.js";
 import throttle from "./helpers/throttle.js";
+
+// Vendors
+import addTippy from "./vendors/tippy.js";
 
 // Events
 import mouseMove from "./events/hover.js";
@@ -120,11 +123,7 @@ const cleanupCommentMode = () => {
 	body.removeEventListener("click", (e) => click(e, addComment));
 	body.removeEventListener("mousemove", throttledEvent, false);
 
-	const highlightedElement = document.querySelector(".gthr-highlight");
-
-	if (highlightedElement) {
-		highlightedElement.classList.remove("gthr-highlight");
-	}
+	checkHighlightedElement();
 
 	overlay.remove();
 }

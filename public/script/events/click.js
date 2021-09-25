@@ -1,4 +1,4 @@
-import checkElements from "../helpers/check-elements.js";
+import { checkElements } from "../helpers/check-elements.js";
 import getAllElementsFromPoint from "../helpers/get-elements-from-point.js";
 import { getTarget } from "../helpers/get-target.js";
 

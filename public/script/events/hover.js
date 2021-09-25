@@ -1,4 +1,4 @@
-import checkElements from "../helpers/check-elements.js";
+import { checkElements, checkHighlightedElement } from "../helpers/check-elements.js";
 import getAllElementsFromPoint from "../helpers/get-elements-from-point.js";
 import { getTarget } from "../helpers/get-target.js";
 
@@ -9,14 +9,12 @@ const mouseMove = (e) => {
 	const targetEl = getTarget(hoveredElement);
 
 	if (checkElements(targetEl)) {
+		checkHighlightedElement();
+
 		return;
 	}
 
-	const highlightedElement = document.querySelector(".gthr-highlight");
-
-	if (highlightedElement) {
-		highlightedElement.classList.remove("gthr-highlight");
-	}
+	checkHighlightedElement();
 
 	targetEl.classList.add("gthr-highlight");
 }
