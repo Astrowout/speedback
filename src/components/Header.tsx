@@ -28,7 +28,7 @@ const Header = () => {
 		<Disclosure as="nav" className="bg-white shadow">
 		  {({ open }) => (
 			<>
-			  <div className="max-w-screen-lg mx-auto container-spacing">
+			  <div className="max-w-screen-xl mx-auto container-spacing">
 				<div className="flex items-center justify-between h-24">
 				  <div className="flex items-center">
 					<Logo />

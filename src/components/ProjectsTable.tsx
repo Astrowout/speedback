@@ -113,7 +113,7 @@ const ProjectsTable: FunctionComponent<ProjectsTableProps> = ({ className, rows,
 									<td className="p-4 whitespace-nowrap flex justify-end">
 										<button
 											type="button"
-											data-clipboard-text={`<script src="${window.location.origin}/script/index.js?id=${row.id}" type="module" crossorigin charset="utf-8"></script>`}
+											data-clipboard-text={`<script src="${window.location.origin}/script/index.js?id=${row.id}" crossorigin charset="utf-8"></script>`}
 											id="copyScriptTrigger"
 											className="text-indigo-500 px-3 py-2 bg-indigo-100 rounded hover:bg-indigo-200 hover:text-indigo-800 flex items-center"
 										>

@@ -81,7 +81,7 @@ const Input: FunctionComponent<InputProps> = forwardRef(({
 			</div>
 
 			{error === 'required' && (
-				<p className="text-red-500 text-sm mt-1.5 text-right"><span className="first-letter:uppercase">{label || name}</span> is required</p>
+				<p className="text-red-500 text-sm mt-1.5 text-right"><span>{label || name}</span> is required</p>
 			)}
 
 			{error === 'pattern' && (

@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "build:script": "babel script/index.js --out-file public/script/index.js"
+    "build:script": "parcel build script/index.js script/main.css --no-source-maps --dist-dir public/script",
+    "watch:script": "parcel watch script/index.js script/main.css --no-source-maps --dist-dir public/script"
   },
   "dependencies": {
     "@apollo/client": "^3.4.13",
@@ -32,6 +33,7 @@
     "autoprefixer": "^10.3.4",
     "eslint": "7.32.0",
     "eslint-config-next": "11.1.2",
+    "parcel": "^2.0.0-rc.0",
     "postcss": "^8.3.6",
     "prisma": "^3.1.1",
     "tailwindcss": "^2.2.15",
