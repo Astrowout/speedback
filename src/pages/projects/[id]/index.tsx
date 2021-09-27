@@ -58,7 +58,7 @@ const AppProjectDetail: NextPage = ({ project }: InferGetStaticPropsType<typeof 
 						<div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
 							<ProjectDataDisplay className="max-w-xl col-span-2 md:col-span-1" data={project}></ProjectDataDisplay>
 
-							<Comments className="col-span-2 md:col-span-1" comments={project.comments} />
+							<Comments className="col-span-2 md:col-span-1" projectId={project.id} comments={project.comments} />
 
 							<Snippet className="col-span-2" id={project.id} />
 						</div>
@@ -67,7 +67,7 @@ const AppProjectDetail: NextPage = ({ project }: InferGetStaticPropsType<typeof 
 							<Link
 								href="/projects"
 							>
-								<a className="my-1.5 mx-2 inline-flex items-center px-4 py-2 border border-gray-300 rounded shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+								<a className="mt-8 my-1.5 mx-2 inline-flex items-center px-4 py-2 border border-gray-300 rounded shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
 									<EyeIcon className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
 									View all projects
 								</a>

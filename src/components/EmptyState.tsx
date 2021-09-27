@@ -11,7 +11,7 @@ const EmptyState: FunctionComponent<EmptyStateProps> = ({ children, title, icon 
 	const Icon = icon;
 
 	return (
-		<div className="flex flex-col items-center space-y-8 container-spacing section-spacing">
+		<div className="flex flex-col items-center container-spacing section-spacing">
 			<div className="flex flex-col items-center space-y-3 max-w-md">
 				<Icon className="block h-16 w-16 text-gray-400" aria-hidden="true" />
 
@@ -20,7 +20,7 @@ const EmptyState: FunctionComponent<EmptyStateProps> = ({ children, title, icon 
 				</p>
 			</div>
 
-			<div>{children}</div>
+			{children}
 	  	</div>
 	)
 }

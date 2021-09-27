@@ -29,7 +29,7 @@ const AppHeader = () => {
 										{navigation.map((item) => (
 											<Link key={item.name} href={item.href}>
 												<a
-													className={cn('px-3 py-2 rounded font-brand', {
+													className={cn('px-3 py-2 text-lg rounded font-brand', {
 														'bg-gray-900 text-white': router.pathname === item.href,
 														'text-gray-400 hover:bg-gray-700 hover:text-white': router.pathname !== item.href,
 													})}
