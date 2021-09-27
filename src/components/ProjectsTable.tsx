@@ -104,7 +104,7 @@ const ProjectsTable: FunctionComponent<ProjectsTableProps> = ({ className, rows,
 												{ row.id }
 											</td>
 
-											<td className="p-4 whitespace-nowrap">
+											<td className="p-4 whitespace-nowrap font-bold">
 												{ row.comments.length }
 											</td>
 										</>

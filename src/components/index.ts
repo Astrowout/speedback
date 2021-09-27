@@ -13,5 +13,7 @@ export { default as Modal } from "./modals/Modal";
 export { default as ConfirmDeleteModal } from "./modals/ConfirmDelete";
 export { default as Button } from "./Button";
 export { default as Stat } from "./Stat";
+export { default as Comment } from "./Comment";
+export { default as Comments } from "./Comments";
 export { default as ProjectDataDisplay } from "./ProjectDataDisplay";
 export { default as ProjectsTable } from "./ProjectsTable";

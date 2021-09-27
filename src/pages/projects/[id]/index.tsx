@@ -6,7 +6,7 @@ import { useMutation } from '@apollo/client';
 import { CollectionIcon, EyeIcon, PencilIcon, TrashIcon } from '@heroicons/react/outline';
 import type { GetStaticProps, InferGetStaticPropsType, NextPage } from "next";
 
-import { ConfirmDeleteModal, EmptyState, Heading, ProjectDataDisplay, Snippet } from '../../../components';
+import { ConfirmDeleteModal, EmptyState, Heading, ProjectDataDisplay, Snippet, Comments } from '../../../components';
 import { AppLayout } from '../../../layouts';
 import { ApolloClient, Mutations, Queries } from '../../../helpers';
 
@@ -55,10 +55,12 @@ const AppProjectDetail: NextPage = ({ project }: InferGetStaticPropsType<typeof 
 
 				<section className="2xl:container container-spacing section-spacing">
 					{project ? (
-						<div className="flex flex-col gap-8">
-							<ProjectDataDisplay className="max-w-3xl" data={project}></ProjectDataDisplay>
+						<div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+							<ProjectDataDisplay className="max-w-xl col-span-2 md:col-span-1" data={project}></ProjectDataDisplay>
 
-							<Snippet id={project.id} />
+							<Comments className="col-span-2 md:col-span-1" comments={project.comments} />
+
+							<Snippet className="col-span-2" id={project.id} />
 						</div>
 					) : (
 						<EmptyState title="This project was not found." icon={CollectionIcon}>

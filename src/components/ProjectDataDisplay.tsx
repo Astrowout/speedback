@@ -1,5 +1,4 @@
-import { ClipboardCopyIcon } from "@heroicons/react/outline";
-import { FunctionComponent, MouseEvent } from "react";
+import { FunctionComponent } from "react";
 import cn from "classnames";
 
 type ProjectDataDisplayProps = {
@@ -15,7 +14,7 @@ const ProjectDataDisplay: FunctionComponent<ProjectDataDisplayProps> = ({ classN
 		>
 			<dl className="divide-y">
 				<div className="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-					<dt className="text-sm font-medium text-gray-500">URL</dt>
+					<dt className="text-sm text-gray-500">URL</dt>
 					<dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
 						<a
 							href={data.url}
@@ -28,19 +27,19 @@ const ProjectDataDisplay: FunctionComponent<ProjectDataDisplayProps> = ({ classN
 					</dd>
 				</div>
 				<div className="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-					<dt className="text-sm font-medium text-gray-500">Description</dt>
+					<dt className="text-sm text-gray-500">Description</dt>
 					<dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
 						{data.description}
 					</dd>
 				</div>
 				<div className="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-					<dt className="text-sm font-medium text-gray-500">Created by</dt>
+					<dt className="text-sm text-gray-500">Created by</dt>
 					<dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
 						{data.createdByAuthUser.email}
 					</dd>
 				</div>
 				<div className="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-					<dt className="text-sm font-medium text-gray-500">ID</dt>
+					<dt className="text-sm text-gray-500">ID</dt>
 					<dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
 						{data.id}
 					</dd>

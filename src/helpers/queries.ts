@@ -4,7 +4,10 @@ const Queries: { [key: string]: DocumentNode } = {};
 
 Queries.getGlobals = gql`
 	query ($issuer: String!) {
-		comments(first: 1, orderBy: createdAt_DESC) {
+		comments(
+			first: 1,
+			orderBy: createdAt_DESC
+		) {
 			createdAt
 		}
 		commentsConnection {
@@ -44,6 +47,14 @@ Queries.getProject = gql`
 			}
 			comments {
 				id
+				text
+				url
+				resolved
+				metaInfo
+				createdAt
+				authUser {
+					email
+				}
 			}
 		}
 	}
@@ -65,7 +76,10 @@ Queries.getProjects = gql`
 
 Queries.getCommentsByProject = gql`
 	query ($projectId: ID!) {
-		comments(where: {project: {id: $projectId}}, orderBy: createdAt_ASC) {
+		comments(
+			where: {project: {id: $projectId}},
+			orderBy: createdAt_ASC
+		) {
 			id
 			text
 			resolved
