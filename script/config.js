@@ -1,5 +1,5 @@
 const config = {
-	SCRIPT_URL: "http://127.0.0.1:3000/script"
+	BASE_URL: "http://127.0.0.1:3000"
 }
 
 export default config;

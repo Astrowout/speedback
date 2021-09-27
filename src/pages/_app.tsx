@@ -4,14 +4,12 @@ import { ApolloProvider } from "@apollo/client";
 
 import { ApolloClient } from '../helpers';
 import { AuthContext, GlobalContext } from '../context';
-import { useAuth, useRouterGuard, useUser } from '../hooks';
-import { Loader } from '../components';
+import { useAuth, useUser } from '../hooks';
 
 import '../styles/globals.css';
 
 const App = ({ Component, pageProps }: AppProps) => {
 	const { user, isLoggedIn, isLoading, methods } = useAuth();
-	useRouterGuard({ isLoggedIn, isLoading });
 	useUser(user, methods.setUser);
 
 	return (
@@ -31,11 +29,7 @@ const App = ({ Component, pageProps }: AppProps) => {
 						<link rel="icon" href="/favicon.ico" />
 					</Head>
 
-					{isLoading ? (
-						<Loader fullscreen />
-					) : (
-						<Component {...pageProps} />
-					)}
+					<Component {...pageProps} />
 				</AuthContext.Provider>
 			</GlobalContext.Provider>
 		</ApolloProvider>

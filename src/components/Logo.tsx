@@ -5,12 +5,13 @@ import cn from "classnames";
 type LogoProps = {
 	size?: number,
 	className?: string,
+	url?: string,
 	dark?: boolean,
 }
 
-const Logo: FunctionComponent<LogoProps> = ({ className, dark = false, size = 26 }) => {
+const Logo: FunctionComponent<LogoProps> = ({ className, dark = false, size = 26, url = "/" }) => {
 	return (
-		<Link href="/">
+		<Link href={url}>
 			<a className={cn(className, {
 				'text-white': dark,
 				'text-black': !dark,

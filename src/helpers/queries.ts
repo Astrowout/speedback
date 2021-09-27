@@ -63,4 +63,20 @@ Queries.getProjects = gql`
 	}
 `;
 
+Queries.getCommentsByProject = gql`
+	query ($projectId: ID!) {
+		comments(where: {project: {id: $projectId}}, orderBy: createdAt_ASC) {
+			id
+			text
+			resolved
+			metaInfo
+			elementSelector
+			authUser {
+				id
+				email
+			}
+		}
+	}
+`;
+
 export default Queries;

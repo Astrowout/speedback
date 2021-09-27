@@ -52,6 +52,7 @@
 
 /* Dot */
 .gthr-dot {
+	user-select: none;
 	position: absolute;
 	top: 0;
 	left: 50%;
@@ -89,7 +90,6 @@
 .tippy-box {
 	width: 320px;
 	box-shadow: var(--box-shadow);
-	pointer-events: all;
 	z-index: calc(var(--z-index) + 1);
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	text-transform: none;
@@ -106,10 +106,18 @@
 }
 
 .gthr-tooltip__input {
+	color: black;
 	resize: none;
 	appearance: none;
 	padding: 4px 0 20px 0;
 	position: relative;
+}
+
+.gthr-tooltip__avatar {
+	border-radius: 99px;
+	width: 32px;
+	height: 32px;
+	color: lightgrey;
 }
 
 .gthr-tooltip__input:focus {

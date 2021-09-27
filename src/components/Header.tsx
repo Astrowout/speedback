@@ -31,7 +31,7 @@ const Header = () => {
 			  <div className="max-w-screen-xl mx-auto container-spacing">
 				<div className="flex items-center justify-between h-24">
 				  <div className="flex items-center">
-					<Logo />
+					<Logo url="/home" />
 
 					<div className="hidden md:block">
 					  <div className="ml-16 flex items-baseline space-x-4">
