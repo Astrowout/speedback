@@ -1,6 +1,7 @@
 import { FunctionComponent } from "react";
 import cn from "classnames";
 import { CheckCircleIcon, ChevronDownIcon } from "@heroicons/react/outline";
+import { CheckCircleIcon as CheckCircleIconSolid } from "@heroicons/react/solid";
 
 import { DateUtils } from "../helpers";
 import { Disclosure } from '@headlessui/react'
@@ -27,23 +28,31 @@ const Comment: FunctionComponent<CommentProps> = ({ className, data }) => {
 					</span>
 				</div>
 
-				<button className="ml-3">
+				<button className="ml-3 transform transition-transform hover:scale-110">
 					<span className="sr-only">Resolve comment</span>
-					<CheckCircleIcon
-						className={cn("w-6 h-6", {
-							'text-green-500': data.resolved,
-							'text-gray-400': !data.resolved,
-						})}
-						aria-hidden="true"
-					/>
+					{data.resolved ? (
+						<CheckCircleIconSolid
+							className="w-6 h-6 text-green-500"
+							aria-hidden="true"
+						/>
+					): (
+						<CheckCircleIcon
+							className="w-6 h-6 text-gray-400"
+							aria-hidden="true"
+						/>
+					)}
 				</button>
 			</div>
 
-			<Disclosure as="div" className="mr-12">
+			<Disclosure as="div" className="mr-16">
 				{({ open }) => (
         			<>
 						<Disclosure.Button className="p-4 pb-6 w-full flex justify-between items-center">
-							<p className="text-left">
+							<p
+								className={cn("text-left", {
+									'line-through text-gray-400': data.resolved
+								})}
+							>
 								{data.text}
 							</p>
 

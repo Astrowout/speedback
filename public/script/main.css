@@ -113,6 +113,11 @@
 	flex-direction: column;
 }
 
+.gthr-tooltip__content {
+	display: flex;
+	justify-content: space-between;
+}
+
 .gthr-tooltip__input {
 	color: black;
 	resize: none;

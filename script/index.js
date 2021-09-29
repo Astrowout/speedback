@@ -11,7 +11,7 @@ import { checkHighlightedElement } from "./helpers/check-elements.js";
 import throttle from "./helpers/throttle.js";
 
 // Vendors
-import addTippy from "./vendors/tippy.js";
+import tippy from "./vendors/tippy.js";
 
 // Events
 import mouseMove from "./events/hover.js";
@@ -71,14 +71,21 @@ const handleInput = (e) => {
 }
 
 const destroyTippy = () => {
-	console.log(tippyInstance);
 	tippyInstance.destroy();
 	tippyInstance = null;
 }
 
 const handlePost = async () => {
 	const input = document.querySelector(".gthr-tooltip__input");
-	console.log(input.value);
+
+	await console.log("fetch");
+
+	tippyInstance.destroy();
+	tippyInstance = null;
+}
+
+const handleResolveComment = async () => {
+	const input = document.querySelector(".gthr-tooltip__input");
 
 	await console.log("fetch");
 
@@ -102,8 +109,29 @@ const initTippy = () => {
 			strategy: 'fixed'
 		},
 		onShown() {
-			console.log("shown");
+			const input = document.querySelector(".gthr-tooltip__input");
+			const resolveBtn = document.querySelector(".gthr-tooltip__resolve");
+
+			if (input) {
+				input.addEventListener("input", handleInput);
+			}
+
+			if (resolveBtn) {
+				resolveBtn.addEventListener("click", handleResolveComment);
+			}
 		},
+		onHidden() {
+			const input = document.querySelector(".gthr-tooltip__input");
+			const resolveBtn = document.querySelector(".gthr-tooltip__resolve");
+
+			if (input) {
+				input.removeEventListener("input", handleInput);
+			}
+
+			if (resolveBtn) {
+				resolveBtn.removeEventListener("click", handleResolveComment);
+			}
+		}
 	});
 }
 
@@ -152,12 +180,16 @@ const placeComments = () => {
 	for (let i = 0; i < comments.length; i++) {
 		const comment = comments[i];
 
+		const el = document.querySelector(comment.elementSelector);
+
+		if (!el) {
+			continue;
+		}
+
 		const dot = document.createElement("span");
 		dot.classList.add("gthr-dot");
 
 		dot.textContent = i + 1;
-
-		const el = document.querySelector(comment.elementSelector);
 
 		if (!el.style.position) {
 			el.style.position = "relative";
@@ -166,7 +198,12 @@ const placeComments = () => {
 		el.appendChild(dot);
 
 		tippy(dot, {
-			content: commentTemplate(comment.text),
+			content: commentTemplate({
+				text: comment.text,
+				resolved: comment.resolved,
+				email: comment.email,
+				action: () => handleResolveComment(comment.id, comment.resolved)
+			}),
 		});
 	}
 }
@@ -181,11 +218,13 @@ const getComments = async () => {
 }
 
 const init = async () => {
-	addTippy(await getComments);
+	addCss("https://unpkg.com/tippy.js@6/animations/scale-subtle.css");
 	addCss(`${config.BASE_URL}/script/main.css`);
 
 	const scriptElement = document.querySelector(`script[src^='${config.BASE_URL}/script']`);
 	id = scriptElement.src.split("?id=")[1];
+
+	await getComments();
 
 	updateButton();
 	renderElements();

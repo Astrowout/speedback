@@ -16,9 +16,9 @@ const user = {
 }
 
 const navigation = [
-	{ name: 'Features', href: '/features' },
+	{ name: 'How does it work?', href: '/feature' },
+	{ name: 'For whom', href: '/for-whom' },
 	{ name: 'Pricing', href: '/pricing' },
-	{ name: 'Integrations', href: '/integrations' },
 ]
 
 const Header = () => {
@@ -65,7 +65,7 @@ const Header = () => {
 						href="/login"
 					>
 						<a className="my-1.5 mx-2 inline-flex items-center px-4 py-2 border border-transparent rounded shadow-sm text-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-							Start free trial
+							Try it for free
 						</a>
 					</Link>
 			</div>
