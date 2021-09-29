@@ -17,7 +17,7 @@ Mutations.createUser = gql`
 Mutations.upsertProject = gql`
 	 mutation ($id: ID, $name: String!, $url: String!, $description: String, $issuer: String!) {
 		upsertProject(
-			where: { id: $id }
+			where: { id: $id },
 			upsert: {
 				create: {
 					name: $name,
@@ -25,14 +25,14 @@ Mutations.upsertProject = gql`
 					description: $description,
 					authUser: { connect: [{ issuer: $issuer }] },
 					createdByAuthUser: { connect: { issuer: $issuer } }
-				}
+				},
 				update: {
 					name: $name,
 					url: $url,
 					description: $description,
 					authUser: { connect: [{ where: { issuer: $issuer } }] }
-				}
-			}
+				},
+			},
 		) {
 			id
 		}
@@ -43,6 +43,18 @@ Mutations.deleteProject = gql`
 	 mutation ($id: ID!) {
 		deleteProject(where: { id: $id }) {
 			id
+		}
+	}
+`;
+
+Mutations.resolveComment = gql`
+	 mutation ($id: ID!, $resolved: Boolean!) {
+		updateComment(
+			data: { resolved: $resolved },
+			where: { id: $id },
+		) {
+			id
+			resolved
 		}
 	}
 `;

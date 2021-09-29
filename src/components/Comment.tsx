@@ -18,7 +18,9 @@ const Comment: FunctionComponent<CommentProps> = ({ className, data }) => {
 			className={cn(className, "flex flex-col")}
 		>
 			<div className="p-4 pb-0 flex justify-between items-center">
-				<div className="flex truncate divide-x divide-gray-300">
+				<div className={cn("flex truncate divide-x divide-gray-300", {
+					'opacity-50': data.resolved
+				})}>
 					<p className="text-sm font-bold truncate pr-3">
 						{data.authUser.email}
 					</p>

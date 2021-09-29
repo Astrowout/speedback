@@ -84,13 +84,21 @@ const handlePost = async () => {
 	tippyInstance = null;
 }
 
-const handleResolveComment = async () => {
-	const input = document.querySelector(".gthr-tooltip__input");
+const handleResolveComment = async (id, resolved = false) => {
+	const res = await fetch(`${config.BASE_URL}/api/comments/resolve?id=${id}&value=${!resolved}`);
+	const comment = await res.json();
 
-	await console.log("fetch");
+	console.log(comment);
+	const index = comments.findIndex(item => item.id === id);
 
-	tippyInstance.destroy();
-	tippyInstance = null;
+	if (index > -1) {
+		comments[index] = {
+			...comments[index],
+			...comment
+		}
+
+		placeComments();
+	}
 }
 
 const initTippy = () => {
@@ -108,30 +116,6 @@ const initTippy = () => {
 		popperOptions: {
 			strategy: 'fixed'
 		},
-		onShown() {
-			const input = document.querySelector(".gthr-tooltip__input");
-			const resolveBtn = document.querySelector(".gthr-tooltip__resolve");
-
-			if (input) {
-				input.addEventListener("input", handleInput);
-			}
-
-			if (resolveBtn) {
-				resolveBtn.addEventListener("click", handleResolveComment);
-			}
-		},
-		onHidden() {
-			const input = document.querySelector(".gthr-tooltip__input");
-			const resolveBtn = document.querySelector(".gthr-tooltip__resolve");
-
-			if (input) {
-				input.removeEventListener("input", handleInput);
-			}
-
-			if (resolveBtn) {
-				resolveBtn.removeEventListener("click", handleResolveComment);
-			}
-		}
 	});
 }
 
@@ -145,15 +129,19 @@ const addComment = (el) => {
 	el.appendChild(dot);
 }
 
+const handleAddComment = (e) => {
+	click(e, addComment);
+}
+
 const handleCommentMode = () => {
-	body.addEventListener("click", (e) => click(e, addComment));
+	body.addEventListener("click", handleAddComment);
 	body.addEventListener("mousemove", throttledEvent, false);
 
 	body.appendChild(overlay);
 }
 
 const cleanupCommentMode = () => {
-	body.removeEventListener("click", (e) => click(e, addComment));
+	body.removeEventListener("click", handleAddComment);
 	body.removeEventListener("mousemove", throttledEvent, false);
 
 	checkHighlightedElement();
@@ -197,13 +185,24 @@ const placeComments = () => {
 
 		el.appendChild(dot);
 
+		const resolveFn = () => handleResolveComment(comment.id, comment.resolved);
+
 		tippy(dot, {
 			content: commentTemplate({
 				text: comment.text,
 				resolved: comment.resolved,
-				email: comment.email,
-				action: () => handleResolveComment(comment.id, comment.resolved)
+				email: comment.authUser.email,
 			}),
+			onShown() {
+				const resolveBtn = document.getElementById("gthr-action-resolve");
+
+				resolveBtn.addEventListener("click", resolveFn)
+			},
+			onHide() {
+				const resolveBtn = document.getElementById("gthr-action-resolve");
+
+				resolveBtn.removeEventListener("click", resolveFn)
+			},
 		});
 	}
 }
@@ -212,13 +211,11 @@ const getComments = async () => {
 	const res = await fetch(`${config.BASE_URL}/api/comments?projectId=${id}`);
 	comments = await res.json();
 
-	console.log(comments);
 	initTippy();
 	placeComments();
 }
 
 const init = async () => {
-	addCss("https://unpkg.com/tippy.js@6/animations/scale-subtle.css");
 	addCss(`${config.BASE_URL}/script/main.css`);
 
 	const scriptElement = document.querySelector(`script[src^='${config.BASE_URL}/script']`);

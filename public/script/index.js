@@ -993,11 +993,19 @@ const handlePost = async ()=>{
     tippyInstance.destroy();
     tippyInstance = null;
 };
-const handleResolveComment = async ()=>{
-    const input = document.querySelector(".gthr-tooltip__input");
-    await console.log("fetch");
-    tippyInstance.destroy();
-    tippyInstance = null;
+const handleResolveComment = async (id1, resolved = false)=>{
+    const res = await fetch(`${_configJsDefault.default.BASE_URL}/api/comments/resolve?id=${id1}&value=${!resolved}`);
+    const comment = await res.json();
+    console.log(comment);
+    const index = comments.findIndex((item)=>item.id === id1
+    );
+    if (index > -1) {
+        comments[index] = {
+            ...comments[index],
+            ...comment
+        };
+        placeComments();
+    }
 };
 const initTippy = ()=>{
     _tippyJsDefault.default.setDefaultProps({
@@ -1013,18 +1021,6 @@ const initTippy = ()=>{
         inlinePositioning: true,
         popperOptions: {
             strategy: 'fixed'
-        },
-        onShown () {
-            const input = document.querySelector(".gthr-tooltip__input");
-            const resolveBtn = document.querySelector(".gthr-tooltip__resolve");
-            if (input) input.addEventListener("input", handleInput);
-            if (resolveBtn) resolveBtn.addEventListener("click", handleResolveComment);
-        },
-        onHidden () {
-            const input = document.querySelector(".gthr-tooltip__input");
-            const resolveBtn = document.querySelector(".gthr-tooltip__resolve");
-            if (input) input.removeEventListener("input", handleInput);
-            if (resolveBtn) resolveBtn.removeEventListener("click", handleResolveComment);
         }
     });
 };
@@ -1033,15 +1029,16 @@ const addComment = (el)=>{
     if (!el.style.position) el.style.position = "relative";
     el.appendChild(dot);
 };
+const handleAddComment = (e)=>{
+    _clickJsDefault.default(e, addComment);
+};
 const handleCommentMode = ()=>{
-    body.addEventListener("click", (e)=>_clickJsDefault.default(e, addComment)
-    );
+    body.addEventListener("click", handleAddComment);
     body.addEventListener("mousemove", throttledEvent, false);
     body.appendChild(overlay);
 };
 const cleanupCommentMode = ()=>{
-    body.removeEventListener("click", (e)=>_clickJsDefault.default(e, addComment)
-    );
+    body.removeEventListener("click", handleAddComment);
     body.removeEventListener("mousemove", throttledEvent, false);
     _checkElementsJs.checkHighlightedElement();
     overlay.remove();
@@ -1064,25 +1061,32 @@ const placeComments = ()=>{
         dot1.textContent = i + 1;
         if (!el.style.position) el.style.position = "relative";
         el.appendChild(dot1);
+        const resolveFn = ()=>handleResolveComment(comment.id, comment.resolved)
+        ;
         _tippyJsDefault.default(dot1, {
             content: _commentJsDefault.default({
                 text: comment.text,
                 resolved: comment.resolved,
-                email: comment.email,
-                action: ()=>handleResolveComment(comment.id, comment.resolved)
-            })
+                email: comment.authUser.email
+            }),
+            onShown () {
+                const resolveBtn = document.getElementById("gthr-action-resolve");
+                resolveBtn.addEventListener("click", resolveFn);
+            },
+            onHide () {
+                const resolveBtn = document.getElementById("gthr-action-resolve");
+                resolveBtn.removeEventListener("click", resolveFn);
+            }
         });
     }
 };
 const getComments = async ()=>{
     const res = await fetch(`${_configJsDefault.default.BASE_URL}/api/comments?projectId=${id}`);
     comments = await res.json();
-    console.log(comments);
     initTippy();
     placeComments();
 };
 const init = async ()=>{
-    _addCssJsDefault.default("https://unpkg.com/tippy.js@6/animations/scale-subtle.css");
     _addCssJsDefault.default(`${_configJsDefault.default.BASE_URL}/script/main.css`);
     const scriptElement = document.querySelector(`script[src^='${_configJsDefault.default.BASE_URL}/script']`);
     id = scriptElement.src.split("?id=")[1];
@@ -3337,13 +3341,13 @@ exports.default = click;
 },{"../helpers/check-elements.js":"67C1n","../helpers/get-elements-from-point.js":"1HdO4","../helpers/get-target.js":"lORvI","@parcel/transformer-js/src/esmodule-helpers.js":"4N8i7"}],"dECAR":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-const inputTemplate = `\n	<div class="gthr-tooltip">\n		<div\n			contenteditable\n			role="textbox"\n			class="gthr-tooltip__input"\n		>\n			<p class="gthr-tooltip__placeholder">Add a comment</p>\n		</div>\n\n		<div class="gthr-tooltip__actions">\n			<button type="button" class="gthr-tooltip__action gthr-tooltip__action--secondary">\n				Cancel\n			</button>\n\n			<button type="button" class="gthr-tooltip__action gthr-tooltip__action--primary">\n				Post\n			</button>\n		</div>\n	</div>\n`;
+const inputTemplate = `\n	<div class="gthr-tooltip">\n		<div\n			contenteditable\n			role="textbox"\n			class="gthr-tooltip__input"\n			id="gthr-action-input"\n		>\n			<p class="gthr-tooltip__placeholder">Add a comment</p>\n		</div>\n\n		<div class="gthr-tooltip__actions">\n			<button type="button" class="gthr-tooltip__action gthr-tooltip__action--secondary">\n				Cancel\n			</button>\n\n			<button type="button" class="gthr-tooltip__action gthr-tooltip__action--primary">\n				Post\n			</button>\n		</div>\n	</div>\n`;
 exports.default = inputTemplate;
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"4N8i7"}],"j90E9":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-const commentTemplate = ({ text , email , resolved , action  })=>`\n	<div class="gthr-tooltip">\n		<div class="gthr-tooltip__content">\n			<p\n				class="gthr-tooltip__input"\n			>\n				${text}\n			</p>\n\n			<button type="button" onclick="${action}">\n				${resolved ? `\n					<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="#10B981">\n						<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />\n					</svg>\n				` : `\n					<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="#9CA3AF">\n						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />\n					</svg>\n				`}\n			</button>\n		</div>\n\n		<div class="gthr-tooltip__actions">\n			<button type="button">\n				<span>${email}</span>\n\n				<svg xmlns="http://www.w3.org/2000/svg" class="gthr-tooltip__avatar" viewBox="0 0 20 20" fill="currentColor">\n					<path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z" clip-rule="evenodd" />\n				</svg>\n			</button>\n		</div>\n	</div>\n`
+const commentTemplate = ({ text , email , resolved  })=>`\n	<div class="gthr-tooltip">\n		<div class="gthr-tooltip__content">\n			<p\n				class="gthr-tooltip__input ${resolved && 'gthr-tooltip__comment--resolved'}"\n			>\n				${text}\n			</p>\n\n			<button type="button" id="gthr-action-resolve">\n				${resolved ? `\n					<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="#10B981">\n						<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />\n					</svg>\n				` : `\n					<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="#9CA3AF">\n						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />\n					</svg>\n				`}\n			</button>\n		</div>\n\n		<div class="gthr-tooltip__actions">\n			<button type="button" class="gthr-tooltip__user">\n				<svg xmlns="http://www.w3.org/2000/svg" class="gthr-tooltip__avatar" viewBox="0 0 20 20" fill="currentColor">\n					<path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z" clip-rule="evenodd" />\n				</svg>\n\n				<span>${email}</span>\n			</button>\n		</div>\n	</div>\n`
 ;
 exports.default = commentTemplate;
 

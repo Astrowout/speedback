@@ -4,6 +4,7 @@ const inputTemplate = `
 			contenteditable
 			role="textbox"
 			class="gthr-tooltip__input"
+			id="gthr-action-input"
 		>
 			<p class="gthr-tooltip__placeholder">Add a comment</p>
 		</div>

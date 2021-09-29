@@ -108,14 +108,21 @@
 .gthr-tooltip__content {
 	display: flex;
 	justify-content: space-between;
+	align-items: flex-start;
 }
 
 .gthr-tooltip__input {
 	color: black;
 	resize: none;
 	appearance: none;
-	padding: 4px 0 20px 0;
+	padding: 4px 0 24px 0;
 	position: relative;
+}
+
+.gthr-tooltip__user {
+	display: flex;
+	align-items: center;
+	color: grey;
 }
 
 .gthr-tooltip__avatar {
@@ -123,10 +130,15 @@
 	width: 32px;
 	height: 32px;
 	color: lightgrey;
+	margin-right: 4px;
 }
 
 .gthr-tooltip__input:focus {
 	outline: none;
+}
+
+.gthr-tooltip__comment--resolved {
+	text-decoration: line-through;
 }
 
 .gthr-tooltip__placeholder {
@@ -165,3 +177,5 @@
 	color: black;
 	border: 1px solid lightgrey;
 }
+
+.tippy-box[data-animation=scale-subtle][data-placement^=top]{transform-origin:bottom}.tippy-box[data-animation=scale-subtle][data-placement^=bottom]{transform-origin:top}.tippy-box[data-animation=scale-subtle][data-placement^=left]{transform-origin:right}.tippy-box[data-animation=scale-subtle][data-placement^=right]{transform-origin:left}.tippy-box[data-animation=scale-subtle][data-state=hidden]{transform:scale(.8);opacity:0}
