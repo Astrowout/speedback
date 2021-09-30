@@ -13,8 +13,8 @@ import { ApolloClient, Mutations, Queries } from '../../../../../helpers';
 
 const AppCommentDetail: NextPage = ({ project, comment }: InferGetStaticPropsType<typeof getStaticProps>) => {
 	const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
-	const [resolveComment] = useMutation(Mutations.resolveComment, {
-		variables: { id: comment.id },
+	const [resolveComment, { loading }] = useMutation(Mutations.resolveComment, {
+		variables: { id: comment.id, resolved: !comment.resolved },
 	});
 	const [deleteComment] = useMutation(Mutations.deleteComment, {
 		variables: { id: comment.id },

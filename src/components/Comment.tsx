@@ -1,10 +1,11 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent, useState } from "react";
 import cn from "classnames";
 import { CheckCircleIcon, ChevronDownIcon } from "@heroicons/react/outline";
 import { CheckCircleIcon as CheckCircleIconSolid } from "@heroicons/react/solid";
 
-import { DateUtils } from "../helpers";
+import { DateUtils, Mutations } from "../helpers";
 import { Disclosure } from '@headlessui/react'
+import { useMutation } from "@apollo/client";
 
 type CommentProps = {
 	data: any,
@@ -12,6 +13,19 @@ type CommentProps = {
 }
 
 const Comment: FunctionComponent<CommentProps> = ({ className, data }) => {
+	const [comment, setComment] = useState(data);
+	const [resolveComment, { loading }] = useMutation(Mutations.resolveComment, {
+		variables: { id: comment.id, resolved: !comment.resolved },
+	});
+
+	const handleResolveComment = async () => {
+		const { data: { updateComment: newComment } } = await resolveComment();
+
+		setComment({
+			...comment,
+			...newComment
+		})
+	}
 
 	return (
 		<div
@@ -19,20 +33,20 @@ const Comment: FunctionComponent<CommentProps> = ({ className, data }) => {
 		>
 			<div className="p-4 pb-0 flex justify-between items-center">
 				<div className={cn("flex truncate divide-x divide-gray-300", {
-					'opacity-50': data.resolved
+					'opacity-50': comment.resolved
 				})}>
 					<p className="text-sm font-bold truncate pr-3">
-						{data.authUser.email}
+						{comment.authUser.email}
 					</p>
 
 					<span className="block text-sm truncate pl-3 text-gray-400">
-						{DateUtils.formatRelative(new Date(data.createdAt))}
+						{DateUtils.formatRelative(new Date(comment.createdAt))}
 					</span>
 				</div>
 
-				<button className="ml-3 transform transition-transform hover:scale-110">
+				<button className="ml-3 transform transition-transform hover:scale-110 disabled:pointer-events-none disabled:opacity-30" disabled={loading} onClick={handleResolveComment}>
 					<span className="sr-only">Resolve comment</span>
-					{data.resolved ? (
+					{comment.resolved ? (
 						<CheckCircleIconSolid
 							className="w-6 h-6 text-green-500"
 							aria-hidden="true"
@@ -52,10 +66,10 @@ const Comment: FunctionComponent<CommentProps> = ({ className, data }) => {
 						<Disclosure.Button className="p-4 pb-6 w-full flex justify-between items-center">
 							<p
 								className={cn("text-left", {
-									'line-through text-gray-400': data.resolved
+									'line-through text-gray-400': comment.resolved
 								})}
 							>
-								{data.text}
+								{comment.text}
 							</p>
 
 							<ChevronDownIcon
@@ -71,12 +85,12 @@ const Comment: FunctionComponent<CommentProps> = ({ className, data }) => {
 								<div className="py-1.5 sm:grid sm:grid-cols-3 sm:gap-4">
 									<dt className="text-sm text-gray-500">URL</dt>
 									<dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-										{data.url}
+										{comment.url}
 									</dd>
 								</div>
 
-								{Object.keys(data.metaInfo).map(key => {
-									const info = data.metaInfo[key];
+								{Object.keys(comment.metaInfo).map(key => {
+									const info = comment.metaInfo[key];
 
 									return (
 										<div key={key} className="py-1.5 sm:grid sm:grid-cols-3 sm:gap-4">
