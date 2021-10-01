@@ -79,26 +79,18 @@ const handlePost = async () => {
 	const input = document.querySelector(".gthr-tooltip__input");
 
 	await console.log("fetch");
-
-	tippyInstance.destroy();
-	tippyInstance = null;
 }
 
-const handleResolveComment = async (id, resolved = false) => {
-	const res = await fetch(`${config.BASE_URL}/api/comments/resolve?id=${id}&value=${!resolved}`);
-	const comment = await res.json();
+const handleResolveComment = async ({ comment, el }) => {
+	console.log("resolve", comment.resolved);
+	const res = await fetch(`${config.BASE_URL}/api/comments/resolve?id=${comment.id}&value=${!comment.resolved}`);
+	const newComment = await res.json();
 
-	console.log(comment);
-	const index = comments.findIndex(item => item.id === id);
-
-	if (index > -1) {
-		comments[index] = {
-			...comments[index],
-			...comment
-		}
-
-		placeComments();
-	}
+	el._tippy.setContent(commentTemplate({
+		text: comment.text,
+		resolved: newComment.resolved,
+		email: comment.authUser.email,
+	}));
 }
 
 const initTippy = () => {
@@ -185,7 +177,12 @@ const placeComments = () => {
 
 		el.appendChild(dot);
 
-		const resolveFn = () => handleResolveComment(comment.id, comment.resolved);
+		console.log(comment);
+
+		const resolveFn = () => handleResolveComment({
+			comment,
+			el: dot
+		});
 
 		tippy(dot, {
 			content: commentTemplate({
@@ -196,12 +193,12 @@ const placeComments = () => {
 			onShown() {
 				const resolveBtn = document.getElementById("gthr-action-resolve");
 
-				resolveBtn.addEventListener("click", resolveFn)
+				resolveBtn.addEventListener("click", resolveFn);
 			},
 			onHide() {
 				const resolveBtn = document.getElementById("gthr-action-resolve");
 
-				resolveBtn.removeEventListener("click", resolveFn)
+				resolveBtn.removeEventListener("click", resolveFn);
 			},
 		});
 	}

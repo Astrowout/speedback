@@ -54,6 +54,12 @@ Mutations.resolveComment = gql`
 			where: { id: $id },
 		) {
 			id
+		}
+		publishComment(
+			where: { id: $id },
+			to: PUBLISHED
+		) {
+			id
 			resolved
 		}
 	}
@@ -61,7 +67,10 @@ Mutations.resolveComment = gql`
 
 Mutations.publishProject = gql`
 	 mutation ($id: ID!) {
-		publishProject(where: {id: $id}, to: PUBLISHED) {
+		publishProject(
+			where: {id: $id},
+			to: PUBLISHED
+		) {
 			id
 		}
 	}

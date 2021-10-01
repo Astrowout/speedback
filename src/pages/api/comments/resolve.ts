@@ -16,7 +16,7 @@ const resolveComment = async (req: NextApiRequest, res: NextApiResponse) => {
 	const isResolved = (req.query.value === 'true');
 
 	try {
-		const { data: { updateComment: comment } } = await ApolloClient.mutate({
+		const { data: { publishComment: comment } } = await ApolloClient.mutate({
 			mutation: Mutations.resolveComment,
 			variables: { id: req.query.id, resolved: isResolved }
 		});

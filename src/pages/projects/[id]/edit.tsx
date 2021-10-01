@@ -1,11 +1,16 @@
 import Head from 'next/head';
+import { useQuery } from '@apollo/client';
 import type { GetStaticProps, InferGetStaticPropsType, NextPage } from "next";
 
 import { Heading, NewProjectForm } from '../../../components';
 import { AppLayout } from '../../../layouts';
 import { ApolloClient, Queries } from '../../../helpers';
 
-const AppNewProject: NextPage = ({ project }: InferGetStaticPropsType<typeof getStaticProps>) => {
+const AppEditProject: NextPage = ({ id }: InferGetStaticPropsType<typeof getStaticProps>) => {
+	const { loading, data: { project } } = useQuery(Queries.getProject, {
+		variables: { id }
+	});
+
 	const data = {
 		name: project.name,
 		url: project.url,
@@ -44,18 +49,12 @@ export const getStaticPaths = async () => {
 	};
 }
 
-export const getStaticProps: GetStaticProps = async({ params }) => {
-	const { data: { project } } = await ApolloClient.query({
-		query: Queries.getProject,
-		variables: { id: params?.id }
-	});
-
+export const getStaticProps: GetStaticProps = ({ params }) => {
 	return {
 		props: {
-			project,
+			id: params?.id,
 		},
-		revalidate: 10, // In seconds
 	}
 }
 
-export default AppNewProject;
+export default AppEditProject;

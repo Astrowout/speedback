@@ -990,22 +990,16 @@ const destroyTippy = ()=>{
 const handlePost = async ()=>{
     const input = document.querySelector(".gthr-tooltip__input");
     await console.log("fetch");
-    tippyInstance.destroy();
-    tippyInstance = null;
 };
-const handleResolveComment = async (id1, resolved = false)=>{
-    const res = await fetch(`${_configJsDefault.default.BASE_URL}/api/comments/resolve?id=${id1}&value=${!resolved}`);
-    const comment = await res.json();
-    console.log(comment);
-    const index = comments.findIndex((item)=>item.id === id1
-    );
-    if (index > -1) {
-        comments[index] = {
-            ...comments[index],
-            ...comment
-        };
-        placeComments();
-    }
+const handleResolveComment = async ({ comment , el  })=>{
+    console.log("resolve", comment.resolved);
+    const res = await fetch(`${_configJsDefault.default.BASE_URL}/api/comments/resolve?id=${comment.id}&value=${!comment.resolved}`);
+    const newComment = await res.json();
+    el._tippy.setContent(_commentJsDefault.default({
+        text: comment.text,
+        resolved: newComment.resolved,
+        email: comment.authUser.email
+    }));
 };
 const initTippy = ()=>{
     _tippyJsDefault.default.setDefaultProps({
@@ -1061,7 +1055,11 @@ const placeComments = ()=>{
         dot1.textContent = i + 1;
         if (!el.style.position) el.style.position = "relative";
         el.appendChild(dot1);
-        const resolveFn = ()=>handleResolveComment(comment.id, comment.resolved)
+        console.log(comment);
+        const resolveFn = ()=>handleResolveComment({
+                comment,
+                el: dot1
+            })
         ;
         _tippyJsDefault.default(dot1, {
             content: _commentJsDefault.default({

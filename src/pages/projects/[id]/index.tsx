@@ -2,18 +2,21 @@ import Head from 'next/head';
 import Link from 'next/link';
 import Router from "next/router";
 import { useState } from 'react';
-import { useMutation } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { CollectionIcon, EyeIcon, PencilIcon, TrashIcon } from '@heroicons/react/outline';
 import type { GetStaticProps, InferGetStaticPropsType, NextPage } from "next";
 
-import { ConfirmDeleteModal, EmptyState, Heading, ProjectDataDisplay, Snippet, Comments } from '../../../components';
+import { ConfirmDeleteModal, EmptyState, Heading, ProjectDataDisplay, Snippet, Comments, Loader } from '../../../components';
 import { AppLayout } from '../../../layouts';
 import { ApolloClient, Mutations, Queries } from '../../../helpers';
 
-const AppProjectDetail: NextPage = ({ project }: InferGetStaticPropsType<typeof getStaticProps>) => {
+const AppProjectDetail: NextPage = ({ id }: InferGetStaticPropsType<typeof getStaticProps>) => {
+	const { loading, data } = useQuery(Queries.getProject, {
+		variables: { id }
+	});
 	const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
 	const [deleteProject] = useMutation(Mutations.deleteProject, {
-		variables: { id: project.id },
+		variables: { id },
 	});
 
 	const handleDeleteProject = async (): Promise<void> => {
@@ -27,11 +30,11 @@ const AppProjectDetail: NextPage = ({ project }: InferGetStaticPropsType<typeof 
 	return (
 		<AppLayout>
 			<Head>
-				<title>{project?.name || "Your project"} - speedback</title>
+				<title>{data?.project.name || "Your project"} - speedback</title>
 			</Head>
 
 			<main>
-				<Heading title={project?.name || "Your project"} backLink={{ url: "/projects", label: "Back to projects" }}>
+				<Heading title={data?.project.name || "Your project"} backLink={{ url: "/projects", label: "Back to projects" }}>
 					<div className="-my-1.5 -mx-2 mt-5 flex flex-wrap lg:mt-0">
 						<button
 							type="button"
@@ -43,7 +46,7 @@ const AppProjectDetail: NextPage = ({ project }: InferGetStaticPropsType<typeof 
 						</button>
 
 						<Link
-							href={`/projects/${project.id}/edit`}
+							href={`/projects/${data?.project.id}/edit`}
 						>
 							<a className="my-1.5 mx-2 inline-flex items-center px-4 py-2 border border-transparent rounded shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
 								<PencilIcon className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
@@ -53,32 +56,36 @@ const AppProjectDetail: NextPage = ({ project }: InferGetStaticPropsType<typeof 
 					</div>
 				</Heading>
 
-				<section className="2xl:container container-spacing section-spacing">
-					{project ? (
-						<div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-							<ProjectDataDisplay className="max-w-xl col-span-2 md:col-span-1" data={project}></ProjectDataDisplay>
+				{loading ? (
+					<Loader />
+				) : (
+					<section className="2xl:container container-spacing section-spacing">
+						{data?.project ? (
+							<div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+								<ProjectDataDisplay className="max-w-xl col-span-2 md:col-span-1" data={data.project}></ProjectDataDisplay>
 
-							<Comments className="col-span-2 md:col-span-1" projectId={project.id} comments={project.comments} />
+								<Comments className="col-span-2 md:col-span-1" projectId={data.project.id} comments={data.project.comments} />
 
-							<Snippet className="col-span-2" id={project.id} />
-						</div>
-					) : (
-						<EmptyState title="This project was not found." icon={CollectionIcon}>
-							<Link
-								href="/projects"
-							>
-								<a className="mt-8 my-1.5 mx-2 inline-flex items-center px-4 py-2 border border-gray-300 rounded shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-									<EyeIcon className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
-									View all projects
-								</a>
-							</Link>
-						</EmptyState>
-					)}
-				</section>
+								<Snippet className="col-span-2" id={data.project.id} />
+							</div>
+						) : (
+							<EmptyState title="This project was not found." icon={CollectionIcon}>
+								<Link
+									href="/projects"
+								>
+									<a className="mt-8 my-1.5 mx-2 inline-flex items-center px-4 py-2 border border-gray-300 rounded shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+										<EyeIcon className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
+										View all projects
+									</a>
+								</Link>
+							</EmptyState>
+						)}
+					</section>
+				)}
 			</main>
 
 			<ConfirmDeleteModal
-				title={`Deleting "${project.name}"`}
+				title={`Deleting "${data?.project.name}"`}
 				description="Are you sure you want to delete this project? This action cannot be reversed."
 				action={handleDeleteProject}
 				closeAction={setIsConfirmModalOpen}
@@ -103,17 +110,11 @@ export const getStaticPaths = async () => {
 	};
 }
 
-export const getStaticProps: GetStaticProps = async({ params }) => {
-	const { data: { project } } = await ApolloClient.query({
-		query: Queries.getProject,
-		variables: { id: params?.id }
-	});
-
+export const getStaticProps: GetStaticProps = ({ params }) => {
 	return {
 		props: {
-			project,
+			id: params?.id,
 		},
-		revalidate: 10, // In seconds
 	}
 }
 

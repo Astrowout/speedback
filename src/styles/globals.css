@@ -6,6 +6,15 @@
 	body {
 		@apply font-body bg-gray-50;
 	}
+
+	body,
+	#__next {
+		@apply min-h-screen flex flex-col;
+	}
+
+	main {
+		@apply flex-grow;
+	}
 }
 
 @layer utilities {
