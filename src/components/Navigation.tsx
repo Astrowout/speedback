@@ -5,7 +5,7 @@ import { motion, AnimateSharedLayout } from "framer-motion";
 import { FunctionComponent, useEffect, useState } from 'react';
 
 const navigation = [
-	{ name: 'How does it work?', anchor: '#feature' },
+	{ name: 'How does it work?', anchor: '#features' },
 	{ name: 'For whom', anchor: '#for-whom' },
 	{ name: 'Pricing', anchor: '#pricing' },
 ]

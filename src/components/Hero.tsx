@@ -14,9 +14,9 @@ type HeroProps = {
 
 const Hero: FunctionComponent<HeroProps> = ({ title, description, visual }) => {
 	return (
-		<section className="max-w-screen-xl mx-auto container-spacing flex space-x-16 items-center">
-			<div className="py-16 sm:py-24 lg:py-32 sm:max-w-lg flex flex-col items-start">
-				<h1 className="font-brand text-gray-900 text-4xl leading-tight lg:text-6xl lg:leading-tight">
+		<section className="max-w-screen-xl mx-auto container-spacing flex space-x-8 items-end lg:items-center overflow-hidden">
+			<div className="py-12 pb-64 md:pb-40 lg:py-32 max-w-lg flex flex-col items-start relative z-10">
+				<h1 className="font-brand text-gray-900 text-4xl leading-tight md:text-5xl md:leading-tight xl:text-6xl xl:leading-tight">
 					{title}
 				</h1>
 
@@ -33,7 +33,7 @@ const Hero: FunctionComponent<HeroProps> = ({ title, description, visual }) => {
 				</Link>
 			</div>
 
-			<div aria-hidden="true" className="relative pointer-events-none lg:inset-y-0 lg:max-w-7xl lg:mx-auto lg:w-full">
+			<div aria-hidden="true" className="absolute -right-16 max-w-lg lg:max-w-full z-0 lg:relative pointer-events-none">
 				<Image src={visual.url} alt="image" width="1628" height="1165" />
 			</div>
 		</section>

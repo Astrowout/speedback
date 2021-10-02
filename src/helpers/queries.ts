@@ -10,6 +10,9 @@ Queries.getLandingPage = gql`
 				heroVisual {
 					url
 				}
+				featuresEyebrow
+				featuresTitle
+				featuresDescription
 			}
 		}
 `;

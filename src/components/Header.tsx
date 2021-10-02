@@ -1,23 +1,49 @@
-import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import cn from "classnames";
 import { Disclosure } from '@headlessui/react';
 import {
-	BellIcon,
 	MenuIcon,
 	XIcon,
 } from '@heroicons/react/outline';
+import throttle from "lodash/throttle";
 
 import { Logo, Navigation } from "./index";
 
-const user = {
-	email: 'tom@example.com',
-}
+const SCROLL_FROM_TOP = 50
 
 const Header = () => {
-	const router = useRouter();
+	const [altHeader, setAltHeader] = useState(false);
+
+	const handleScroll = () => {
+		if (document.body.scrollTop > SCROLL_FROM_TOP || document.documentElement.scrollTop > SCROLL_FROM_TOP) {
+			setAltHeader(true);
+		  } else {
+			setAltHeader(false);
+		  }
+	}
+
+	const throttledScroll = throttle(handleScroll, 200, {
+		leading: true,
+		trailing: true
+	});
+
+	useEffect(() => {
+		window.addEventListener("scroll", throttledScroll, false);
+
+		return () => {
+			window.removeEventListener("scroll", throttledScroll, false);
+		}
+	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	return (
-		<Disclosure as="header" className="bg-white shadow">
+		<Disclosure
+			as="header"
+			className={cn("sticky top-0 z-50 transition", {
+				'bg-gray-50': !altHeader,
+				'bg-white shadow': altHeader
+			})}
+		>
 		  	{({ open }) => (
 				<>
 				<div className="max-w-screen-xl mx-auto container-spacing">
@@ -64,20 +90,6 @@ const Header = () => {
 
 					<Disclosure.Panel className="md:hidden">
 						<Navigation />
-
-						<div className="pt-4 pb-3 border-t border-gray-700">
-							<div className="flex items-center px-5">
-								<div className="ml-3 text-gray-400">{user.email}</div>
-
-								<button
-									type="button"
-									className="ml-auto bg-gray-800 flex-shrink-0 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
-								>
-									<span className="sr-only">View notifications</span>
-									<BellIcon className="h-6 w-6" aria-hidden="true" />
-								</button>
-							</div>
-						</div>
 					</Disclosure.Panel>
 				</>
 			)}

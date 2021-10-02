@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "NODE_ENV=production next build",
     "start": "next start",
     "lint": "next lint",
     "build:script": "parcel build script/index.js script/main.css --no-source-maps --dist-dir public/script",
@@ -22,6 +22,7 @@
     "date-fns": "^2.24.0",
     "framer-motion": "^4.1.17",
     "graphql": "^15.6.0",
+    "lodash": "^4.17.21",
     "magic-sdk": "^6.0.5",
     "next": "11.1.2",
     "react": "17.0.2",

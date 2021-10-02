@@ -21,7 +21,11 @@ const Home: NextPage = ({ data }: InferGetStaticPropsType<typeof getStaticProps>
 					visual={data.heroVisual}
 				/>
 
-				<Features eyebrow="features" title="De titel" />
+				<Features
+					eyebrow={data.featuresEyebrow}
+					title={data.featuresTitle}
+					description={data.featuresDescription}
+				/>
 				<Cta title="Title of the cta" subtitle="subtitle for the cta" />
 			</main>
 		</MarketingLayout>

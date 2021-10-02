@@ -1,5 +1,5 @@
 import { FunctionComponent } from 'react';
-import { AnnotationIcon, GlobeAltIcon, LightningBoltIcon, ScaleIcon } from '@heroicons/react/outline';
+import { GlobeAltIcon, LightningBoltIcon, ScaleIcon } from '@heroicons/react/outline';
 
 const features = [
 	{
@@ -20,12 +20,6 @@ const features = [
 		'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque, iste dolor cupiditate blanditiis ratione.',
 	  icon: LightningBoltIcon,
 	},
-	{
-	  name: 'Mobile notifications',
-	  description:
-		'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque, iste dolor cupiditate blanditiis ratione.',
-	  icon: AnnotationIcon,
-	},
   ]
 
 type FeaturesProps = {
@@ -36,23 +30,23 @@ type FeaturesProps = {
 
 const Features: FunctionComponent<FeaturesProps> = ({ children, eyebrow, title, description }) => {
 	return (
-		<div className="py-12 bg-white">
+		<div id="features" className="py-12 lg:py-32 bg-white">
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-				<div className="lg:text-center">
-					<h2 className="text-base text-indigo-500 font-semibold tracking-wide uppercase">
+				<div className="text-center">
+					<h2 className="text-indigo-500 font-bold text-sm tracking-wider uppercase">
 						{eyebrow}
 					</h2>
 
-					<p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+					<p className="mt-2 font-brand text-gray-900 text-3xl leading-tight md:text-4xl md:leading-tight xl:text-5xl xl:leading-tight">
 						{title}
 					</p>
 
-					<p className="mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto">
+					<p className="mt-4 max-w-prose mx-auto text-gray-500">
 						{description}
 					</p>
 				</div>
 
-				<div className="mt-10">
+				<div className="mt-12">
 					<dl className="space-y-10 md:space-y-0 md:grid md:grid-cols-2 md:gap-x-8 md:gap-y-10">
 						{features.map((feature) => (
 							<div key={feature.name} className="relative">

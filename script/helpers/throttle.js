@@ -1,4 +1,3 @@
-
 const throttle = (callback, interval) => {
 	let enableCall = true;
 
