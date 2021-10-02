@@ -1,6 +1,6 @@
 import { FunctionComponent, useContext } from "react";
 
-import { AppHeader, Loader } from "../components";
+import { AppHeader, Loader, Version } from "../components";
 import { AuthContext } from "../context";
 import { useRouterGuard } from "../hooks";
 
@@ -13,7 +13,10 @@ const AppLayout: FunctionComponent = ({ children }) => {
 		) : (
 		<>
 			<AppHeader />
-			{ children }
+
+			{children}
+
+			<Version version="beta" />
 	  	</>
 	)
 }

@@ -31,7 +31,7 @@ const features = [
 type FeaturesProps = {
 	eyebrow: string;
 	title: string;
-	description: string;
+	description?: string;
 }
 
 const Features: FunctionComponent<FeaturesProps> = ({ children, eyebrow, title, description }) => {

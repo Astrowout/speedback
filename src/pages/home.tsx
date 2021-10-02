@@ -2,6 +2,7 @@ import Head from 'next/head';
 import type { NextPage } from "next";
 
 import { MarketingLayout } from '../layouts';
+import { Cta, Features, Hero } from '../components';
 
 const Home: NextPage = () => {
 	return (
@@ -13,7 +14,9 @@ const Home: NextPage = () => {
 			</Head>
 
 			<main>
-				Landingpage
+				<Hero />
+				<Features eyebrow="features" title="De titel" />
+				<Cta title="Title of the cta" subtitle="subtitle for the cta" />
 			</main>
 		</MarketingLayout>
 	)

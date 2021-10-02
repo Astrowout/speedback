@@ -5,7 +5,6 @@ import { ApolloProvider } from "@apollo/client";
 import { ApolloClient } from '../helpers';
 import { AuthContext, GlobalContext } from '../context';
 import { useAuth, useUser } from '../hooks';
-import { Version } from '../components';
 
 import '../styles/globals.css';
 
@@ -31,8 +30,6 @@ const App = ({ Component, pageProps }: AppProps) => {
 					</Head>
 
 					<Component {...pageProps} />
-
-					<Version version="beta" />
 				</AuthContext.Provider>
 			</GlobalContext.Provider>
 		</ApolloProvider>
