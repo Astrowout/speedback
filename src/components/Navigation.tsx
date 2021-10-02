@@ -1,13 +1,12 @@
-import { useRouter } from 'next/router';
 import Link from 'next/link';
 import cn from "classnames";
 import { motion, AnimateSharedLayout } from "framer-motion";
 import { FunctionComponent, useState } from 'react';
 
 const navigation = [
-	{ name: 'How does it work?', href: '/feature' },
-	{ name: 'For whom', href: '/for-whom' },
-	{ name: 'Pricing', href: '/pricing' },
+	{ name: 'How does it work?', anchor: '#feature' },
+	{ name: 'For whom', anchor: '#for-whom' },
+	{ name: 'Pricing', anchor: '#pricing' },
 ]
 
 type NavigationProps = {
@@ -15,35 +14,36 @@ type NavigationProps = {
 }
 
 const Navigation: FunctionComponent<NavigationProps> = ({ className }) => {
-	const [activeIndex, setActiveIndex] = useState<number | null>(null);
-	const router = useRouter();
+	const [activeAnchor, setActiveAnchor] = useState<string | null>(null);
 
 	return (
 		<div className={cn(className)}>
 			<AnimateSharedLayout>
 				<nav
 					className="hidden md:flex ml-16 items-baseline space-x-4"
-					onMouseLeave={() => setActiveIndex(null)}
 				>
-					{navigation.map((item, i) => (
-						<Link key={item.name} href={item.href}>
+					{navigation.map((item) => (
+						<Link
+							key={item.anchor}
+							href={item.anchor}
+						>
 							<a
-								className={cn('px-3 py-2 text-lg rounded font-brand relative', {
-									'bg-gray-100 text-black': router.pathname === item.href,
-								})}
-								onMouseEnter={() => setActiveIndex(i)}
+								className={cn('px-3 py-2 text-lg rounded font-brand relative')}
+								onMouseEnter={() => setActiveAnchor(item.anchor)}
 							>
-								{activeIndex === i && (
+								{activeAnchor === item.anchor && (
 									<motion.div
 										transition={{
 											duration: 0.2
 										}}
 										animate={{ opacity: 1 }}
 										layoutId="nav-background"
-										className="absolute inset-0 opacity-0 bg-gray-200 rounded"
+										className={cn("absolute inset-0 opacity-0 rounded", {
+											"bg-gray-200": window.location.hash !== item.anchor,
+											"bg-indigo-100": window.location.hash === item.anchor,
+										})}
 									/>
 								)}
-
 								<span className="z-10 relative">{item.name}</span>
 							</a>
 						</Link>
