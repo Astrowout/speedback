@@ -1,7 +1,8 @@
+import { useRouter } from 'next/router';
 import Link from 'next/link';
 import cn from "classnames";
 import { motion, AnimateSharedLayout } from "framer-motion";
-import { FunctionComponent, useState } from 'react';
+import { FunctionComponent, useEffect, useState } from 'react';
 
 const navigation = [
 	{ name: 'How does it work?', anchor: '#feature' },
@@ -15,12 +16,24 @@ type NavigationProps = {
 
 const Navigation: FunctionComponent<NavigationProps> = ({ className }) => {
 	const [activeAnchor, setActiveAnchor] = useState<string | null>(null);
+	const router = useRouter();
+
+	useEffect(() => {
+		if (!window.location.hash) {
+			setActiveAnchor(null);
+		}
+	}, [router]);
+
+	if (typeof window === 'undefined') {
+		return null;
+	}
 
 	return (
 		<div className={cn(className)}>
 			<AnimateSharedLayout>
 				<nav
 					className="hidden md:flex ml-16 items-baseline space-x-4"
+					onMouseLeave={() => setActiveAnchor(window.location.hash)}
 				>
 					{navigation.map((item) => (
 						<Link
@@ -28,7 +41,10 @@ const Navigation: FunctionComponent<NavigationProps> = ({ className }) => {
 							href={item.anchor}
 						>
 							<a
-								className={cn('px-3 py-2 text-lg rounded font-brand relative')}
+								className={cn('px-3 py-1.5 transition-colors text-lg rounded font-brand relative', {
+									"text-gray-500 hover:text-gray-900": window.location.hash !== item.anchor,
+									"text-gray-900": window.location.hash === item.anchor,
+								})}
 								onMouseEnter={() => setActiveAnchor(item.anchor)}
 							>
 								{activeAnchor === item.anchor && (
@@ -38,12 +54,13 @@ const Navigation: FunctionComponent<NavigationProps> = ({ className }) => {
 										}}
 										animate={{ opacity: 1 }}
 										layoutId="nav-background"
-										className={cn("absolute inset-0 opacity-0 rounded", {
+										className={cn("absolute transition-colors inset-0 opacity-0 rounded", {
 											"bg-gray-200": window.location.hash !== item.anchor,
 											"bg-indigo-100": window.location.hash === item.anchor,
 										})}
 									/>
 								)}
+
 								<span className="z-10 relative">{item.name}</span>
 							</a>
 						</Link>
