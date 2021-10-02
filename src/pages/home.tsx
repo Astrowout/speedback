@@ -1,10 +1,11 @@
 import Head from 'next/head';
-import type { NextPage } from "next";
+import type { GetStaticProps, InferGetStaticPropsType, NextPage } from "next";
 
 import { MarketingLayout } from '../layouts';
 import { Cta, Features, Hero } from '../components';
+import { ApolloClient, Queries } from '../helpers';
 
-const Home: NextPage = () => {
+const Home: NextPage = ({ data }: InferGetStaticPropsType<typeof getStaticProps>) => {
 	return (
 		<MarketingLayout>
 			<Head>
@@ -14,12 +15,29 @@ const Home: NextPage = () => {
 			</Head>
 
 			<main>
-				<Hero />
+				<Hero
+					title={data.heroTitle}
+					description={data.heroDescription}
+					visual={data.heroVisual}
+				/>
+
 				<Features eyebrow="features" title="De titel" />
 				<Cta title="Title of the cta" subtitle="subtitle for the cta" />
 			</main>
 		</MarketingLayout>
 	)
+}
+
+export const getStaticProps: GetStaticProps = async () => {
+	const { data: { landingPage } } = await ApolloClient.query({
+		query: Queries.getLandingPage,
+	});
+
+	return {
+		props: {
+			data: landingPage,
+		},
+	}
 }
 
 export default Home;

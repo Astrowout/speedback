@@ -2,6 +2,18 @@ import { DocumentNode, gql } from "@apollo/client";
 
 const Queries: { [key: string]: DocumentNode } = {};
 
+Queries.getLandingPage = gql`
+	query {
+		landingPage(where: { id: "cku9ux4uoe39q0c10qw2549nj" }) {
+				heroTitle
+				heroDescription
+				heroVisual {
+					url
+				}
+			}
+		}
+`;
+
 Queries.getGlobals = gql`
 	query ($issuer: String!) {
 		comments(

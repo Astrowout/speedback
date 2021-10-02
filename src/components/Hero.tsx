@@ -1,64 +1,42 @@
 import { FunctionComponent } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 
-type HeroProps = {
-	title?: string;
-	subtitle?: string;
+interface IVisual {
+	url: string;
 }
 
-const Hero: FunctionComponent<HeroProps> = ({ children, title, subtitle }) => {
-	return (
-		<div className="relative bg-white overflow-hidden">
-			<div className="pt-16 pb-80 sm:pt-24 sm:pb-40 lg:pt-40 lg:pb-48">
-				<div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 sm:static">
-				<div className="sm:max-w-lg">
-					<h1 className="text-4xl font font-extrabold tracking-tight text-gray-900 sm:text-6xl">
-					Summer styles are finally here
-					</h1>
-					<p className="mt-4 text-xl text-gray-500">This year, our new summer collection will shelter you from the harsh elements of a world that care if you live or die.</p>
-				</div>
-				<div>
-					<div className="mt-10">
-					<div aria-hidden="true" className="pointer-events-none lg:absolute lg:inset-y-0 lg:max-w-7xl lg:mx-auto lg:w-full">
-						<div className="absolute transform sm:left-1/2 sm:top-0 sm:translate-x-8 lg:left-1/2 lg:top-1/2 lg:-translate-y-1/2 lg:translate-x-8">
-						<div className="flex items-center space-x-6 lg:space-x-8">
-							<div className="flex-shrink-0 grid grid-cols-1 gap-y-6 lg:gap-y-8">
-							<div className="w-44 h-64 rounded-lg overflow-hidden sm:opacity-0 lg:opacity-100">
-								<Image src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-01.jpg" alt="image" layout="fill" width="120" className="object-center object-cover"/>
-							</div>
-							<div className="w-44 h-64 rounded-lg overflow-hidden">
-								<Image src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-02.jpg" alt="image" layout="fill" width="120" className="object-center object-cover"/>
-							</div>
-							</div>
-							<div className="flex-shrink-0 grid grid-cols-1 gap-y-6 lg:gap-y-8">
-							<div className="w-44 h-64 rounded-lg overflow-hidden">
-								<Image src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-03.jpg" alt="image" layout="fill" width="120" className="object-center object-cover"/>
-							</div>
-							<div className="w-44 h-64 rounded-lg overflow-hidden">
-								<Image src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-04.jpg" alt="image" layout="fill" width="120" className="object-center object-cover"/>
-							</div>
-							<div className="w-44 h-64 rounded-lg overflow-hidden">
-								<Image src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-05.jpg" alt="image" layout="fill" width="120" className="object-center object-cover"/>
-							</div>
-							</div>
-							<div className="flex-shrink-0 grid grid-cols-1 gap-y-6 lg:gap-y-8">
-							<div className="w-44 h-64 rounded-lg overflow-hidden">
-								<Image src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-06.jpg" alt="image" layout="fill" width="120" className="object-center object-cover"/>
-							</div>
-							<div className="w-44 h-64 rounded-lg overflow-hidden">
-								<Image src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-07.jpg" alt="image" layout="fill" width="120" className="object-center object-cover"/>
-							</div>
-							</div>
-						</div>
-						</div>
-					</div>
+type HeroProps = {
+	title: string;
+	description: string;
+	visual: IVisual;
+}
 
-					<a href="#" className="inline-block text-center bg-indigo-600 border border-transparent rounded-md py-3 px-8 font-medium text-white hover:bg-indigo-700">Shop Collection</a>
-					</div>
-				</div>
-				</div>
+const Hero: FunctionComponent<HeroProps> = ({ title, description, visual }) => {
+	return (
+		<section className="max-w-screen-xl mx-auto container-spacing flex space-x-16 items-center">
+			<div className="py-16 sm:py-24 lg:py-32 sm:max-w-lg flex flex-col items-start">
+				<h1 className="font-brand text-gray-900 text-4xl leading-tight lg:text-6xl lg:leading-tight">
+					{title}
+				</h1>
+
+				<p className="mt-2 text-gray-500">
+					{description}
+				</p>
+
+				<Link href="/login">
+					<a
+						className="mt-8 inline-flex items-center justify-center px-5 py-3 border border-transparent rounded text-white bg-indigo-500 hover:bg-indigo-700"
+					>
+						Try it for free
+					</a>
+				</Link>
 			</div>
-		</div>
+
+			<div aria-hidden="true" className="relative pointer-events-none lg:inset-y-0 lg:max-w-7xl lg:mx-auto lg:w-full">
+				<Image src={visual.url} alt="image" width="1628" height="1165" />
+			</div>
+		</section>
 	)
 }
 
