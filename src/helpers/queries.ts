@@ -13,6 +13,19 @@ Queries.getLandingPage = gql`
 				featuresEyebrow
 				featuresTitle
 				featuresDescription
+				features {
+					id
+					title
+					description
+					icon
+				}
+				pricing {
+					eyebrow
+					title
+					description
+					monthlyCost
+					yearlyCost
+				}
 			}
 		}
 `;

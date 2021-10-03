@@ -1,34 +1,21 @@
 import { FunctionComponent } from 'react';
-import { GlobeAltIcon, LightningBoltIcon, ScaleIcon } from '@heroicons/react/outline';
+import * as HeroIcons from '@heroicons/react/outline';
 
-const features = [
-	{
-	  name: 'Competitive exchange rates',
-	  description:
-		'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque, iste dolor cupiditate blanditiis ratione.',
-	  icon: GlobeAltIcon,
-	},
-	{
-	  name: 'No hidden fees',
-	  description:
-		'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque, iste dolor cupiditate blanditiis ratione.',
-	  icon: ScaleIcon,
-	},
-	{
-	  name: 'Transfers are instant',
-	  description:
-		'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque, iste dolor cupiditate blanditiis ratione.',
-	  icon: LightningBoltIcon,
-	},
-  ]
+interface IFeature {
+	id: string;
+	title: string;
+	description: string;
+	icon: keyof typeof HeroIcons;
+}
 
 type FeaturesProps = {
 	eyebrow: string;
 	title: string;
 	description?: string;
+	features: IFeature[];
 }
 
-const Features: FunctionComponent<FeaturesProps> = ({ children, eyebrow, title, description }) => {
+const Features: FunctionComponent<FeaturesProps> = ({ features, eyebrow, title, description }) => {
 	return (
 		<div id="features" className="py-12 lg:py-32 bg-white">
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -46,20 +33,23 @@ const Features: FunctionComponent<FeaturesProps> = ({ children, eyebrow, title, 
 					</p>
 				</div>
 
-				<div className="mt-12">
-					<dl className="space-y-10 md:space-y-0 md:grid md:grid-cols-2 md:gap-x-8 md:gap-y-10">
-						{features.map((feature) => (
-							<div key={feature.name} className="relative">
-								<dt>
-									<div className="absolute flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
-										<feature.icon className="h-6 w-6" aria-hidden="true" />
-									</div>
-									<p className="ml-16 text-lg leading-6 font-medium text-gray-900">{feature.name}</p>
-								</dt>
-								<dd className="mt-2 ml-16 text-base text-gray-500">{feature.description}</dd>
+				<div className="mt-12 space-y-10 md:space-y-0 md:grid md:grid-cols-2 md:gap-x-16 md:gap-y-20">
+					{features.map((feature) => {
+						const Icon = HeroIcons[feature.icon as keyof typeof HeroIcons];
+
+						return (
+							<div key={feature.id} className="relative flex items-start max-w-lg">
+								<div className="flex items-center justify-center h-20 w-20 flex-shrink-0 rounded-full bg-indigo-100 text-indigo-500">
+									<Icon className="h-8 w-8" aria-hidden="true" />
+								</div>
+
+								<div className="flex flex-col ml-8">
+									<p className="text-lg font-bold text-gray-900">{feature.title}</p>
+									<div className="mt-2 text-gray-500">{feature.description}</div>
+								</div>
 							</div>
-						))}
-					</dl>
+						)
+					})}
 				</div>
 			</div>
 		</div>

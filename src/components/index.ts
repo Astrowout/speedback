@@ -21,4 +21,7 @@ export { default as Version } from "./Version";
 export { default as Cta } from "./Cta";
 export { default as Features } from "./Features";
 export { default as Hero } from "./Hero";
+export { default as Pricing } from "./Pricing";
 export { default as Navigation } from "./Navigation";
+export { default as Toggle } from "./Toggle";
+export { default as Footer } from "./Footer";

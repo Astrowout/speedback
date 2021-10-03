@@ -8,7 +8,7 @@
 	}
 
 	body {
-		@apply font-body bg-gray-50;
+		@apply font-body bg-gray-50 overflow-x-hidden;
 	}
 
 	body,

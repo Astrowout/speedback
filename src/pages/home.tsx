@@ -2,7 +2,7 @@ import Head from 'next/head';
 import type { GetStaticProps, InferGetStaticPropsType, NextPage } from "next";
 
 import { MarketingLayout } from '../layouts';
-import { Cta, Features, Hero } from '../components';
+import { Cta, Features, Footer, Hero, Pricing } from '../components';
 import { ApolloClient, Queries } from '../helpers';
 
 const Home: NextPage = ({ data }: InferGetStaticPropsType<typeof getStaticProps>) => {
@@ -25,8 +25,27 @@ const Home: NextPage = ({ data }: InferGetStaticPropsType<typeof getStaticProps>
 					eyebrow={data.featuresEyebrow}
 					title={data.featuresTitle}
 					description={data.featuresDescription}
+					features={data.features}
 				/>
-				<Cta title="Title of the cta" subtitle="subtitle for the cta" />
+
+				<Pricing
+					eyebrow={data.pricing.eyebrow}
+					title={data.pricing.title}
+					description={data.pricing.description}
+					monthlyCost={data.pricing.monthlyCost}
+					yearlyCost={data.pricing.yearlyCost}
+				/>
+
+				<Cta
+					title="Start gathering comments on your websites."
+					subtitle="Easy setup in only 3 minutes."
+				/>
+
+				<Footer
+					title={data.heroTitle}
+					description={data.heroDescription}
+					visual={data.heroVisual}
+				/>
 			</main>
 		</MarketingLayout>
 	)
