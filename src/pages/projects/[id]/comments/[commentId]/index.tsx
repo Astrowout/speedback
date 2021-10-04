@@ -97,12 +97,15 @@ const AppCommentDetail: NextPage = ({ project, comment }: InferGetStaticPropsTyp
 }
 
 export const getStaticPaths = async () => {
-	const { data: { projects } } = await ApolloClient.query({
-		query: Queries.getProjects,
+	const { data: { comments } } = await ApolloClient.query({
+		query: Queries.getComments,
 	});
 
-	const paths = projects.map((project: any) => ({
-		params: { id: project.id },
+	const paths = comments.map((comment: any) => ({
+		params: {
+			id: comment.project.id,
+			commentId: comment.id
+		},
 	}));
 
 	return {

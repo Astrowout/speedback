@@ -18,7 +18,7 @@ interface IFormValues {
 type NewProjectFormProps = {
 	className?: string,
 	id?: string,
-	data?: IFormValues,
+	data?: IFormValues | {},
 }
 
 const NewProjectForm: FunctionComponent<NewProjectFormProps> = ({ className, id, data = {} }) => {

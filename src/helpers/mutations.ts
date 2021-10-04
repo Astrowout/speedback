@@ -47,6 +47,14 @@ Mutations.deleteProject = gql`
 	}
 `;
 
+Mutations.deleteComment = gql`
+	 mutation ($id: ID!) {
+		deleteComment(where: { id: $id }) {
+			id
+		}
+	}
+`;
+
 Mutations.resolveComment = gql`
 	 mutation ($id: ID!, $resolved: Boolean!) {
 		updateComment(

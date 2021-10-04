@@ -113,6 +113,37 @@ Queries.getProjects = gql`
 	}
 `;
 
+Queries.getComments = gql`
+	query {
+		comments(
+			orderBy: createdAt_ASC
+		) {
+			id
+			project {
+				id
+			}
+		}
+	}
+`;
+
+Queries.getComment = gql`
+	query ($id: ID!) {
+		comment(
+			where: { id: $id },
+		) {
+			id
+			text
+			resolved
+			metaInfo
+			elementSelector
+			authUser {
+				id
+				email
+			}
+		}
+	}
+`;
+
 Queries.getCommentsByProject = gql`
 	query ($projectId: ID!) {
 		comments(

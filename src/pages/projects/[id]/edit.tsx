@@ -7,15 +7,15 @@ import { AppLayout } from '../../../layouts';
 import { ApolloClient, Queries } from '../../../helpers';
 
 const AppEditProject: NextPage = ({ id }: InferGetStaticPropsType<typeof getStaticProps>) => {
-	const { loading, data: { project } } = useQuery(Queries.getProject, {
+	const { loading, data } = useQuery(Queries.getProject, {
 		variables: { id }
 	});
 
-	const data = {
-		name: project.name,
-		url: project.url,
-		description: project.description,
-	}
+	const formData = data ? {
+		name: data.project.name,
+		url: data.project.url,
+		description: data.project.description,
+	} : {};
 
 	return (
 		<AppLayout>
@@ -24,10 +24,10 @@ const AppEditProject: NextPage = ({ id }: InferGetStaticPropsType<typeof getStat
 			</Head>
 
 			<main>
-				<Heading title="Edit project" backLink={{ url: `/projects/${project.id}`, label: "Back to project" }} />
+				<Heading title="Edit project" backLink={{ url: `/projects/${data?.project.id}`, label: "Back to project" }} />
 
 				<section className="2xl:container container-spacing section-spacing">
-					<NewProjectForm className="max-w-xl" data={data} id={project.id as string} />
+					<NewProjectForm className="max-w-xl" data={formData} id={data?.project.id as string} />
 				</section>
 			</main>
 		</AppLayout>
