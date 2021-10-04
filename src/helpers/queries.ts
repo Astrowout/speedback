@@ -9,6 +9,8 @@ Queries.getLandingPage = gql`
 				heroDescription
 				heroVisual {
 					url
+					width
+					height
 				}
 				featuresEyebrow
 				featuresTitle
@@ -19,12 +21,21 @@ Queries.getLandingPage = gql`
 					description
 					icon
 				}
+				forWhomEyebrow
+				forWhomTitle
+				forWhomDescription
 				pricing {
 					eyebrow
 					title
 					description
 					monthlyCost
 					yearlyCost
+				}
+				footerDescription
+				footerVisual {
+					url
+					width
+					height
 				}
 			}
 		}

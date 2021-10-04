@@ -5618,7 +5618,7 @@ lodash.uniq@^4.5.0:
   resolved "https://registry.yarnpkg.com/lodash.uniq/-/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"
   integrity sha1-0CJTc662Uq3BvILklFM5qEJ1R3M=
 
-lodash@^4.17.15, lodash@^4.17.19, lodash@^4.17.21:
+lodash@4.17.21, lodash@^4.17.15, lodash@^4.17.19, lodash@^4.17.21:
   version "4.17.21"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
   integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
@@ -7204,6 +7204,13 @@ react-refresh@^0.9.0:
   version "0.9.0"
   resolved "https://registry.yarnpkg.com/react-refresh/-/react-refresh-0.9.0.tgz#71863337adc3e5c2f8a6bfddd12ae3bfe32aafbf"
   integrity sha512-Gvzk7OZpiqKSkxsQvO/mbTN1poglhmAV7gR/DdIrRrSMXraRQQlfikRJOr3Nb9GTMPC5kof948Zy6jJZIFtDvQ==
+
+react-use-scrollspy@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/react-use-scrollspy/-/react-use-scrollspy-3.0.1.tgz#c4ab90c7e1e98bc34370b0c23e8e492c730817a6"
+  integrity sha512-VUcGDW0bcnNCKtAgl2iRFPo8jnBHOOgwn95pRu3jEU+g+7RLb9aD5JFsugKmIHvh6QLQ67RSyqVl4Vks1ZyG8A==
+  dependencies:
+    lodash "4.17.21"
 
 react@17.0.2:
   version "17.0.2"

@@ -23,7 +23,7 @@
 
 @layer utilities {
 	.container-spacing {
-		@apply px-4 sm:px-6 lg:px-8 xl:px-10;
+		@apply px-5 sm:px-6 lg:px-8 xl:px-10;
 	}
 
 	.section-spacing {

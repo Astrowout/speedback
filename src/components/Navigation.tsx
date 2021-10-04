@@ -32,7 +32,7 @@ const Navigation: FunctionComponent<NavigationProps> = ({ className }) => {
 		<div className={cn(className)}>
 			<AnimateSharedLayout>
 				<nav
-					className="hidden md:flex ml-16 items-baseline space-x-4"
+					className="flex flex-col md:flex-row space-y-3 md:space-y-0 md:space-x-3 lg:space-x-4"
 					onMouseLeave={() => setActiveAnchor(window.location.hash)}
 				>
 					{navigation.map((item) => (
@@ -41,8 +41,8 @@ const Navigation: FunctionComponent<NavigationProps> = ({ className }) => {
 							href={item.anchor}
 						>
 							<a
-								className={cn('px-3 py-1.5 transition-colors text-lg rounded font-brand relative', {
-									"text-gray-500 hover:text-gray-900": window.location.hash !== item.anchor,
+								className={cn('px-3 py-1.5 transition-colors text-lg font-brand relative', {
+									"text-gray-900 md:text-gray-500 hover:text-gray-900": window.location.hash !== item.anchor,
 									"text-gray-900": window.location.hash === item.anchor,
 								})}
 								onMouseEnter={() => setActiveAnchor(item.anchor)}
@@ -60,7 +60,6 @@ const Navigation: FunctionComponent<NavigationProps> = ({ className }) => {
 										})}
 									/>
 								)}
-
 								<span className="z-10 relative">{item.name}</span>
 							</a>
 						</Link>

@@ -18,6 +18,8 @@ export { default as Comments } from "./Comments";
 export { default as ProjectDataDisplay } from "./ProjectDataDisplay";
 export { default as ProjectsTable } from "./ProjectsTable";
 export { default as Version } from "./Version";
+export { default as Socials } from "./Socials";
+export { default as ForWhom } from "./ForWhom";
 export { default as Cta } from "./Cta";
 export { default as Features } from "./Features";
 export { default as Hero } from "./Hero";

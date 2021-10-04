@@ -29,7 +29,7 @@ const Pricing: FunctionComponent<PricingProps> = ({ monthlyCost, yearlyCost, eye
 						{eyebrow}
 					</h2>
 
-					<p className="mt-2 font-brand text-gray-900 text-3xl leading-tight md:text-4xl md:leading-tight xl:text-5xl xl:leading-tight">
+					<p className="mt-2 font-brand text-gray-900 text-3xl leading-tight lg:text-5xl lg:leading-tight">
 						{title}
 					</p>
 
@@ -40,8 +40,8 @@ const Pricing: FunctionComponent<PricingProps> = ({ monthlyCost, yearlyCost, eye
 
 				<Toggle enabled={yearly} setEnabled={setYearly} label="Paid yearly" className="mt-16" />
 
-				<div className="mt-10 flex mx-auto">
-					<div className="relative w-96 my-8 p-8 bg-white text-center rounded shadow-xl">
+				<div className="mt-10 flex flex-col md:flex-row md:mx-auto max-w-full self-stretch">
+					<div className="relative md:w-96 md:my-8 p-8 bg-white text-center rounded-t md:rounded shadow-xl">
 						<h3 className="text-gray-900 font-brand text-3xl">
 							Free beta
 						</h3>
@@ -89,7 +89,7 @@ const Pricing: FunctionComponent<PricingProps> = ({ monthlyCost, yearlyCost, eye
 						</div>
 					</div>
 
-					<div className="w-80 p-8 bg-gray-900 text-center flex flex-col rounded text-white shadow-xl">
+					<div className="md:w-80 p-8 bg-gray-900 text-center flex flex-col rounded-b md:rounded text-white shadow-xl">
 						<h3 className="text-white font-brand text-3xl">
 							Premium
 						</h3>

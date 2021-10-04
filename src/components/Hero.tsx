@@ -4,6 +4,8 @@ import Link from 'next/link';
 
 interface IVisual {
 	url: string;
+	width: number;
+	height: number;
 }
 
 type HeroProps = {
@@ -34,7 +36,7 @@ const Hero: FunctionComponent<HeroProps> = ({ title, description, visual }) => {
 			</div>
 
 			<div aria-hidden="true" className="absolute -right-16 max-w-lg lg:max-w-full z-0 lg:relative pointer-events-none">
-				<Image src={visual.url} alt="image" width="1628" height="1165" />
+				<Image src={visual.url} alt="image" width={visual.width} height={visual.height} />
 			</div>
 		</section>
 	)

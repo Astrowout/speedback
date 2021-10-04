@@ -2,7 +2,7 @@ import Head from 'next/head';
 import type { GetStaticProps, InferGetStaticPropsType, NextPage } from "next";
 
 import { MarketingLayout } from '../layouts';
-import { Cta, Features, Footer, Hero, Pricing } from '../components';
+import { Cta, Features, Footer, Hero, Pricing, ForWhom } from '../components';
 import { ApolloClient, Queries } from '../helpers';
 
 const Home: NextPage = ({ data }: InferGetStaticPropsType<typeof getStaticProps>) => {
@@ -28,6 +28,12 @@ const Home: NextPage = ({ data }: InferGetStaticPropsType<typeof getStaticProps>
 					features={data.features}
 				/>
 
+				<ForWhom
+					eyebrow={data.forWhomEyebrow}
+					title={data.forWhomTitle}
+					description={data.forWhomDescription}
+				/>
+
 				<Pricing
 					eyebrow={data.pricing.eyebrow}
 					title={data.pricing.title}
@@ -42,9 +48,8 @@ const Home: NextPage = ({ data }: InferGetStaticPropsType<typeof getStaticProps>
 				/>
 
 				<Footer
-					title={data.heroTitle}
-					description={data.heroDescription}
-					visual={data.heroVisual}
+					description={data.footerDescription}
+					visual={data.footerVisual}
 				/>
 			</main>
 		</MarketingLayout>
