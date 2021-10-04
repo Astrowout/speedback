@@ -78,7 +78,7 @@ const Pricing: FunctionComponent<PricingProps> = ({ monthlyCost, yearlyCost, eye
 							</p>
 
 							<Link href="/login">
-								<a className="block w-full px-6 py-4 bg-indigo-500 mt-8 rounded text-white">
+								<a className="block w-full px-6 py-4 bg-indigo-500 mt-6 rounded text-white">
 									Get started for free
 								</a>
 							</Link>
@@ -130,13 +130,15 @@ const Pricing: FunctionComponent<PricingProps> = ({ monthlyCost, yearlyCost, eye
 								</p>
 							</div>
 
-							<Link href="/login">
-								<a
-									className="block w-full px-6 py-4 bg-indigo-500 mt-8 rounded text-white pointer-events-none opacity-30"
-								>
-									test
-								</a>
-							</Link>
+							<div className="mt-4 cursor-not-allowed">
+								<Link href="/login">
+										<a
+											className="block w-full px-6 py-4 bg-indigo-500 rounded text-white pointer-events-none opacity-50"
+										>
+											Choose this plan
+										</a>
+								</Link>
+							</div>
 						</div>
 					</div>
 				</div>
