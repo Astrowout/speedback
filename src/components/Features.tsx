@@ -48,17 +48,19 @@ const Features: FunctionComponent<FeaturesProps> = ({ features, eyebrow, title, 
 									"md:justify-self-end": !isEven
 								})}
 							>
-								<div className="flex items-center justify-center h-20 w-20 flex-shrink-0 rounded-full bg-indigo-100 text-indigo-500">
+								<div className="flex items-center justify-center h-16 w-16 flex-shrink-0 rounded-full bg-indigo-100 text-indigo-500">
 									<Icon className="h-8 w-8" aria-hidden="true" />
 								</div>
 
 								<div
 									className={cn("flex flex-col", {
-										'ml-6 md:mr-6 md:order-first md:text-right': !isEven,
-										'ml-6': isEven,
+										'ml-8 md:mr-8 md:order-first md:text-right': !isEven,
+										'ml-8': isEven,
 									})}
 								>
-									<p className="text-lg font-bold text-gray-900">{feature.title}</p>
+									<p className="text-xl md:text-2xl font-bold text-gray-900">
+										{feature.title}
+									</p>
 									<div className="mt-2 text-gray-500">{feature.description}</div>
 								</div>
 							</div>

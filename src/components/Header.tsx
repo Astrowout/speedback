@@ -10,7 +10,7 @@ import throttle from "lodash/throttle";
 
 import { Logo, Navigation } from "./index";
 
-const SCROLL_FROM_TOP = 50
+const SCROLL_FROM_TOP = 20;
 
 const Header = () => {
 	const [altHeader, setAltHeader] = useState(false);

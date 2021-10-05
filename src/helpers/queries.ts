@@ -24,6 +24,16 @@ Queries.getLandingPage = gql`
 			forWhomEyebrow
 			forWhomTitle
 			forWhomDescription
+			targetAudiences {
+				id
+				title
+				description
+				visual {
+					url
+					width
+					height
+				}
+			}
 			pricing {
 				eyebrow
 				title

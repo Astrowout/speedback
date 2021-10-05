@@ -1,23 +1,24 @@
 import { FunctionComponent } from 'react';
-import * as HeroIcons from '@heroicons/react/outline';
+import Image from "next/image";
 
-interface IFeature {
+interface IAudience {
 	id: string;
 	title: string;
 	description: string;
-	icon: keyof typeof HeroIcons;
+	visual: any;
 }
 
 type ForWhomProps = {
 	eyebrow: string;
 	title: string;
+	audiences: IAudience[];
 	description?: string;
 }
 
-const ForWhom: FunctionComponent<ForWhomProps> = ({ eyebrow, title, description }) => {
+const ForWhom: FunctionComponent<ForWhomProps> = ({ eyebrow, title, description, audiences = [] }) => {
 	return (
-		<div id="for-whom" className="py-16 border-t lg:py-32 bg-white">
-			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+		<div id="for-whom" className="py-16 border-t-2 border-indigo-100 lg:py-32 bg-white">
+			<div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 				<div className="text-center">
 					<h2 className="text-indigo-500 font-bold text-sm tracking-wider uppercase">
 						{eyebrow}
@@ -34,9 +35,28 @@ const ForWhom: FunctionComponent<ForWhomProps> = ({ eyebrow, title, description 
 					)}
 				</div>
 
-				<div className="mt-12 space-y-10 md:space-y-0 md:grid md:grid-cols-2 md:gap-x-16 md:gap-y-20">
-					content
-				</div>
+				{audiences.map((audience) => (
+					<div key={audience.id} className="mt-16 space-y-10 md:space-y-0 md:grid md:grid-cols-2 md:gap-x-16 md:gap-y-20 items-center">
+						<div>
+							<h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+								{audience.title}
+							</h2>
+
+							<p className="mt-4 text-gray-500">
+								{audience.description}
+							</p>
+						</div>
+
+						<div className="max-w-xs">
+							<Image
+								src={audience.visual.url}
+								alt="Walnut card tray with white powder coated steel divider and 3 punchout holes."
+								width={audience.visual.width}
+								height={audience.visual.height}
+							/>
+						</div>
+					</div>
+				))}
 			</div>
 		</div>
 	)

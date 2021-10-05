@@ -37,6 +37,7 @@ const Home: NextPage = ({ data }: InferGetStaticPropsType<typeof getStaticProps>
 					eyebrow={data.forWhomEyebrow}
 					title={data.forWhomTitle}
 					description={data.forWhomDescription}
+					audiences={data.targetAudiences}
 				/>
 
 				<Pricing
