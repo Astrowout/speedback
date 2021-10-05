@@ -9,6 +9,7 @@ export { default as Input } from "./Input";
 export { default as Loader } from "./Loader";
 export { default as User } from "./User";
 export { default as Snippet } from "./Snippet";
+export { default as RichText } from "./RichText";
 export { default as Modal } from "./modals/Modal";
 export { default as ConfirmDeleteModal } from "./modals/ConfirmDelete";
 export { default as Button } from "./Button";

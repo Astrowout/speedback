@@ -13,7 +13,7 @@ const Toggle: FunctionComponent<ToggleProps> = ({ enabled, setEnabled, className
 	return (
 		<Switch.Group>
 			<div className={cn(className, "flex items-center")}>
-				<Switch.Label className="mr-4 text-indigo-500 font-bold select-none">
+				<Switch.Label className="mr-4 text-indigo-500 cursor-pointer font-bold select-none">
 					{label}
 				</Switch.Label>
 

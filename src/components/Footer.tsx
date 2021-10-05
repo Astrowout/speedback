@@ -21,11 +21,11 @@ const navigation = [
 
 const legalNavigation = [
 	{
-		label: "For whom",
+		label: "Privacy policy",
 		url: "/privacy-policy",
 	},
 	{
-		label: "Pricing",
+		label: "Cookies",
 		url: "/cookies",
 	},
 ]

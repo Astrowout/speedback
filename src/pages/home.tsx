@@ -57,13 +57,16 @@ const Home: NextPage = ({ data }: InferGetStaticPropsType<typeof getStaticProps>
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-	const { data: { landingPage } } = await ApolloClient.query({
+	const { data: { landingPage, global } } = await ApolloClient.query({
 		query: Queries.getLandingPage,
 	});
 
 	return {
 		props: {
-			data: landingPage,
+			data: {
+				...landingPage,
+				...global
+			},
 		},
 	}
 }

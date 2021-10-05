@@ -18,7 +18,7 @@ type FeaturesProps = {
 
 const Features: FunctionComponent<FeaturesProps> = ({ features, eyebrow, title, description }) => {
 	return (
-		<div id="features" className="py-12 lg:py-32 bg-white">
+		<div id="features" className="py-16 lg:py-32 bg-white">
 			<div className="max-w-5xl mx-auto container-spacing">
 				<div className="text-center">
 					<h2 className="text-indigo-500 font-bold text-sm tracking-wider uppercase">

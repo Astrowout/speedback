@@ -5,40 +5,64 @@ const Queries: { [key: string]: DocumentNode } = {};
 Queries.getLandingPage = gql`
 	query {
 		landingPage(where: { id: "cku9ux4uoe39q0c10qw2549nj" }) {
-				heroTitle
-				heroDescription
-				heroVisual {
-					url
-					width
-					height
-				}
-				featuresEyebrow
-				featuresTitle
-				featuresDescription
-				features {
-					id
-					title
-					description
-					icon
-				}
-				forWhomEyebrow
-				forWhomTitle
-				forWhomDescription
-				pricing {
-					eyebrow
-					title
-					description
-					monthlyCost
-					yearlyCost
-				}
-				footerDescription
-				footerVisual {
-					url
-					width
-					height
-				}
+			heroTitle
+			heroDescription
+			heroVisual {
+				url
+				width
+				height
+			}
+			featuresEyebrow
+			featuresTitle
+			featuresDescription
+			features {
+				id
+				title
+				description
+				icon
+			}
+			forWhomEyebrow
+			forWhomTitle
+			forWhomDescription
+			pricing {
+				eyebrow
+				title
+				description
+				monthlyCost
+				yearlyCost
 			}
 		}
+
+		global(where: { id: "ckuefco8wf1950b076fop8ulj" }) {
+			footerDescription
+			footerVisual {
+				url
+				width
+				height
+			}
+		}
+	}
+`;
+
+Queries.getContentPage = gql`
+	query ($id: ID!) {
+		contentPage(where: { id: $id }) {
+			eyebrow
+			title
+			content {
+				html
+			}
+		}
+
+		global(where: { id: "ckuefco8wf1950b076fop8ulj" }) {
+			footerDescription
+			footerVisual {
+				url
+				width
+				height
+			}
+		}
+	}
 `;
 
 Queries.getGlobals = gql`

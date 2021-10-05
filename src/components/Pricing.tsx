@@ -22,7 +22,7 @@ const Pricing: FunctionComponent<PricingProps> = ({ monthlyCost, yearlyCost, eye
 	const [yearly, setYearly] = useState<boolean>(true);
 
 	return (
-		<div id="pricing" className="py-12 lg:py-32 bg-indigo-50">
+		<div id="pricing" className="py-16 lg:py-32 bg-indigo-50">
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center">
 				<div className="text-center">
 					<h2 className="text-indigo-500 font-bold text-sm tracking-wider uppercase">
