@@ -1,14 +1,24 @@
 import { FunctionComponent } from "react";
 
-import { Header } from "../components";
+import { Footer, Header } from "../components";
 
-const AppLayout: FunctionComponent = ({ children }) => {
+type MarketingLayoutProps = {
+	data: any;
+}
+
+const MarketingLayout: FunctionComponent<MarketingLayoutProps> = ({ children, data }) => {
 	return (
 		<>
 			<Header />
-			{ children }
+
+			{children}
+
+			<Footer
+				description={data.footerDescription}
+				visual={data.footerVisual}
+			/>
 	  	</>
 	)
 }
 
-export default AppLayout;
+export default MarketingLayout;

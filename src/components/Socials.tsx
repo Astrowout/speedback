@@ -27,9 +27,9 @@ const Socials: FunctionComponent<SocialsProps> = ({ className, instaLabel }) => 
 				</a>
 
 				{instaLabel && (
-					<div className="text-indigo-300 ml-2 mt-1 flex space-x-1.5">
-						<ReplyIcon className="w-5 h-5 transform rotate-180" aria-hidden="true" />
-						<span className="font-brand">{instaLabel}</span>
+					<div className="text-indigo-300 ml-1 mt-2 flex space-x-1.5">
+						<ReplyIcon className="w-5 h-5 transform rotate-90 scale-y-[-1]" aria-hidden="true" />
+						<span className="font-brand mt-1 inline-block">{instaLabel}</span>
 					</div>
 				)}
 			</div>
