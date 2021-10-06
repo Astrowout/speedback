@@ -58,7 +58,7 @@ const Footer: FunctionComponent<FooterProps> = ({ visual, description }) => {
 						<Socials instaLabel="Follow our process" />
 					</div>
 
-					<div className="flex space-x-20 sm:space-x-32 flex-shrink-0">
+					<div className="flex space-x-16 sm:space-x-32 flex-shrink-0">
 						<div className="flex flex-col items-start space-y-4">
 							<h4 className="font-brand text-xl">
 								Product
