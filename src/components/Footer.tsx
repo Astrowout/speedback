@@ -7,14 +7,17 @@ import { Logo, Version, Socials } from './index';
 const navigation = [
 	{
 		label: "How does it work?",
+		url: '/home',
 		anchor: "#features",
 	},
 	{
 		label: "For whom",
+		url: '/home',
 		anchor: "#for-whom",
 	},
 	{
 		label: "Pricing",
+		url: '/home',
 		anchor: "#pricing",
 	},
 ]
@@ -67,7 +70,7 @@ const Footer: FunctionComponent<FooterProps> = ({ visual, description }) => {
 							<ul className="flex flex-col items-start space-y-2">
 								{navigation.map(item => (
 									<li key={item.anchor}>
-										<Link href={item.anchor}>
+										<Link href={item.url + item.anchor}>
 											<a className="text-gray-600 hover:underline">{item.label}</a>
 										</Link>
 									</li>

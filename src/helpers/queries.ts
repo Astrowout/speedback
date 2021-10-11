@@ -33,6 +33,11 @@ Queries.getLandingPage = gql`
 					width
 					height
 				}
+				usps {
+					id
+					title
+					description
+				}
 			}
 			pricing {
 				eyebrow

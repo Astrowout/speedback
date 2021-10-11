@@ -1,11 +1,19 @@
 import { FunctionComponent } from 'react';
 import Image from "next/image";
+import cn from "classnames";
+
+interface IUsp {
+	id: string;
+	title: string;
+	description: string;
+}
 
 interface IAudience {
 	id: string;
 	title: string;
 	description: string;
 	visual: any;
+	usps: IUsp[];
 }
 
 type ForWhomProps = {
@@ -35,24 +43,35 @@ const ForWhom: FunctionComponent<ForWhomProps> = ({ eyebrow, title, description,
 					)}
 				</div>
 
-				{audiences.map((audience) => (
-					<div key={audience.id} className="mt-16 space-y-10 md:space-y-0 md:grid md:grid-cols-2 md:gap-x-16 md:gap-y-20 items-center">
+				{audiences.map((audience, i) => (
+					<div key={audience.id} className="my-16 space-y-10 md:space-y-0 md:grid md:grid-cols-2 md:gap-x-16 md:gap-y-20 items-center">
 						<div>
 							<h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
 								{audience.title}
 							</h2>
 
-							<p className="mt-4 text-gray-500">
+							<p className="mt-4 text-lg text-gray-500">
 								{audience.description}
 							</p>
+
+							{/* {audience.usps.map(usp => (
+								<div key={usp.id} className="border-t border-gray-200 pt-4">
+									<dt className="text-gray-900">{usp.title}</dt>
+									<dd className="mt-2 text-sm text-gray-500">{usp.description}</dd>
+								</div>
+							))} */}
 						</div>
 
-						<div className="max-w-xs">
+						<div
+							className={cn("rounded relative shadow-lg h-52 sm:h-64 md:h-80 overflow-hidden", {
+								"order-first": i % 2
+							})}
+						>
 							<Image
 								src={audience.visual.url}
-								alt="Walnut card tray with white powder coated steel divider and 3 punchout holes."
-								width={audience.visual.width}
-								height={audience.visual.height}
+								alt={audience.title}
+								objectFit="cover"
+								layout="fill"
 							/>
 						</div>
 					</div>

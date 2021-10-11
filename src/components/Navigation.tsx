@@ -5,9 +5,21 @@ import { motion, AnimateSharedLayout } from "framer-motion";
 import { FunctionComponent, useEffect, useState } from 'react';
 
 const navigation = [
-	{ name: 'How does it work?', anchor: '#features' },
-	{ name: 'For whom', anchor: '#for-whom' },
-	{ name: 'Pricing', anchor: '#pricing' },
+	{
+		name: 'How does it work?',
+		url: '/home',
+		anchor: '#features'
+	},
+	{
+		name: 'For whom',
+		url: '/home',
+		anchor: '#for-whom'
+	},
+	{
+		name: 'Pricing',
+		url: '/home',
+		anchor: '#pricing'
+	},
 ]
 
 type NavigationProps = {
@@ -38,7 +50,7 @@ const Navigation: FunctionComponent<NavigationProps> = ({ className }) => {
 					{navigation.map((item) => (
 						<Link
 							key={item.anchor}
-							href={item.anchor}
+							href={item.url + item.anchor}
 						>
 							<a
 								className={cn('px-3 py-1.5 transition-colors text-lg font-brand relative', {
