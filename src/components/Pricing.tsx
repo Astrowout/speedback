@@ -95,7 +95,7 @@ const Pricing: FunctionComponent<PricingProps> = ({ monthlyCost, yearlyCost, eye
 						</h3>
 
 						<p className="pt-2">
-							<span className="text-gray-400 align-top">€ </span>
+							{/* <span className="text-gray-400 align-top">€ </span> */}
 
 							{/* <span className="text-3xl font-bold">
 								{yearly ? yearlyCost : monthlyCost}{" "}
@@ -105,9 +105,9 @@ const Pricing: FunctionComponent<PricingProps> = ({ monthlyCost, yearlyCost, eye
 								tbd
 							</span>
 
-							<span className="text-gray-400">
+							{/* <span className="text-gray-400">
 								/ month
-							</span>
+							</span> */}
 						</p>
 
 						<hr className="mt-4 border-gray-600" />
