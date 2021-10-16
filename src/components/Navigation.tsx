@@ -1,8 +1,9 @@
-import { useRouter } from 'next/router';
-import Link from 'next/link';
 import cn from "classnames";
+import Link from 'next/link';
 import { motion, AnimateSharedLayout } from "framer-motion";
 import { FunctionComponent, useEffect, useState } from 'react';
+
+import { useScrollSpy } from '../hooks';
 
 const navigation = [
 	{
@@ -28,13 +29,13 @@ type NavigationProps = {
 
 const Navigation: FunctionComponent<NavigationProps> = ({ className }) => {
 	const [activeAnchor, setActiveAnchor] = useState<string | null>(null);
-	const router = useRouter();
+	const activeSectionId = useScrollSpy(navigation.map((item) => item.anchor));
 
 	useEffect(() => {
-		if (!window.location.hash) {
-			setActiveAnchor(null);
+		if (activeSectionId) {
+			setActiveAnchor(activeSectionId);
 		}
-	}, [router]);
+	}, [activeSectionId]); // eslint-disable-line react-hooks/exhaustive-deps
 
 	if (typeof window === 'undefined') {
 		return null;
@@ -45,7 +46,6 @@ const Navigation: FunctionComponent<NavigationProps> = ({ className }) => {
 			<AnimateSharedLayout>
 				<nav
 					className="flex flex-col md:flex-row space-y-3 md:space-y-0 md:space-x-3 lg:space-x-4"
-					onMouseLeave={() => setActiveAnchor(window.location.hash)}
 				>
 					{navigation.map((item) => (
 						<Link
@@ -54,10 +54,9 @@ const Navigation: FunctionComponent<NavigationProps> = ({ className }) => {
 						>
 							<a
 								className={cn('px-3 py-1.5 transition-colors text-lg font-brand relative', {
-									"text-gray-900 md:text-gray-500 hover:text-gray-900": window.location.hash !== item.anchor,
-									"text-gray-900": window.location.hash === item.anchor,
+									"text-gray-900 md:text-gray-500 hover:text-gray-900": activeAnchor !== item.anchor,
+									"text-gray-900": activeAnchor === item.anchor,
 								})}
-								onMouseEnter={() => setActiveAnchor(item.anchor)}
 							>
 								{activeAnchor === item.anchor && (
 									<motion.div
@@ -67,8 +66,8 @@ const Navigation: FunctionComponent<NavigationProps> = ({ className }) => {
 										animate={{ opacity: 1 }}
 										layoutId="nav-background"
 										className={cn("absolute transition-colors inset-0 opacity-0 rounded", {
-											"bg-gray-200": window.location.hash !== item.anchor,
-											"bg-indigo-100": window.location.hash === item.anchor,
+											"bg-gray-200": activeAnchor !== item.anchor,
+											"bg-indigo-100": activeAnchor === item.anchor,
 										})}
 									/>
 								)}

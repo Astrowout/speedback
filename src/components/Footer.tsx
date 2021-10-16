@@ -1,5 +1,6 @@
 import { FunctionComponent } from 'react';
 import Image from 'next/image';
+import { gsap } from "gsap";
 import Link from 'next/link';
 
 import { Logo, Version, Socials } from './index';

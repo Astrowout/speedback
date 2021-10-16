@@ -1,9 +1,13 @@
 import Head from 'next/head';
+import { gsap } from "gsap";
+import ScrollToPlugin from 'gsap/dist/ScrollToPlugin';
 import type { GetStaticProps, InferGetStaticPropsType, NextPage } from "next";
 
 import { MarketingLayout } from '../layouts';
-import { Cta, Features, Footer, Hero, Pricing, ForWhom } from '../components';
+import { Cta, Features, Hero, Pricing, ForWhom } from '../components';
 import { ApolloClient, Queries } from '../helpers';
+
+gsap.registerPlugin(ScrollToPlugin);
 
 const Home: NextPage = ({ data }: InferGetStaticPropsType<typeof getStaticProps>) => {
 	return (

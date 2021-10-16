@@ -13,7 +13,7 @@ const Socials: FunctionComponent<SocialsProps> = ({ className, instaLabel }) => 
 			<a
 				target="_blank"
 				rel="noopener noreferrer"
-				href="https://www.instagram.com/digital.product.startup/"
+				href="https://www.instagram.com/daily.tech.express/"
 				className="text-indigo-500 hover:text-indigo-300"
 			>
 				<span className="sr-only">Instagram</span>

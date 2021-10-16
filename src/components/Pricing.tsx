@@ -78,7 +78,7 @@ const Pricing: FunctionComponent<PricingProps> = ({ monthlyCost, yearlyCost, eye
 							</p>
 
 							<Link href="/login">
-								<a className="block w-full px-6 py-4 bg-indigo-500 mt-6 rounded text-white">
+								<a className="block w-full px-6 py-4 bg-indigo-500 mt-6 rounded text-white hover:bg-indigo-600">
 									Get started for free
 								</a>
 							</Link>
@@ -101,8 +101,8 @@ const Pricing: FunctionComponent<PricingProps> = ({ monthlyCost, yearlyCost, eye
 								{yearly ? yearlyCost : monthlyCost}{" "}
 							</span> */}
 
-							<span className="text-3xl font-bold">
-								tbd
+							<span className="text-lg text-gray-400">
+								Coming soon...
 							</span>
 
 							{/* <span className="text-gray-400">
@@ -139,7 +139,7 @@ const Pricing: FunctionComponent<PricingProps> = ({ monthlyCost, yearlyCost, eye
 										<a
 											className="block w-full px-6 py-4 bg-indigo-500 rounded text-white pointer-events-none opacity-50"
 										>
-											Coming soon...
+											Not yet available
 										</a>
 								</Link>
 							</div>
