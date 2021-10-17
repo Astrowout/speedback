@@ -36,7 +36,7 @@ const User: FunctionComponent<UserProps> = ({ className }) => {
 						leaveFrom="transform opacity-100 scale-100"
 						leaveTo="transform opacity-0 scale-95"
 					>
-						<Menu.Items className="origin-top-right overflow-hidden divide-y divide-indigo-50 absolute right-0 w-64 rounded shadow-lg bg-white focus:outline-none">
+						<Menu.Items className="origin-top-right z-50 overflow-hidden divide-y divide-indigo-50 absolute right-0 w-64 rounded shadow-lg bg-white focus:outline-none">
 							<Menu.Item disabled>
 								{({ active }) => (
 									<Link

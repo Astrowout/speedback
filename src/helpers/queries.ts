@@ -81,20 +81,18 @@ Queries.getContentPage = gql`
 `;
 
 Queries.getGlobals = gql`
-	query ($issuer: String!) {
+	query ($issuer: String!, $projectId: ID!) {
 		comments(
 			first: 1,
+			where: { issuer: $issuer }
 			orderBy: createdAt_DESC
 		) {
 			createdAt
 		}
-		commentsConnection {
+		commentsConnection(where: { issuer: $issuer }) {
 			aggregate {
 				count
 			}
-		}
-		authUser(where: { issuer: $issuer }) {
-			pricingPlan
 		}
 	}
 `;
