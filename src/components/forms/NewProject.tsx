@@ -8,6 +8,7 @@ import { LinkIcon } from '@heroicons/react/outline';
 import { Input } from '../index';
 import { Mutations, Queries } from '../../helpers';
 import { AuthContext } from '../../context';
+import Button from '../Button';
 
 interface IFormValues {
 	name: string;
@@ -80,13 +81,14 @@ const NewProjectForm: FunctionComponent<NewProjectFormProps> = ({ className, id,
 			</div>
 
             <div className="space-y-3">
-				<button
+				<Button
 					type="submit"
 					disabled={loading}
-					className="relative w-full disabled:opacity-30 disabled:pointer-events-none flex justify-center py-3 px-4 border border-transparent rounded text-white bg-indigo-500 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+					fluid
+					compact={false}
 				>
 					{id ? 'Edit project' : 'Create project'}
-				</button>
+				</Button>
 
 				{error && (
 					<p className="text-red-500 text-sm">

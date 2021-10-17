@@ -6,7 +6,7 @@ import { useMutation, useQuery } from '@apollo/client';
 import { CollectionIcon, EyeIcon, PencilIcon, TrashIcon } from '@heroicons/react/outline';
 import type { GetStaticProps, InferGetStaticPropsType, NextPage } from "next";
 
-import { ConfirmDeleteModal, EmptyState, Heading, ProjectDataDisplay, Snippet, Comments, Loader } from '../../../components';
+import { ConfirmDeleteModal, EmptyState, Heading, ProjectDataDisplay, Snippet, Comments, Loader, Button } from '../../../components';
 import { AppLayout } from '../../../layouts';
 import { ApolloClient, Mutations, Queries } from '../../../helpers';
 
@@ -36,23 +36,23 @@ const AppProjectDetail: NextPage = ({ id }: InferGetStaticPropsType<typeof getSt
 			<main>
 				<Heading title={data?.project.name || "Your project"} backLink={{ url: "/projects", label: "Back to projects" }}>
 					<div className="-my-1.5 -mx-2 mt-5 flex flex-wrap lg:mt-0">
-						<button
+						<Button
 							type="button"
 							onClick={() => setIsConfirmModalOpen(true)}
-							className="my-1.5 mx-2 disabled:pointer-events-none disabled:opacity-30 inline-flex items-center px-4 py-2 border border-red-200 rounded shadow-sm text-sm font-medium text-red-500 bg-white hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+							icon={TrashIcon}
+							danger
+							className="my-1.5 mx-2"
 						>
-							<TrashIcon className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
 							Delete project
-						</button>
+						</Button>
 
-						<Link
-							href={`/projects/${data?.project.id}/edit`}
+						<Button
+							url={`/projects/${data?.project.id}/edit`}
+							icon={PencilIcon}
+							className="my-1.5 mx-2"
 						>
-							<a className="my-1.5 mx-2 inline-flex items-center px-4 py-2 border border-transparent rounded shadow-sm text-sm font-medium text-white bg-indigo-500 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-								<PencilIcon className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
-								Edit project
-							</a>
-						</Link>
+							Edit project
+						</Button>
 					</div>
 				</Heading>
 

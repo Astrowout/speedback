@@ -3,6 +3,8 @@ import { Fragment, useRef, memo, FC, ReactNode } from 'react';
 import { createPortal } from "react-dom";
 import { Dialog, Transition } from '@headlessui/react';
 
+import { Button } from '../index';
+
 type ModalProps = {
 	isOpen: boolean,
 	closeAction: (value: boolean) => void,
@@ -44,22 +46,22 @@ const Modal: FC<ModalProps> = ({ children, isOpen = false, action, closeAction }
 							</div>
 
 							<div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-								<button
-									type="button"
-									className="w-full inline-flex justify-center rounded border border-transparent shadow-sm px-4 py-2 bg-red-500 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
+								<Button
 									onClick={action}
+									danger
+									className="w-full sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
 								>
 									Delete
-								</button>
+								</Button>
 
-								<button
-									type="button"
-									className="mt-3 w-full inline-flex justify-center rounded border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+								<Button
 									onClick={() => closeAction(false)}
+									secondary
 									ref={cancelButtonRef}
+									className="mt-3 w-full sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
 								>
 									Cancel
-								</button>
+								</Button>
 							</div>
 					</Transition.Child>
 				</div>
