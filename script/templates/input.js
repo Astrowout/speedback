@@ -10,11 +10,11 @@ const inputTemplate = `
 		</div>
 
 		<div class="gthr-tooltip__actions">
-			<button type="button" class="gthr-tooltip__action gthr-tooltip__action--secondary">
+			<button type="button" id="gthr-action-cancel" class="gthr-tooltip__action gthr-tooltip__action--secondary">
 				Cancel
 			</button>
 
-			<button type="button" class="gthr-tooltip__action gthr-tooltip__action--primary">
+			<button type="button" id="gthr-action-post" class="gthr-tooltip__action gthr-tooltip__action--primary">
 				Post
 			</button>
 		</div>

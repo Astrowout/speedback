@@ -13,7 +13,7 @@ const useAuth = () => {
 
 		magic = new Magic(process.env.NEXT_PUBLIC_MAGIC_API_KEY || '');
 
-		const preloadMagic = async() => {
+		const preloadMagic = async () => {
 			try {
 				await magic!.preload();
 			} catch (error) {
@@ -21,7 +21,7 @@ const useAuth = () => {
 			}
 		}
 
-		const checkUser = async() => {
+		const checkUser = async () => {
 			try {
 				const isLoggedIn = await magic!.user.isLoggedIn();
 
@@ -47,18 +47,13 @@ const useAuth = () => {
 		setIsLoading(true);
 
 		try {
-			const didToken = await magic!.auth.loginWithMagicLink({
+			await magic!.auth.loginWithMagicLink({
 				email,
 				redirectURI: `${window.location.origin}/callback`
 			});
 
-			if (didToken) {
-				const userData = await magic!.user.getMetadata();
-
-				setUser(userData);
-			} else {
-				setUser(null);
-			}
+			const userData = await magic!.user.getMetadata();
+			setUser(userData);
 		} catch (error) {
 			console.error(error);
 
@@ -69,28 +64,9 @@ const useAuth = () => {
 					case RPCErrorCode.MagicLinkExpired:
 					case RPCErrorCode.MagicLinkRateLimited:
 					case RPCErrorCode.UserAlreadyLoggedIn:
-					break;
+						break;
 				}
 			}
-		} finally {
-			setIsLoading(false);
-		}
-	}
-
-	const loginWithCredential = async (): Promise<void> => {
-		setIsLoading(true);
-
-		try {
-			const isLoggedIn = await magic!.user.isLoggedIn();
-
-			if (isLoggedIn) {
-				return;
-			}
-
-			await magic!.auth.loginWithCredential();
-		} catch (error) {
-			console.error(error);
-			setError(error);
 		} finally {
 			setIsLoading(false);
 		}
@@ -110,9 +86,8 @@ const useAuth = () => {
 			setUser,
 			logout,
 			loginWithEmail,
-			loginWithCredential,
 		}
-  	};
+	};
 }
 
 export default useAuth;

@@ -37,10 +37,6 @@ const Navigation: FunctionComponent<NavigationProps> = ({ className }) => {
 		}
 	}, [activeSectionId]); // eslint-disable-line react-hooks/exhaustive-deps
 
-	if (typeof window === 'undefined') {
-		return null;
-	}
-
 	return (
 		<div className={cn(className)}>
 			<AnimateSharedLayout>

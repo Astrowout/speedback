@@ -10,14 +10,14 @@ const AppLayout: FunctionComponent = ({ children }) => {
 
 	return !isLoggedIn ? (
 		<Loader fullscreen />
-		) : (
+	) : (
 		<>
 			<AppHeader />
 
 			{children}
 
 			<Version version="beta" />
-	  	</>
+		</>
 	)
 }
 

@@ -75,7 +75,7 @@ const destroyTippy = () => {
 	tippyInstance = null;
 }
 
-const handlePost = async () => {
+const handlePostComment = async () => {
 	const input = document.querySelector(".gthr-tooltip__input");
 
 	await console.log("fetch");
@@ -91,6 +91,10 @@ const handleResolveComment = async ({ comment, el }) => {
 		resolved: newComment.resolved,
 		email: comment.authUser.email,
 	}));
+}
+
+const handleCloseInput = (el) => {
+	el._tippy.hide();
 }
 
 const initTippy = () => {
@@ -119,6 +123,33 @@ const addComment = (el) => {
 	}
 
 	el.appendChild(dot);
+
+	const postFn = () => handlePostComment();
+
+	const cancelFn = () => handleCloseInput(dot);
+
+	tippy(dot, {
+		content: inputTemplate,
+		showOnCreate: true,
+		onCreate() {
+			console.log("create");
+		},
+		onShown() {
+			console.log("shown");
+			const postBtn = document.getElementById("gthr-action-post");
+			const cancelBtn = document.getElementById("gthr-action-cancel");
+
+			postBtn.addEventListener("click", postFn);
+			cancelBtn.addEventListener("click", cancelFn);
+		},
+		onHide() {
+			const postBtn = document.getElementById("gthr-action-post");
+			const cancelBtn = document.getElementById("gthr-action-cancel");
+
+			postBtn.removeEventListener("click", postFn);
+			cancelBtn.removeEventListener("click", cancelFn);
+		},
+	});
 }
 
 const handleAddComment = (e) => {
@@ -177,8 +208,6 @@ const placeComments = () => {
 
 		el.appendChild(dot);
 
-		console.log(comment);
-
 		const resolveFn = () => handleResolveComment({
 			comment,
 			el: dot
@@ -189,6 +218,7 @@ const placeComments = () => {
 				text: comment.text,
 				resolved: comment.resolved,
 				email: comment.authUser.email,
+				metadata: comment.metadata
 			}),
 			onShown() {
 				const resolveBtn = document.getElementById("gthr-action-resolve");
@@ -205,7 +235,7 @@ const placeComments = () => {
 }
 
 const getComments = async () => {
-	const res = await fetch(`${config.BASE_URL}/api/comments?projectId=${id}`);
+	const res = await fetch(`${config.BASE_URL}/api/comments?projectId=${id}&pathname=${window.location.pathname}`);
 	comments = await res.json();
 
 	initTippy();

@@ -1,30 +1,43 @@
 import Head from 'next/head';
-import Link from 'next/link';
-import type { GetStaticProps, NextPage } from "next";
+import type { NextPage } from "next";
+import { useContext } from 'react';
 import { useQuery } from "@apollo/client";
+import get from "lodash/get";
 
 import { Heading, EmptyState, ProjectsTable, Loader, Button } from '../components';
 import { AppLayout } from '../layouts';
 import { PlusIcon, EyeIcon, CollectionIcon } from '@heroicons/react/outline';
 import { ApolloClient, Queries } from '../helpers';
+import { AuthContext } from '../context';
 
 const AppIndex: NextPage = () => {
-	const { data, loading } = useQuery(Queries.getProjects);
+	const { user } = useContext(AuthContext);
+
+	const { data, loading } = useQuery(Queries.getProjects, {
+		variables: { issuer: user?.issuer },
+		skip: !user,
+		fetchPolicy: "cache-and-network"
+	});
+
+	const { data: globals } = useQuery(Queries.getGlobals, {
+		variables: { issuer: user?.issuer },
+		skip: !user
+	});
 
 	return (
 		<AppLayout>
 			<Head>
 				<title>My dashboard - speedback</title>
 				<meta name="description" content="Bugbash your digital products at hyperspeed with speedback." />
-				<link rel="icon" href="/favicon.ico" />
+				<meta name="robots" content="noindex, nofollow" />
 			</Head>
 
 			<main>
 				<Heading
 					title="My dashboard"
 					stats={{
-						commentCount: 53,
-						lastCommentDate: new Date(),
+						commentCount: get(globals, ["commentsConnection", "aggregate", "count"], 0),
+						lastCommentDate: new Date(get(globals, ["comments", "0", "createdAt"], new Date())),
 					}}
 				>
 					<div className="-my-1.5 -mx-2 mt-5 flex flex-wrap lg:mt-0">
@@ -51,7 +64,7 @@ const AppIndex: NextPage = () => {
 				<section className="2xl:container container-spacing section-spacing">
 					{loading ? (
 						<Loader />
-					) : data.projects?.length ? (
+					) : data?.projects.length ? (
 						<ProjectsTable className="max-w-3xl" rows={data.projects} compact></ProjectsTable>
 					) : (
 						<EmptyState title="No projects found." icon={CollectionIcon}>
@@ -59,7 +72,7 @@ const AppIndex: NextPage = () => {
 								url="/projects/create"
 								disabled={!!data?.projects.length}
 								icon={PlusIcon}
-								className="my-1.5 mx-2"
+								className="mt-6"
 							>
 								{!data?.projects.length ? "Create a new project" : "Go premium to add more projects"}
 							</Button>
@@ -70,20 +83,5 @@ const AppIndex: NextPage = () => {
 		</AppLayout>
 	);
 }
-
-// export const getStaticProps: GetStaticProps = async({ params }) => {
-// 	const { data: { project } } = await ApolloClient.query({
-// 		query: Queries.getGlobals,
-// 		variables: { id: params?.id }
-// 	});
-
-// 	return {
-// 		props: {
-// 			comment,
-// 			project
-// 		},
-// 		revalidate: 10, // In seconds
-// 	}
-// }
 
 export default AppIndex;

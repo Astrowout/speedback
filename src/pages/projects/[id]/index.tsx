@@ -1,5 +1,4 @@
 import Head from 'next/head';
-import Link from 'next/link';
 import Router from "next/router";
 import { useState } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
@@ -17,14 +16,15 @@ const AppProjectDetail: NextPage = ({ id }: InferGetStaticPropsType<typeof getSt
 	const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
 	const [deleteProject] = useMutation(Mutations.deleteProject, {
 		variables: { id },
+		onCompleted: () => {
+			Router.push("/projects");
+		}
 	});
 
-	const handleDeleteProject = async (): Promise<void> => {
+	const handleDeleteProject = (): void => {
 		setIsConfirmModalOpen(false);
 
-		await deleteProject();
-
-		Router.push("/projects");
+		deleteProject();
 	}
 
 	return (
@@ -70,14 +70,14 @@ const AppProjectDetail: NextPage = ({ id }: InferGetStaticPropsType<typeof getSt
 							</div>
 						) : (
 							<EmptyState title="This project was not found." icon={CollectionIcon}>
-								<Link
-									href="/projects"
+								<Button
+									url="/projects"
+									icon={EyeIcon}
+									className="mt-8"
+									secondary
 								>
-									<a className="mt-8 my-1.5 mx-2 inline-flex items-center px-4 py-2 border border-gray-300 rounded shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-										<EyeIcon className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
-										View all projects
-									</a>
-								</Link>
+									View all projects
+								</Button>
 							</EmptyState>
 						)}
 					</section>
@@ -97,7 +97,7 @@ const AppProjectDetail: NextPage = ({ id }: InferGetStaticPropsType<typeof getSt
 
 export const getStaticPaths = async () => {
 	const { data: { projects } } = await ApolloClient.query({
-		query: Queries.getProjects,
+		query: Queries.getAllProjects,
 	});
 
 	const paths = projects.map((project: any) => ({
@@ -105,8 +105,8 @@ export const getStaticPaths = async () => {
 	}));
 
 	return {
-	  paths,
-	  fallback: 'blocking'
+		paths,
+		fallback: 'blocking'
 	};
 }
 

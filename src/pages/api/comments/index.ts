@@ -16,7 +16,7 @@ const comments = async (req: NextApiRequest, res: NextApiResponse) => {
 	try {
 		const { data: { comments } } = await ApolloClient.query({
 			query: Queries.getCommentsByProject,
-			variables: { projectId: req.query.projectId }
+			variables: { projectId: req.query.projectId, pathname: req.query.pathname }
 		});
 
 		res.status(200).json(comments);

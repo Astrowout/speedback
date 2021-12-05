@@ -1,15 +1,15 @@
 import { useContext, useEffect } from 'react';
 import { NextPage } from 'next';
+import Head from 'next/head';
 import Router from "next/router";
 
 import { Loader } from "../components";
 import { AuthContext } from '../context';
 
 const AppCallback: NextPage = () => {
-	const { isLoading, methods } = useContext(AuthContext);
+	const { isLoading } = useContext(AuthContext);
 
-	const completeLogin = async () => {
-		await methods.loginWithCredential();
+	const completeLogin = () => {
 		Router.replace("/");
 	}
 
@@ -19,7 +19,16 @@ const AppCallback: NextPage = () => {
 		}
 	}, [isLoading]); // eslint-disable-line react-hooks/exhaustive-deps
 
-	return <Loader fullscreen />;
+	return (
+		<>
+			<Head>
+				<title>Loading speedback...</title>
+				<meta name="robots" content="noindex, nofollow" />
+			</Head>
+
+			<Loader fullscreen />
+		</>
+	);
 }
 
 export default AppCallback;

@@ -1,9 +1,7 @@
 import { FunctionComponent, useState } from 'react';
-import Link from "next/link";
 import { CheckIcon } from '@heroicons/react/outline';
 
-import { Toggle } from './index';
-
+import { Toggle, Button } from './index';
 interface IPricing {
 	id: string;
 	title: string;
@@ -62,6 +60,7 @@ const Pricing: FunctionComponent<PricingProps> = ({ monthlyCost, yearlyCost, eye
 									Get started with one project
 								</span>
 							</p>
+
 							<p className="flex text-gray-600 text-left pt-5">
 								<CheckIcon aria-hidden="true" className="mt-0.5 w-5 h-5 text-indigo-500" />
 
@@ -69,6 +68,7 @@ const Pricing: FunctionComponent<PricingProps> = ({ monthlyCost, yearlyCost, eye
 									New features added every week
 								</span>
 							</p>
+
 							<p className="flex text-gray-600 text-left pt-5">
 								<CheckIcon aria-hidden="true" className="mt-0.5 w-5 h-5 text-indigo-500" />
 
@@ -77,11 +77,14 @@ const Pricing: FunctionComponent<PricingProps> = ({ monthlyCost, yearlyCost, eye
 								</span>
 							</p>
 
-							<Link href="/login">
-								<a className="block w-full px-6 py-4 bg-indigo-500 mt-6 rounded text-white hover:bg-indigo-600">
-									Get started for free
-								</a>
-							</Link>
+							<Button
+								url="/login"
+								compact={false}
+								fluid
+								className="mt-8"
+							>
+								Get started for free
+							</Button>
 						</div>
 
 						<div className="absolute top-4 -left-1">
@@ -120,28 +123,38 @@ const Pricing: FunctionComponent<PricingProps> = ({ monthlyCost, yearlyCost, eye
 										All features from the free beta
 									</span>
 								</p>
+
 								<p className="flex text-gray-300 text-left pt-5">
 									<CheckIcon aria-hidden="true" className="mt-0.5 w-5 h-5 text-indigo-300" />
 									<span className="pl-2">
 										Unlimited projects
 									</span>
 								</p>
+
 								<p className="flex text-gray-300 text-left pt-5">
 									<CheckIcon aria-hidden="true" className="mt-0.5 w-5 h-5 text-indigo-300" />
 									<span className="pl-2">
 										Unlimited users (coming soon)
 									</span>
 								</p>
+
+								<p className="flex text-gray-300 text-left pt-5">
+									<CheckIcon aria-hidden="true" className="mt-0.5 w-5 h-5 text-indigo-300" />
+									<span className="pl-2">
+										User roles (coming soon)
+									</span>
+								</p>
 							</div>
 
 							<div className="mt-4 cursor-not-allowed">
-								<Link href="/login">
-										<a
-											className="block w-full px-6 py-4 bg-indigo-500 rounded text-white pointer-events-none opacity-50"
-										>
-											Not yet available
-										</a>
-								</Link>
+								<Button
+									url="/login"
+									compact={false}
+									fluid
+									disabled
+								>
+									Not yet available
+								</Button>
 							</div>
 						</div>
 					</div>

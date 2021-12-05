@@ -8,7 +8,7 @@
 		"start": "next start",
 		"lint": "next lint",
 		"build:script": "parcel build script/index.js script/main.css --no-source-maps --dist-dir public/script",
-		"watch:script": "parcel watch script/index.js script/main.css --no-source-maps --dist-dir public/script"
+		"start:script": "parcel script/index.js script/main.css --no-source-maps --dist-dir public/script"
 	},
 	"dependencies": {
 		"@apollo/client": "^3.4.13",

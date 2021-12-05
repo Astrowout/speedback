@@ -36,16 +36,19 @@ const AppEditProject: NextPage = ({ id }: InferGetStaticPropsType<typeof getStat
 
 export const getStaticPaths = async () => {
 	const { data: { projects } } = await ApolloClient.query({
-		query: Queries.getProjects,
+		query: Queries.getAllProjects,
 	});
+
+	console.log(projects);
+
 
 	const paths = projects.map((project: any) => ({
 		params: { id: project.id },
 	}));
 
 	return {
-	  paths,
-	  fallback: 'blocking'
+		paths,
+		fallback: 'blocking'
 	};
 }
 

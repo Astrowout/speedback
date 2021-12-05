@@ -25,7 +25,12 @@ type NewProjectFormProps = {
 const NewProjectForm: FunctionComponent<NewProjectFormProps> = ({ className, id, data = {} }) => {
 	const { user } = useContext(AuthContext);
 	const [upsertProject, { loading, error }] = useMutation(Mutations.upsertProject);
-	const [publishProject] = useMutation(Mutations.publishProject);
+	const [publishProject] = useMutation(Mutations.publishProject, {
+		onCompleted: ({ publishProject: project }) => {
+			Router.push(`/projects/${project.id}`);
+			reset();
+		}
+	});
 	const { register, handleSubmit, reset, formState: { errors: formErrors } } = useForm<IFormValues>({
 		defaultValues: data
 	});
@@ -33,17 +38,10 @@ const NewProjectForm: FunctionComponent<NewProjectFormProps> = ({ className, id,
 	const onSubmit = async (data: IFormValues) => {
 		const { data: { upsertProject: project } } = await upsertProject({
 			variables: { issuer: user.issuer, id, ...data },
-			refetchQueries: [Queries.getProject]
 		});
-		await publishProject({ variables: { id: project.id } });
-
-
-		if (id) {
-			Router.push(`/projects/${id}`);
-		} else {
-			Router.push("/projects");
-			reset();
-		}
+		await publishProject({
+			variables: { id: project.id },
+		});
 	}
 
 	return (
@@ -80,7 +78,7 @@ const NewProjectForm: FunctionComponent<NewProjectFormProps> = ({ className, id,
 				/>
 			</div>
 
-            <div className="space-y-3">
+			<div className="space-y-3">
 				<Button
 					type="submit"
 					disabled={loading}
@@ -96,7 +94,7 @@ const NewProjectForm: FunctionComponent<NewProjectFormProps> = ({ className, id,
 					</p>
 				)}
 			</div>
-        </form>
+		</form>
 	)
 }
 

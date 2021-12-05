@@ -2,6 +2,8 @@ import { FunctionComponent } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { Button } from './index';
+
 interface IVisual {
 	url: string;
 	width: number;
@@ -26,13 +28,13 @@ const Hero: FunctionComponent<HeroProps> = ({ title, description, visual }) => {
 					{description}
 				</p>
 
-				<Link href="/login">
-					<a
-						className="mt-8 inline-flex items-center justify-center px-5 py-3 border border-transparent rounded text-white bg-indigo-500 hover:bg-indigo-700"
-					>
-						Try it for free
-					</a>
-				</Link>
+				<Button
+					url="/login"
+					compact={false}
+					className="mt-8"
+				>
+					Try it for free
+				</Button>
 			</div>
 
 			<div aria-hidden="true" className="absolute bottom-8 -right-8 max-w-lg lg:max-w-full z-0 lg:relative pointer-events-none">

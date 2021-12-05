@@ -83,9 +83,9 @@ const Comment: FunctionComponent<CommentProps> = ({ className, data }) => {
 						<Disclosure.Panel className="px-4 pb-6 text-gray-500">
 							<dl className="divide-y">
 								<div className="py-1.5 sm:grid sm:grid-cols-3 sm:gap-4">
-									<dt className="text-sm text-gray-500">URL</dt>
+									<dt className="text-sm text-gray-500">Pathname</dt>
 									<dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-										{comment.url}
+										<code>{comment.pathname}</code>
 									</dd>
 								</div>
 

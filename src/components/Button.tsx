@@ -36,7 +36,7 @@ const Button: ForwardRefComponent<ButtonProps, any> = forwardRef<any, ButtonProp
 		"border border-gray-300 text-gray-800 bg-white hover:bg-gray-100": secondary,
 		"border border-red-300 text-red-600 focus:ring-red-500 bg-white hover:bg-red-50": danger,
 		"w-full": fluid,
-		"px-8 py-3": !compact,
+		"px-6 py-4": !compact,
 		"px-4 py-2 text-sm": compact,
 		"pointer-events-none opacity-50": disabled
 	});

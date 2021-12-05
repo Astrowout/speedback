@@ -1,6 +1,8 @@
 import { FunctionComponent } from 'react';
 import Link from "next/link";
 
+import { Button } from './index';
+
 type CtaProps = {
 	title: string;
 	subtitle: string;
@@ -20,13 +22,13 @@ const Cta: FunctionComponent<CtaProps> = ({ title, subtitle }) => {
 					</span>
 				</h2>
 
-				<Link href="/login">
-					<a
-						className="mt-8 inline-block lg:mt-0 lg:flex-shrink-0 px-5 py-3 rounded text-white bg-indigo-500 hover:bg-indigo-700"
-					>
-						Try it for free
-					</a>
-				</Link>
+				<Button
+					url="/login"
+					compact={false}
+					className="mt-8 lg:mt-0"
+				>
+					Try it for free
+				</Button>
 			</div>
 		</div>
 	)

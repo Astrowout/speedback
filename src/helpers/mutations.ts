@@ -73,10 +73,38 @@ Mutations.resolveComment = gql`
 	}
 `;
 
+Mutations.createComment = gql`
+	 mutation ($text: String!, $pathname: String!, $elementSelector: String!, $metainfo: String!, $userId: ID!, $projectId: ID!) {
+		createComment(
+			data: {
+				text: $text,
+				pathname: $pathname,
+				elementSelector: $elementSelector,
+				metaInfo: $metainfo,
+				project: { connect: { id: $projectId } },
+				authUser: { connect: { id: $userId } },
+			}
+		) {
+			id
+		}
+	}
+`;
+
+Mutations.publishComment = gql`
+	 mutation ($id: ID!) {
+		publishComment(
+			where: { id: $id },
+			to: PUBLISHED
+		) {
+			id
+		}
+	}
+`;
+
 Mutations.publishProject = gql`
 	 mutation ($id: ID!) {
 		publishProject(
-			where: {id: $id},
+			where: { id: $id },
 			to: PUBLISHED
 		) {
 			id

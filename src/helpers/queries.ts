@@ -81,20 +81,20 @@ Queries.getContentPage = gql`
 `;
 
 Queries.getGlobals = gql`
-	query ($issuer: String!, $projectId: ID!) {
+	query ($issuer: String!) {
 		comments(
-			first: 1,
-			where: { issuer: $issuer }
+			first: 1
+			where: { authUser: { issuer: $issuer }}
 			orderBy: createdAt_DESC
 		) {
 			createdAt
 		}
-		commentsConnection(where: { issuer: $issuer }) {
+		commentsConnection(where: { authUser: { issuer: $issuer }}) {
 			aggregate {
 				count
 			}
 		}
-	}
+		}
 `;
 
 Queries.getUser = gql`
@@ -109,7 +109,11 @@ Queries.getUser = gql`
 
 Queries.getProject = gql`
 	query ($id: ID!) {
-		project(where: {id: $id}) {
+		project(
+			where: {
+				id: $id
+			}
+		) {
 			id
 			name
 			url
@@ -124,7 +128,7 @@ Queries.getProject = gql`
 			comments {
 				id
 				text
-				url
+				pathname
 				resolved
 				metaInfo
 				createdAt
@@ -136,9 +140,21 @@ Queries.getProject = gql`
 	}
 `;
 
-Queries.getProjects = gql`
+Queries.getAllProjects = gql`
 	query {
 		projects {
+			id
+		}
+	}
+`;
+
+Queries.getProjects = gql`
+	query ($issuer: String)  {
+		projects(
+			where: {
+				authUser_every: { issuer: $issuer }
+			}
+		) {
 			id
 			name
 			url
@@ -182,9 +198,9 @@ Queries.getComment = gql`
 `;
 
 Queries.getCommentsByProject = gql`
-	query ($projectId: ID!) {
+	query ($projectId: ID!, $pathname: String!) {
 		comments(
-			where: {project: {id: $projectId}},
+			where: { project: { id: $projectId }, pathname: $pathname },
 			orderBy: createdAt_ASC
 		) {
 			id
