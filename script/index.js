@@ -8,6 +8,7 @@ import commentTemplate from "./templates/comment.js";
 // Helpers
 import addCss from "./helpers/add-css.js";
 import { checkHighlightedElement } from "./helpers/check-elements.js";
+import generateSelector from "./helpers/generate-selector.js";
 import throttle from "./helpers/throttle.js";
 
 // Vendors
@@ -63,7 +64,7 @@ const renderElements = () => {
 const handleInput = (e) => {
 	const placeholder = document.querySelector(".gthr-tooltip__placeholder");
 
-	if (e.target.value) {
+	if (e.target.innerText) {
 		placeholder.style.visibility = "hidden";
 	} else {
 		placeholder.style.visibility = "visible";
@@ -75,21 +76,37 @@ const destroyTippy = () => {
 	tippyInstance = null;
 }
 
-const handlePostComment = async () => {
+const handlePostComment = async (e, el) => {
+	e.target.disabled = true;
+
 	const input = document.querySelector(".gthr-tooltip__input");
 
-	await console.log("fetch");
+	const data = {
+		metainfo: {blabla: "test"},
+		text: input.innerText,
+		pathname: window.location.pathname,
+		elementSelector: generateSelector(el),
+		projectId: id,
+	}
+
+	const res = await fetch(`${config.BASE_URL}/api/comments/post`, {
+		method: "POST",
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify(data)
+	});
+	const comment = await res.json();
+	await console.log(comment);
 }
 
 const handleResolveComment = async ({ comment, el }) => {
-	console.log("resolve", comment.resolved);
 	const res = await fetch(`${config.BASE_URL}/api/comments/resolve?id=${comment.id}&value=${!comment.resolved}`);
 	const newComment = await res.json();
 
 	el._tippy.setContent(commentTemplate({
 		text: comment.text,
 		resolved: newComment.resolved,
-		email: comment.authUser.email,
 	}));
 }
 
@@ -124,32 +141,40 @@ const addComment = (el) => {
 
 	el.appendChild(dot);
 
-	const postFn = () => handlePostComment();
+	const postFn = (e) => handlePostComment(e, el);
 
 	const cancelFn = () => handleCloseInput(dot);
 
-	tippy(dot, {
-		content: inputTemplate,
-		showOnCreate: true,
-		onCreate() {
-			console.log("create");
-		},
-		onShown() {
-			console.log("shown");
-			const postBtn = document.getElementById("gthr-action-post");
-			const cancelBtn = document.getElementById("gthr-action-cancel");
+	const inputFn = (e) => handleInput(e);
 
-			postBtn.addEventListener("click", postFn);
-			cancelBtn.addEventListener("click", cancelFn);
-		},
-		onHide() {
-			const postBtn = document.getElementById("gthr-action-post");
-			const cancelBtn = document.getElementById("gthr-action-cancel");
+	if (dot._tippy) {
+		dot._tippy.show();
+	} else {
+		tippy(dot, {
+			content: inputTemplate,
+			showOnCreate: true,
+			onShown() {
+				disableCommentMode();
 
-			postBtn.removeEventListener("click", postFn);
-			cancelBtn.removeEventListener("click", cancelFn);
-		},
-	});
+				const postBtn = document.getElementById("gthr-action-post");
+				const cancelBtn = document.getElementById("gthr-action-cancel");
+				const inputEl = document.getElementById("gthr-action-input");
+
+				postBtn.addEventListener("click", postFn);
+				cancelBtn.addEventListener("click", cancelFn);
+				inputEl.addEventListener("input", inputFn);
+			},
+			onHide() {
+				const postBtn = document.getElementById("gthr-action-post");
+				const cancelBtn = document.getElementById("gthr-action-cancel");
+				const inputEl = document.getElementById("gthr-action-input");
+
+				postBtn.removeEventListener("click", postFn);
+				cancelBtn.removeEventListener("click", cancelFn);
+				inputEl.removeEventListener("input", inputFn);
+			},
+		});
+	}
 }
 
 const handleAddComment = (e) => {
@@ -170,7 +195,14 @@ const cleanupCommentMode = () => {
 	checkHighlightedElement();
 
 	overlay.remove();
-	dot.remove();
+}
+
+const disableCommentMode = () => {
+	commentMode = false;
+
+	updateButton();
+
+	cleanupCommentMode();
 }
 
 const toggleCommentMode = (e) => {
@@ -217,7 +249,6 @@ const placeComments = () => {
 			content: commentTemplate({
 				text: comment.text,
 				resolved: comment.resolved,
-				email: comment.authUser.email,
 				metadata: comment.metadata
 			}),
 			onShown() {

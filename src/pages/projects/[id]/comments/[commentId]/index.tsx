@@ -1,7 +1,6 @@
 
 import Head from 'next/head';
 import Link from 'next/link';
-import Router from "next/router";
 import { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { ChatAlt2Icon, ClipboardCopyIcon, PencilIcon, TrashIcon } from '@heroicons/react/outline';
@@ -109,12 +108,12 @@ export const getStaticPaths = async () => {
 	}));
 
 	return {
-	  paths,
-	  fallback: 'blocking'
+		paths,
+		fallback: 'blocking'
 	};
 }
 
-export const getStaticProps: GetStaticProps = async({ params }) => {
+export const getStaticProps: GetStaticProps = async ({ params }) => {
 	const { data: { project } } = await ApolloClient.query({
 		query: Queries.getProject,
 		variables: { id: params?.id }

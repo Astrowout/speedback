@@ -44,6 +44,13 @@ Mutations.deleteProject = gql`
 		deleteProject(where: { id: $id }) {
 			id
 		}
+		deleteManyComments(
+			where: {
+				project: { id: $id }
+			}
+		) {
+			id
+		}
 	}
 `;
 
@@ -74,7 +81,7 @@ Mutations.resolveComment = gql`
 `;
 
 Mutations.createComment = gql`
-	 mutation ($text: String!, $pathname: String!, $elementSelector: String!, $metainfo: String!, $userId: ID!, $projectId: ID!) {
+	 mutation ($text: String!, $pathname: String!, $elementSelector: String!, $metainfo: Json!, $projectId: ID!) {
 		createComment(
 			data: {
 				text: $text,
@@ -82,7 +89,6 @@ Mutations.createComment = gql`
 				elementSelector: $elementSelector,
 				metaInfo: $metainfo,
 				project: { connect: { id: $projectId } },
-				authUser: { connect: { id: $userId } },
 			}
 		) {
 			id

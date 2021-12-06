@@ -121,20 +121,6 @@
 	position: relative;
 }
 
-.gthr-tooltip__user {
-	display: flex;
-	align-items: center;
-	color: grey;
-}
-
-.gthr-tooltip__avatar {
-	border-radius: 99px;
-	width: 32px;
-	height: 32px;
-	color: lightgrey;
-	margin-right: 4px;
-}
-
 .gthr-tooltip__input:focus {
 	outline: none;
 }
@@ -161,6 +147,11 @@
 .gthr-tooltip__action {
 	padding: 6px 12px;
 	border-radius: var(--border-radius);
+}
+
+.gthr-tooltip__action:disabled {
+	pointer-events: none;
+	opacity: 0.5;
 }
 
 .gthr-tooltip__action--primary {

@@ -1,4 +1,4 @@
-import { FunctionComponent, useContext } from 'react';
+import { FunctionComponent, useContext, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import cn from "classnames";
 import Router from 'next/router';
@@ -6,7 +6,7 @@ import { useMutation } from '@apollo/client';
 import { LinkIcon } from '@heroicons/react/outline';
 
 import { Input } from '../index';
-import { Mutations, Queries } from '../../helpers';
+import { Mutations } from '../../helpers';
 import { AuthContext } from '../../context';
 import Button from '../Button';
 
@@ -28,7 +28,6 @@ const NewProjectForm: FunctionComponent<NewProjectFormProps> = ({ className, id,
 	const [publishProject] = useMutation(Mutations.publishProject, {
 		onCompleted: ({ publishProject: project }) => {
 			Router.push(`/projects/${project.id}`);
-			reset();
 		}
 	});
 	const { register, handleSubmit, reset, formState: { errors: formErrors } } = useForm<IFormValues>({
@@ -44,8 +43,14 @@ const NewProjectForm: FunctionComponent<NewProjectFormProps> = ({ className, id,
 		});
 	}
 
+	useEffect(() => {
+		return () => {
+			reset();
+		}
+	}, []); // eslint-disable-line react-hooks/exhaustive-deps
+
 	return (
-		<form className={cn(className, "space-y-10")} onSubmit={handleSubmit(onSubmit)}>
+		<form className={cn(className, "space-y-10 mx-auto")} onSubmit={handleSubmit(onSubmit)}>
 			<div className="space-y-6">
 				<Input
 					type="text"

@@ -1,8 +1,10 @@
 import { ClipboardCopyIcon } from "@heroicons/react/outline";
-import { FunctionComponent, MouseEvent, MouseEventHandler, useEffect } from "react";
+import { FunctionComponent, MouseEvent, useEffect } from "react";
 import cn from "classnames";
 import ClipboardJS from "clipboard";
 import Router from "next/router";
+
+import { Tooltip } from "./index";
 
 type ProjectsTableProps = {
 	rows: any[],
@@ -79,7 +81,7 @@ const ProjectsTable: FunctionComponent<ProjectsTableProps> = ({ className, rows,
 								>
 									<td className="p-4 whitespace-nowrap">
 										<strong>
-											{ row.name }
+											{row.name}
 										</strong>
 									</td>
 
@@ -90,36 +92,39 @@ const ProjectsTable: FunctionComponent<ProjectsTableProps> = ({ className, rows,
 											rel="noopener noreferrer"
 											className="text-sm text-blue-500 underline"
 										>
-											{ row.url }
+											{row.url}
 										</a>
 									</td>
 
 									{!compact && (
 										<>
 											<td className="p-4 whitespace-nowrap text-sm">
-												{ row.description }
+												{row.description}
 											</td>
 
 											<td className="p-4 whitespace-nowrap text-sm">
-												{ row.id }
+												{row.id}
 											</td>
 
 											<td className="p-4 whitespace-nowrap font-bold">
-												{ row.comments.length }
+												{row.comments.length}
 											</td>
 										</>
 									)}
 
 									<td className="p-4 whitespace-nowrap flex justify-end">
-										<button
-											type="button"
-											data-clipboard-text={`<script src="${window.location.origin}/script/index.js?id=${row.id}" crossorigin charset="utf-8"></script>`}
-											id="copyScriptTrigger"
-											className="text-indigo-500 px-3 py-2 bg-indigo-100 rounded hover:bg-indigo-200 hover:text-indigo-800 flex items-center"
-										>
-											<ClipboardCopyIcon className="block h-5 w-5 mr-1" aria-hidden="true" />
-											<span className="text-sm">Copy script</span>
-										</button>
+										<Tooltip content="Script copied!">
+											<button
+												type="button"
+												onClick={(e) => e.stopPropagation()}
+												data-clipboard-text={`<script src="${window.location.origin}/script/index.js?id=${row.id}" crossorigin charset="utf-8"></script>`}
+												id="copyScriptTrigger"
+												className="text-indigo-500 px-3 py-2 bg-indigo-100 rounded hover:bg-indigo-200 hover:text-indigo-800 flex items-center"
+											>
+												<ClipboardCopyIcon className="block h-5 w-5 mr-1" aria-hidden="true" />
+												<span className="text-sm">Copy script</span>
+											</button>
+										</Tooltip>
 									</td>
 								</tr>
 							))}

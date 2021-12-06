@@ -81,15 +81,15 @@ Queries.getContentPage = gql`
 `;
 
 Queries.getGlobals = gql`
-	query ($issuer: String!) {
+	query ($projectId: String!) {
 		comments(
 			first: 1
-			where: { authUser: { issuer: $issuer }}
+			where: { project: { id: $projectId }}
 			orderBy: createdAt_DESC
 		) {
 			createdAt
 		}
-		commentsConnection(where: { authUser: { issuer: $issuer }}) {
+		commentsConnection(where: { project: { id: $projectId }}) {
 			aggregate {
 				count
 			}
@@ -132,9 +132,6 @@ Queries.getProject = gql`
 				resolved
 				metaInfo
 				createdAt
-				authUser {
-					email
-				}
 			}
 		}
 	}
@@ -189,10 +186,6 @@ Queries.getComment = gql`
 			resolved
 			metaInfo
 			elementSelector
-			authUser {
-				id
-				email
-			}
 		}
 	}
 `;
@@ -208,10 +201,6 @@ Queries.getCommentsByProject = gql`
 			resolved
 			metaInfo
 			elementSelector
-			authUser {
-				id
-				email
-			}
 		}
 	}
 `;

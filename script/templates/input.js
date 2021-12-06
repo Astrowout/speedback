@@ -5,9 +5,8 @@ const inputTemplate = `
 			role="textbox"
 			class="gthr-tooltip__input"
 			id="gthr-action-input"
-		>
-			<p class="gthr-tooltip__placeholder">Add a comment</p>
-		</div>
+		></div>
+		<p class="gthr-tooltip__placeholder">Add a comment</p>
 
 		<div class="gthr-tooltip__actions">
 			<button type="button" id="gthr-action-cancel" class="gthr-tooltip__action gthr-tooltip__action--secondary">

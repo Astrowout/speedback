@@ -7,7 +7,7 @@ import { AppLayout } from '../../../layouts';
 import { ApolloClient, Queries } from '../../../helpers';
 
 const AppEditProject: NextPage = ({ id }: InferGetStaticPropsType<typeof getStaticProps>) => {
-	const { loading, data } = useQuery(Queries.getProject, {
+	const { data } = useQuery(Queries.getProject, {
 		variables: { id }
 	});
 

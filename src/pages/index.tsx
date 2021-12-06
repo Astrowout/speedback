@@ -37,7 +37,7 @@ const AppIndex: NextPage = () => {
 					title="My dashboard"
 					stats={{
 						commentCount: get(globals, ["commentsConnection", "aggregate", "count"], 0),
-						lastCommentDate: new Date(get(globals, ["comments", "0", "createdAt"], new Date())),
+						lastCommentDate: get(globals, ["comments", "0", "createdAt"], null),
 					}}
 				>
 					<div className="-my-1.5 -mx-2 mt-5 flex flex-wrap lg:mt-0">

@@ -28,3 +28,4 @@ export { default as Pricing } from "./Pricing";
 export { default as Navigation } from "./Navigation";
 export { default as Toggle } from "./Toggle";
 export { default as Footer } from "./Footer";
+export { default as Tooltip } from "./Tooltip";

@@ -35,11 +35,7 @@ const Comment: FunctionComponent<CommentProps> = ({ className, data }) => {
 				<div className={cn("flex truncate divide-x divide-gray-300", {
 					'opacity-50': comment.resolved
 				})}>
-					<p className="text-sm font-bold truncate pr-3">
-						{comment.authUser.email}
-					</p>
-
-					<span className="block text-sm truncate pl-3 text-gray-400">
+					<span className="block text-sm truncate text-gray-400">
 						{DateUtils.formatRelative(new Date(comment.createdAt))}
 					</span>
 				</div>
@@ -51,7 +47,7 @@ const Comment: FunctionComponent<CommentProps> = ({ className, data }) => {
 							className="w-6 h-6 text-green-500"
 							aria-hidden="true"
 						/>
-					): (
+					) : (
 						<CheckCircleIcon
 							className="w-6 h-6 text-gray-400"
 							aria-hidden="true"
@@ -62,7 +58,7 @@ const Comment: FunctionComponent<CommentProps> = ({ className, data }) => {
 
 			<Disclosure as="div" className="mr-16">
 				{({ open }) => (
-        			<>
+					<>
 						<Disclosure.Button className="p-4 pb-6 w-full flex justify-between items-center">
 							<p
 								className={cn("text-left", {
@@ -104,7 +100,7 @@ const Comment: FunctionComponent<CommentProps> = ({ className, data }) => {
 							</dl>
 						</Disclosure.Panel>
 					</>
-      			)}
+				)}
 			</Disclosure>
 		</div>
 	)

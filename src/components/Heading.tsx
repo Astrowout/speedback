@@ -62,7 +62,7 @@ const Heading: FunctionComponent<HeadingProps> = ({ children, title, stats, back
 
 				{children}
 			</div>
-	  	</section>
+		</section>
 	)
 }
 

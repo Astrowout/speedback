@@ -6,17 +6,20 @@ import { ApolloClient, initMiddleware, Mutations } from '../../../helpers';
 const cors = initMiddleware(
 	Cors({
 		// Only allow requests with GET and OPTIONS
-		methods: ['GET', 'OPTIONS'],
+		methods: ['POST', 'OPTIONS'],
 	})
 )
 
 const postComment = async (req: NextApiRequest, res: NextApiResponse) => {
 	await cors(req, res);
 
+	console.log(req);
+
+
 	try {
 		const { data: { createComment: comment } } = await ApolloClient.mutate({
 			mutation: Mutations.createComment,
-			variables: req.query
+			variables: req.body
 		});
 		await ApolloClient.mutate({
 			mutation: Mutations.publishComment,
