@@ -97,7 +97,12 @@ const handlePostComment = async (e, el) => {
 		body: JSON.stringify(data)
 	});
 	const comment = await res.json();
-	await console.log(comment);
+
+	if (comment.id) {
+		const dot = el.querySelector(".gthr-dot");
+		dot.remove();
+		await getComments();
+	}
 }
 
 const handleResolveComment = async ({ comment, el }) => {
