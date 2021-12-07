@@ -13,6 +13,7 @@ import throttle from "./helpers/throttle.js";
 
 // Vendors
 import tippy from "./vendors/tippy.js";
+import Bowser from "./vendors/bowser.js";
 
 // Events
 import mouseMove from "./events/hover.js";
@@ -82,7 +83,7 @@ const handlePostComment = async (e, el) => {
 	const input = document.querySelector(".gthr-tooltip__input");
 
 	const data = {
-		metainfo: {blabla: "test"},
+		metainfo: Bowser.parse(window.navigator.userAgent),
 		text: input.innerText,
 		pathname: window.location.pathname,
 		elementSelector: generateSelector(el),
@@ -106,7 +107,18 @@ const handlePostComment = async (e, el) => {
 }
 
 const handleResolveComment = async ({ comment, el }) => {
-	const res = await fetch(`${config.BASE_URL}/api/comments/resolve?id=${comment.id}&value=${!comment.resolved}`);
+	const data = {
+		id: comment.id,
+		value: !comment.resolved
+	};
+
+	const res = await fetch(`${config.BASE_URL}/api/comments/resolve`, {
+		method: "POST",
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify(data),
+	});
 	const newComment = await res.json();
 
 	el._tippy.setContent(commentTemplate({

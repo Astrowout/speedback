@@ -125,6 +125,10 @@
 	outline: none;
 }
 
+.gthr-tooltip__comment {
+	color: black;
+}
+
 .gthr-tooltip__comment--resolved {
 	text-decoration: line-through;
 }

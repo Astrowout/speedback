@@ -40,10 +40,10 @@ const Comments: FunctionComponent<CommentsProps> = ({ className, comments, proje
 					</div>
 				</EmptyState>
 			) : (
-				<ul className="bg-white shadow border overflow-hidden rounded divide-y mt-2">
-					{comments.map(comment => (
-						<li key={comment.id}>
-							<Comment data={comment} />
+				<ul className="flex flex-col gap-y-4 mt-2">
+					{comments.map((comment, i) => (
+						<li key={comment.id} className="bg-white shadow border overflow-hidden rounded">
+							<Comment data={comment} index={i} />
 						</li>
 					))}
 				</ul>

@@ -1,20 +1,18 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import Cors from 'cors';
+
 import { ApolloClient, initMiddleware, Mutations } from '../../../helpers';
 
 // Initialize the cors middleware
 const cors = initMiddleware(
 	Cors({
-		// Only allow requests with GET and OPTIONS
+		// Only allow requests with POST and OPTIONS
 		methods: ['POST', 'OPTIONS'],
 	})
 )
 
 const postComment = async (req: NextApiRequest, res: NextApiResponse) => {
 	await cors(req, res);
-
-	console.log(req);
-
 
 	try {
 		const { data: { createComment: comment } } = await ApolloClient.mutate({

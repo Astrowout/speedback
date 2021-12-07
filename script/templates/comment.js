@@ -2,7 +2,7 @@ const commentTemplate = ({ text, resolved }) => `
 	<div class="gthr-tooltip">
 		<div class="gthr-tooltip__content">
 			<p
-				class="${resolved && 'gthr-tooltip__comment--resolved'}"
+				class="gthr-tooltip__comment ${resolved && 'gthr-tooltip__comment--resolved'}"
 			>
 				${text}
 			</p>
