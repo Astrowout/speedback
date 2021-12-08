@@ -8,8 +8,8 @@ import { MenuIcon, XIcon } from '@heroicons/react/outline';
 import { Logo, User } from "./index";
 
 const navigation = [
-{ name: 'Dashboard', href: '/' },
-{ name: 'Projects', href: '/projects' },
+	{ name: 'Dashboard', href: '/' },
+	{ name: 'Projects', href: '/projects' },
 ]
 
 const AppHeader = () => {
@@ -67,10 +67,10 @@ const AppHeader = () => {
 										className={cn('block px-3 py-2 rounded font-brand', {
 											'bg-gray-900 text-white': router.pathname === item.href,
 											'text-gray-300 hover:bg-gray-700 hover:text-white': router.pathname !== item.href,
-									})}
-									aria-current={router.pathname === item.href ? 'page' : undefined}
+										})}
+										aria-current={router.pathname === item.href ? 'page' : undefined}
 									>
-									{item.name}
+										{item.name}
 									</a>
 								</Link>
 							))}
