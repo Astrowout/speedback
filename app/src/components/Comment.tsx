@@ -1,10 +1,10 @@
-import { FunctionComponent, ReactElement, useState } from "react";
+import { Fragment, FunctionComponent, ReactElement, useState } from "react";
 import cn from "classnames";
 import { CheckCircleIcon, ChevronDownIcon } from "@heroicons/react/outline";
 import { CheckCircleIcon as CheckCircleIconSolid } from "@heroicons/react/solid";
 
 import { DateUtils, Mutations } from "../helpers";
-import { Disclosure } from '@headlessui/react'
+import { Disclosure, Transition } from '@headlessui/react'
 import { useMutation } from "@apollo/client";
 
 type CommentProps = {
@@ -31,12 +31,6 @@ const Comment: FunctionComponent<CommentProps> = ({ className, data, index }) =>
 	const renderMetainfo = (key: string, info: any): ReactElement => {
 
 		if (typeof info === "object") {
-			Object.keys(info).map(nestedKey => {
-				const nestedInfo = info[nestedKey];
-
-				return renderMetainfo(nestedKey, nestedInfo);
-			});
-
 			return (
 				<>
 					<div key={key} className="py-2 px-4 sm:grid sm:grid-cols-3 sm:gap-4 bg-gray-100">
@@ -53,7 +47,7 @@ const Comment: FunctionComponent<CommentProps> = ({ className, data, index }) =>
 		}
 
 		return (
-			<div key={key} className="py-2 px-4 sm:grid sm:grid-cols-3 sm:gap-4">
+			<div key={`${key} - ${info}`} className="py-2 px-4 sm:grid sm:grid-cols-3 sm:gap-4">
 				<dt className="text-sm text-gray-500">{key}</dt>
 				<dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
 					{info}
@@ -121,15 +115,25 @@ const Comment: FunctionComponent<CommentProps> = ({ className, data, index }) =>
 							/>
 						</Disclosure.Button>
 
-						<Disclosure.Panel>
-							<dl className="divide-y border-t overflow-hidden">
-								{Object.keys(comment.metaInfo).map(key => {
-									const info = comment.metaInfo[key];
+						<Transition
+							as={Fragment}
+							enter="transition-all duration-150 ease-out"
+							enterFrom="transform max-h-0 -translate-y-4 opacity-0"
+							enterTo="transform max-h-96 translate-y-0 opacity-100"
+							leave="transition-all duration-100 ease-out"
+							leaveFrom="transform max-h-96 translate-y-0 opacity-100"
+							leaveTo="transform max-h-0 -translate-y-4 opacity-0"
+						>
+							<Disclosure.Panel>
+								<dl className="divide-y border-t overflow-hidden">
+									{Object.keys(comment.metaInfo).map(key => {
+										const info = comment.metaInfo[key];
 
-									return renderMetainfo(key, info);
-								})}
-							</dl>
-						</Disclosure.Panel>
+										return renderMetainfo(key, info);
+									})}
+								</dl>
+							</Disclosure.Panel>
+						</Transition>
 					</>
 				)}
 			</Disclosure>

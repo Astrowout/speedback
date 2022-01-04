@@ -57,7 +57,7 @@ const User: FunctionComponent<UserProps> = ({ className }) => {
 							<Menu.Item>
 								{({ active }) => (
 									<Link
-										href="/logout"
+										href="/app/logout"
 									>
 										<a
 											className={cn('flex items-center w-full text-left hover:bg-indigo-50 p-4 text-sm', {
@@ -91,7 +91,7 @@ const User: FunctionComponent<UserProps> = ({ className }) => {
 
 					<div className="mt-3 px-2">
 						<Link
-							href="/logout"
+							href="/app/logout"
 						>
 							<a
 								className={cn('block w-full text-left px-4 py-2 text-sm text-gray-300')}

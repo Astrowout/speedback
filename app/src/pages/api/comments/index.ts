@@ -5,10 +5,10 @@ import { ApolloClient, Queries, initMiddleware } from '../../../helpers';
 // Initialize the cors middleware
 const cors = initMiddleware(
 	Cors({
-	  // Only allow requests with GET and OPTIONS
-	  methods: ['GET', 'OPTIONS'],
+		// Only allow requests with GET and OPTIONS
+		methods: ['GET', 'OPTIONS'],
 	})
-)
+);
 
 const comments = async (req: NextApiRequest, res: NextApiResponse) => {
 	await cors(req, res);
@@ -16,6 +16,7 @@ const comments = async (req: NextApiRequest, res: NextApiResponse) => {
 	try {
 		const { data: { comments } } = await ApolloClient.query({
 			query: Queries.getCommentsByProject,
+			fetchPolicy: "network-only",
 			variables: { projectId: req.query.projectId, pathname: req.query.pathname }
 		});
 

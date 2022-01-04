@@ -40,7 +40,6 @@
 	left: 0;
 	right: 0;
 	bottom: 0;
-	border: 6px solid var(--primary-color);
 	z-index: var(--z-index);
 	cursor: crosshair !important;
 }
@@ -70,7 +69,7 @@
 	box-shadow: var(--box-shadow);
 	border: 1px solid black;
 	border-radius: 99px;
-	z-index: calc(var(--z-index) + 3);
+	z-index: calc(var(--z-index) + 2);
 
 	cursor: pointer;
 
@@ -90,7 +89,7 @@
 .tippy-box {
 	width: 320px;
 	box-shadow: var(--box-shadow);
-	z-index: calc(var(--z-index) + 1);
+	z-index: calc(var(--z-index) + 3);
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	text-transform: none;
 	background-color: white;
@@ -104,7 +103,7 @@
 	position: relative;
 	display: flex;
 	flex-direction: column;
-	z-index: 1000;
+	z-index: calc(var(--z-index) + 3);
 }
 
 .gthr-tooltip__content {
@@ -126,7 +125,8 @@
 }
 
 .gthr-tooltip__comment {
-	color: black;
+	color: black !important;
+	margin: 0 !important;
 }
 
 .gthr-tooltip__comment--resolved {
@@ -140,6 +140,19 @@
 	color: lightgrey;
 	pointer-events: none;
 	margin: 0 !important;
+}
+
+.gthr-tooltip__spinner {
+	animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
 }
 
 .gthr-tooltip__actions {

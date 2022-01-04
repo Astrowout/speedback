@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import Cors from 'cors';
-import { ApolloClient, initMiddleware, Mutations } from '../../../helpers';
+import { ApolloClient, initMiddleware, Mutations, Queries } from '../../../helpers';
 
 // Initialize the cors middleware
 const cors = initMiddleware(
@@ -8,18 +8,23 @@ const cors = initMiddleware(
 		// Only allow requests with POST and OPTIONS
 		methods: ['POST', 'OPTIONS'],
 	})
-)
+);
 
 const resolveComment = async (req: NextApiRequest, res: NextApiResponse) => {
 	await cors(req, res);
 
 	try {
-		const { data: { publishComment: comment } } = await ApolloClient.mutate({
+		const { data: { comment } } = await ApolloClient.query({
+			query: Queries.getComment,
+			fetchPolicy: "network-only",
+			variables: { id: req.body.id }
+		});
+		const { data: { publishComment: updatedComment } } = await ApolloClient.mutate({
 			mutation: Mutations.resolveComment,
-			variables: { id: req.body.id, resolved: req.body.value }
+			variables: { id: req.body.id, resolved: !comment.resolved }
 		});
 
-		res.status(200).json(comment);
+		res.status(200).json(updatedComment);
 	} catch (error) {
 		console.log(error);
 		res.status(500).send(error);

@@ -1,87 +1,78 @@
 import Head from 'next/head';
-import type { NextPage } from "next";
-import { useContext } from 'react';
-import { useQuery } from "@apollo/client";
-import get from "lodash/get";
+import { gsap } from "gsap";
+import ScrollToPlugin from 'gsap/dist/ScrollToPlugin';
+import type { GetStaticProps, InferGetStaticPropsType, NextPage } from "next";
 
-import { Heading, EmptyState, ProjectsTable, Loader, Button } from '../components';
-import { AppLayout } from '../layouts';
-import { PlusIcon, EyeIcon, CollectionIcon } from '@heroicons/react/outline';
+import { MarketingLayout } from '../layouts';
+import { Cta, Features, Hero, Pricing, ForWhom } from '../components';
 import { ApolloClient, Queries } from '../helpers';
-import { AuthContext } from '../context';
 
-const AppIndex: NextPage = () => {
-	const { user } = useContext(AuthContext);
+gsap.registerPlugin(ScrollToPlugin);
 
-	const { data, loading } = useQuery(Queries.getProjects, {
-		variables: { issuer: user?.issuer },
-		skip: !user,
-		fetchPolicy: "cache-and-network"
-	});
-
-	const { data: globals } = useQuery(Queries.getGlobals, {
-		variables: { issuer: user?.issuer },
-		skip: !user
-	});
-
+const Home: NextPage = ({ data }: InferGetStaticPropsType<typeof getStaticProps>) => {
 	return (
-		<AppLayout>
+		<MarketingLayout
+			data={{
+				footerDescription: data.footerDescription,
+				footerVisual: data.footerVisual,
+			}}
+		>
 			<Head>
-				<title>My dashboard - speedback</title>
+				<title>Welcome @ speedback</title>
 				<meta name="description" content="Bugbash your digital products at hyperspeed with speedback." />
-				<meta name="robots" content="noindex, nofollow" />
 			</Head>
 
 			<main>
-				<Heading
-					title="My dashboard"
-					stats={{
-						commentCount: get(globals, ["commentsConnection", "aggregate", "count"], 0),
-						lastCommentDate: get(globals, ["comments", "0", "createdAt"], null),
-					}}
-				>
-					<div className="-my-1.5 -mx-2 mt-5 flex flex-wrap lg:mt-0">
-						<Button
-							url="/projects"
-							icon={EyeIcon}
-							className="my-1.5 mx-2"
-							secondary
-						>
-							View projects
-						</Button>
+				<Hero
+					title={data.heroTitle}
+					description={data.heroDescription}
+					visual={data.heroVisual}
+				/>
 
-						<Button
-							url="/projects/create"
-							disabled={!!data?.projects.length}
-							icon={PlusIcon}
-							className="my-1.5 mx-2"
-						>
-							{!data?.projects.length ? "Create a new project" : "Go premium to add more projects"}
-						</Button>
-					</div>
-				</Heading>
+				<Features
+					eyebrow={data.featuresEyebrow}
+					title={data.featuresTitle}
+					description={data.featuresDescription}
+					features={data.features}
+				/>
 
-				<section className="2xl:container container-spacing section-spacing">
-					{loading ? (
-						<Loader />
-					) : data?.projects.length ? (
-						<ProjectsTable className="max-w-3xl" rows={data.projects} compact></ProjectsTable>
-					) : (
-						<EmptyState title="No projects found." icon={CollectionIcon}>
-							<Button
-								url="/projects/create"
-								disabled={!!data?.projects.length}
-								icon={PlusIcon}
-								className="mt-6"
-							>
-								{!data?.projects.length ? "Create a new project" : "Go premium to add more projects"}
-							</Button>
-						</EmptyState>
-					)}
-				</section>
+				<ForWhom
+					eyebrow={data.forWhomEyebrow}
+					title={data.forWhomTitle}
+					description={data.forWhomDescription}
+					audiences={data.targetAudiences}
+				/>
+
+				<Pricing
+					eyebrow={data.pricing.eyebrow}
+					title={data.pricing.title}
+					description={data.pricing.description}
+					monthlyCost={data.pricing.monthlyCost}
+					yearlyCost={data.pricing.yearlyCost}
+				/>
+
+				<Cta
+					title="Start gathering comments on your websites."
+					subtitle="Easy setup in only 3 minutes."
+				/>
 			</main>
-		</AppLayout>
-	);
+		</MarketingLayout>
+	)
 }
 
-export default AppIndex;
+export const getStaticProps: GetStaticProps = async () => {
+	const { data: { landingPage, global } } = await ApolloClient.query({
+		query: Queries.getLandingPage,
+	});
+
+	return {
+		props: {
+			data: {
+				...landingPage,
+				...global
+			},
+		},
+	}
+}
+
+export default Home;

@@ -75,6 +75,7 @@ Mutations.resolveComment = gql`
 			to: PUBLISHED
 		) {
 			id
+			text
 			resolved
 		}
 	}

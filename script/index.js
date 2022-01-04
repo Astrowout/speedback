@@ -41,14 +41,14 @@ let comments = [];
 const updateButton = () => {
 	if (commentMode) {
 		button.innerHTML = `
-			<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
 			</svg>
 			Close feedback
 		`;
 	} else {
 		button.innerHTML = `
-			<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
 			</svg>
 			Give feedback
@@ -107,9 +107,13 @@ const handlePostComment = async (e, el) => {
 }
 
 const handleResolveComment = async ({ comment, el }) => {
+	el._tippy.setContent(commentTemplate({
+		text: comment.text,
+		loading: true,
+	}));
+
 	const data = {
 		id: comment.id,
-		value: !comment.resolved
 	};
 
 	const res = await fetch(`${config.BASE_URL}/api/comments/resolve`, {
@@ -119,12 +123,14 @@ const handleResolveComment = async ({ comment, el }) => {
 		},
 		body: JSON.stringify(data),
 	});
-	const newComment = await res.json();
+	const updatedComment = await res.json();
 
 	el._tippy.setContent(commentTemplate({
-		text: comment.text,
-		resolved: newComment.resolved,
+		text: updatedComment.text,
+		resolved: updatedComment.resolved,
 	}));
+
+	el._tippy.hide();
 }
 
 const handleCloseInput = (el) => {
@@ -199,6 +205,7 @@ const handleAddComment = (e) => {
 }
 
 const handleCommentMode = () => {
+	placeComments();
 	body.addEventListener("click", handleAddComment);
 	body.addEventListener("mousemove", throttledEvent, false);
 
@@ -206,6 +213,7 @@ const handleCommentMode = () => {
 }
 
 const cleanupCommentMode = () => {
+	hideComments();
 	body.removeEventListener("click", handleAddComment);
 	body.removeEventListener("mousemove", throttledEvent, false);
 
@@ -282,12 +290,21 @@ const placeComments = () => {
 	}
 }
 
+const hideComments = () => {
+	const comments = document.querySelectorAll(".gthr-dot");
+
+	for (let i = 0; i < comments.length; i++) {
+		const comment = comments[i];
+
+		comment.remove();
+	}
+}
+
 const getComments = async () => {
 	const res = await fetch(`${config.BASE_URL}/api/comments?projectId=${id}&pathname=${window.location.pathname}`);
 	comments = await res.json();
 
 	initTippy();
-	placeComments();
 }
 
 const init = async () => {

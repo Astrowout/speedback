@@ -8,8 +8,8 @@ import { MenuIcon, XIcon } from '@heroicons/react/outline';
 import { Logo, User } from "./index";
 
 const navigation = [
-	{ name: 'Dashboard', href: '/' },
-	{ name: 'Projects', href: '/projects' },
+	{ name: 'Dashboard', href: '/app/dashboard' },
+	{ name: 'Projects', href: '/app/projects' },
 ]
 
 const AppHeader = () => {

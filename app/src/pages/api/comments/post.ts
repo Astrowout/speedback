@@ -9,7 +9,7 @@ const cors = initMiddleware(
 		// Only allow requests with POST and OPTIONS
 		methods: ['POST', 'OPTIONS'],
 	})
-)
+);
 
 const postComment = async (req: NextApiRequest, res: NextApiResponse) => {
 	await cors(req, res);

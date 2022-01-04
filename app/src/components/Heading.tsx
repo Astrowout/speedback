@@ -53,7 +53,7 @@ const Heading: FunctionComponent<HeadingProps> = ({ children, title, stats, back
 
 							{stats.lastCommentDate && (
 								<Stat icon={CalendarIcon} className="mt-2">
-									Last comment:&nbsp;<strong>{DateUtils.formatRelative(stats.lastCommentDate)}</strong>
+									Last comment:&nbsp;<strong>{DateUtils.formatRelative(new Date(stats.lastCommentDate))}</strong>
 								</Stat>
 							)}
 						</div>

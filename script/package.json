@@ -1,0 +1,12 @@
+{
+	"name": "gathr-script",
+	"version": "0.1.0",
+	"private": true,
+	"scripts": {
+		"build": "esbuild index.js main.css --bundle --minify --outdir=../app/public/script",
+		"start": "esbuild index.js main.css --watch --bundle --minify --outdir=../app/public/script"
+	},
+	"devDependencies": {
+		"esbuild": "^0.14.5"
+	}
+}

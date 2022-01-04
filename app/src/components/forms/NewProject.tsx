@@ -27,7 +27,7 @@ const NewProjectForm: FunctionComponent<NewProjectFormProps> = ({ className, id,
 	const [upsertProject, { loading, error }] = useMutation(Mutations.upsertProject);
 	const [publishProject] = useMutation(Mutations.publishProject, {
 		onCompleted: ({ publishProject: project }) => {
-			Router.push(`/projects/${project.id}`);
+			Router.push(`/app/projects/${project.id}`);
 		}
 	});
 	const { register, handleSubmit, reset, formState: { errors: formErrors } } = useForm<IFormValues>({

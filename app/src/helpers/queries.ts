@@ -8,7 +8,9 @@ Queries.getLandingPage = gql`
 			heroTitle
 			heroDescription
 			heroVisual {
-				url
+				url(transformation: {
+					image: { resize: { width: 1400, fit: max } }
+				})
 				width
 				height
 			}
@@ -29,7 +31,9 @@ Queries.getLandingPage = gql`
 				title
 				description
 				visual {
-					url
+					url(transformation: {
+						image: { resize: { width: 1000, fit: max } }
+					})
 					width
 					height
 				}
@@ -51,7 +55,9 @@ Queries.getLandingPage = gql`
 		global(where: { id: "ckuefco8wf1950b076fop8ulj" }) {
 			footerDescription
 			footerVisual {
-				url
+				url(transformation: {
+					image: { resize: { width: 600, fit: max } }
+				})
 				width
 				height
 			}
@@ -81,20 +87,19 @@ Queries.getContentPage = gql`
 `;
 
 Queries.getGlobals = gql`
-	query ($projectId: String!) {
+	query {
 		comments(
 			first: 1
-			where: { project: { id: $projectId }}
 			orderBy: createdAt_DESC
 		) {
 			createdAt
 		}
-		commentsConnection(where: { project: { id: $projectId }}) {
+		commentsConnection {
 			aggregate {
 				count
 			}
 		}
-		}
+	}
 `;
 
 Queries.getUser = gql`

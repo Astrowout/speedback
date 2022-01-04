@@ -9,25 +9,23 @@ const useAuth = () => {
 	const [error, setError] = useState<string | null | unknown>(null);
 
 	useEffect(() => {
-		setIsLoading(true);
-
 		magic = new Magic(process.env.NEXT_PUBLIC_MAGIC_API_KEY || '');
 
-		const preloadMagic = async () => {
+		const preloadMagic = () => {
 			try {
-				await magic!.preload();
+				magic!.preload();
 			} catch (error) {
 				console.log(error);
 			}
 		}
 
 		const checkUser = async () => {
+			setIsLoading(true);
+
 			try {
-				const isLoggedIn = await magic!.user.isLoggedIn();
+				const userData = await magic!.user.getMetadata();
 
-				if (isLoggedIn) {
-					const userData = await magic!.user.getMetadata();
-
+				if (userData) {
 					setUser(userData);
 				} else {
 					setUser(null);
@@ -39,17 +37,19 @@ const useAuth = () => {
 			}
 		}
 
-		preloadMagic();
 		checkUser();
+		preloadMagic();
 	}, []);
 
 	const loginWithEmail = async (email: string): Promise<void> => {
 		setIsLoading(true);
 
 		try {
-			await magic!.auth.loginWithMagicLink({
+			const didToken = await magic!.auth.loginWithMagicLink({
 				email,
 			});
+
+			document.cookie = `userToken=${didToken}; max-age=900; Secure`
 
 			const userData = await magic!.user.getMetadata();
 			setUser(userData);
@@ -74,6 +74,7 @@ const useAuth = () => {
 	const logout = async (): Promise<void> => {
 		await magic!.user.logout();
 		setUser(null);
+		document.cookie = "userToken= ; expires = Thu, 01 Jan 1970 00:00:00 GMT"
 	}
 
 	return {

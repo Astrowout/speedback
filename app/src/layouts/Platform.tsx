@@ -1,16 +1,9 @@
-import { FunctionComponent, useContext } from "react";
+import { FunctionComponent } from "react";
 
-import { AppHeader, Loader, Version } from "../components";
-import { AuthContext } from "../context";
-import { useRouterGuard } from "../hooks";
+import { AppHeader, Version } from "../components";
 
 const AppLayout: FunctionComponent = ({ children }) => {
-	const { isLoading, isLoggedIn } = useContext(AuthContext);
-	useRouterGuard({ isLoggedIn, isLoading });
-
-	return !isLoggedIn ? (
-		<Loader fullscreen />
-	) : (
+	return (
 		<>
 			<AppHeader />
 
