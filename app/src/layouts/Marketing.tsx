@@ -17,7 +17,7 @@ const MarketingLayout: FunctionComponent<MarketingLayoutProps> = ({ children, da
 				description={data.footerDescription}
 				visual={data.footerVisual}
 			/>
-	  	</>
+		</>
 	)
 }
 
