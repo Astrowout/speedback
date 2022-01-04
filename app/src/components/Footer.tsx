@@ -8,17 +8,17 @@ import { Logo, Version, Socials } from './index';
 const navigation = [
 	{
 		label: "How does it work?",
-		url: '/home',
+		url: '/',
 		anchor: "#features",
 	},
 	{
 		label: "For whom",
-		url: '/home',
+		url: '/',
 		anchor: "#for-whom",
 	},
 	{
 		label: "Pricing",
-		url: '/home',
+		url: '/',
 		anchor: "#pricing",
 	},
 ]

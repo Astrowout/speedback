@@ -22,7 +22,7 @@ const PrivacyPolicy: NextPage = ({ data }: InferGetStaticPropsType<typeof getSta
 
 			<main className="mx-auto w-full max-w-screen-xl section-spacing container-spacing">
 				<Link
-					href="/home"
+					href="/"
 				>
 					<a className="mb-6 inline-flex items-center text-sm text-gray-600 hover:text-black">
 						<ArrowSmLeftIcon className="block mr-1 w-5 h-5" aria-hidden="true" />

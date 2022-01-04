@@ -22,7 +22,7 @@ const Cookies: NextPage = ({ data }: InferGetStaticPropsType<typeof getStaticPro
 
 			<main className="xl:container section-spacing container-spacing">
 				<Link
-					href="/home"
+					href="/"
 				>
 					<a className="mb-6 inline-flex items-center text-sm text-gray-600 hover:text-black">
 						<ArrowSmLeftIcon className="block mr-1 w-5 h-5" aria-hidden="true" />

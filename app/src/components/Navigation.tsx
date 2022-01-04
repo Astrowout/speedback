@@ -8,17 +8,17 @@ import { useScrollSpy } from '../hooks';
 const navigation = [
 	{
 		name: 'How does it work?',
-		url: '/home',
+		url: '/',
 		anchor: '#features'
 	},
 	{
 		name: 'For whom',
-		url: '/home',
+		url: '/',
 		anchor: '#for-whom'
 	},
 	{
 		name: 'Pricing',
-		url: '/home',
+		url: '/',
 		anchor: '#pricing'
 	},
 ]
