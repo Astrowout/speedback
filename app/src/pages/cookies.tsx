@@ -20,7 +20,7 @@ const Cookies: NextPage = ({ data }: InferGetStaticPropsType<typeof getStaticPro
 				<meta name="description" content="Bugbash your digital products at hyperspeed with speedback." />
 			</Head>
 
-			<main className="xl:container section-spacing container-spacing">
+			<main className="mx-auto w-full max-w-screen-xl section-spacing container-spacing">
 				<Link
 					href="/"
 				>
