@@ -3,8 +3,8 @@ import { NextPage } from 'next';
 import Head from 'next/head';
 import Router from "next/router";
 
-import { Loader } from "../../components";
-import { AuthContext } from '../../context';
+import { Loader } from "../components";
+import { AuthContext } from '../context';
 
 const AppCallback: NextPage = () => {
 	const { methods } = useContext(AuthContext);
