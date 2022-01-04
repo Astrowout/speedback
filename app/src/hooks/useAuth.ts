@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import Router from 'next/router';
 import { Magic, RPCErrorCode, RPCError, MagicUserMetadata } from 'magic-sdk';
 
 let magic: Magic | null = null;
@@ -53,6 +54,8 @@ const useAuth = () => {
 
 			const userData = await magic!.user.getMetadata();
 			setUser(userData);
+
+			Router.replace("/app/dashboard");
 		} catch (error) {
 			console.error(error);
 
@@ -74,7 +77,8 @@ const useAuth = () => {
 	const logout = async (): Promise<void> => {
 		await magic!.user.logout();
 		setUser(null);
-		document.cookie = "userToken= ; expires = Thu, 01 Jan 1970 00:00:00 GMT"
+		document.cookie = "userToken= ; expires = Thu, 01 Jan 1970 00:00:00 GMT";
+		Router.replace("/");
 	}
 
 	return {

@@ -1,7 +1,6 @@
 import { useContext, useEffect } from 'react';
 import { NextPage } from 'next';
 import Head from 'next/head';
-import Router from "next/router";
 
 import { Loader } from "../components";
 import { AuthContext } from '../context';
@@ -9,15 +8,9 @@ import { AuthContext } from '../context';
 const AppCallback: NextPage = () => {
 	const { methods } = useContext(AuthContext);
 
-	const completeLogout = () => {
-		Router.replace("/");
-	}
-
 	useEffect(() => {
 		const init = async () => {
 			await methods.logout();
-
-			completeLogout();
 		}
 
 		init();
