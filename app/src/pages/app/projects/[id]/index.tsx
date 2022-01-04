@@ -12,7 +12,7 @@ import { ApolloClient, Mutations, Queries } from '../../../../helpers';
 const AppProjectDetail: NextPage = ({ id }: InferGetStaticPropsType<typeof getStaticProps>) => {
 	const { loading, data } = useQuery(Queries.getProject, {
 		variables: { id },
-		fetchPolicy: "cache-and-network"
+		fetchPolicy: "cache-and-network",
 	});
 	const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
 	const [deleteProject] = useMutation(Mutations.deleteProject, {
@@ -31,30 +31,32 @@ const AppProjectDetail: NextPage = ({ id }: InferGetStaticPropsType<typeof getSt
 	return (
 		<AppLayout>
 			<Head>
-				<title>{data?.project.name || "Your project"} - speedback</title>
+				<title>{data?.project?.name || "Unknown project"} - speedback</title>
 			</Head>
 
 			<main>
-				<Heading title={data?.project.name || "Your project"} backLink={{ url: "/app/projects", label: "Back to projects" }}>
-					<div className="-my-1.5 -mx-2 mt-5 flex flex-wrap lg:mt-0">
-						<Button
-							type="button"
-							onClick={() => setIsConfirmModalOpen(true)}
-							icon={TrashIcon}
-							danger
-							className="my-1.5 mx-2"
-						>
-							Delete project
-						</Button>
+				<Heading title={data?.project?.name || "Unknown project"} backLink={{ url: "/app/projects", label: "Back to projects" }}>
+					{data?.project && (
+						<div className="-my-1.5 -mx-2 mt-5 flex flex-wrap lg:mt-0">
+							<Button
+								type="button"
+								onClick={() => setIsConfirmModalOpen(true)}
+								icon={TrashIcon}
+								danger
+								className="my-1.5 mx-2"
+							>
+								Delete project
+							</Button>
 
-						<Button
-							url={`/app/projects/${data?.project.id}/edit`}
-							icon={PencilIcon}
-							className="my-1.5 mx-2"
-						>
-							Edit project
-						</Button>
-					</div>
+							<Button
+								url={`/app/projects/${data?.project?.id}/edit`}
+								icon={PencilIcon}
+								className="my-1.5 mx-2"
+							>
+								Edit project
+							</Button>
+						</div>
+					)}
 				</Heading>
 
 				{loading ? (
@@ -86,7 +88,7 @@ const AppProjectDetail: NextPage = ({ id }: InferGetStaticPropsType<typeof getSt
 			</main>
 
 			<ConfirmDeleteModal
-				title={`Deleting "${data?.project.name}"`}
+				title={`Deleting "${data?.project?.name}"`}
 				description="Are you sure you want to delete this project? This action cannot be reversed."
 				action={handleDeleteProject}
 				closeAction={setIsConfirmModalOpen}

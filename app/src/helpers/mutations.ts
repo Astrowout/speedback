@@ -41,14 +41,14 @@ Mutations.upsertProject = gql`
 
 Mutations.deleteProject = gql`
 	 mutation ($id: ID!) {
-		deleteProject(where: { id: $id }) {
-			id
-		}
 		deleteManyComments(
 			where: {
 				project: { id: $id }
 			}
 		) {
+			count
+		}
+		deleteProject(where: { id: $id }) {
 			id
 		}
 	}

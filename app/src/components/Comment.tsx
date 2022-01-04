@@ -29,11 +29,10 @@ const Comment: FunctionComponent<CommentProps> = ({ className, data, index }) =>
 	}
 
 	const renderMetainfo = (key: string, info: any): ReactElement => {
-
 		if (typeof info === "object") {
 			return (
-				<>
-					<div key={key} className="py-2 px-4 sm:grid sm:grid-cols-3 sm:gap-4 bg-gray-100">
+				<Fragment key={key}>
+					<div className="py-2 px-4 sm:grid sm:grid-cols-3 sm:gap-4 bg-gray-100">
 						<dt className="text-sm text-gray-800 font-bold">{key}</dt>
 					</div>
 
@@ -42,12 +41,12 @@ const Comment: FunctionComponent<CommentProps> = ({ className, data, index }) =>
 
 						return renderMetainfo(nestedKey, nestedInfo);
 					})}
-				</>
+				</Fragment>
 			);
 		}
 
 		return (
-			<div key={`${key} - ${info}`} className="py-2 px-4 sm:grid sm:grid-cols-3 sm:gap-4">
+			<div key={`${key}-${info}`} className="py-2 px-4 sm:grid sm:grid-cols-3 sm:gap-4">
 				<dt className="text-sm text-gray-500">{key}</dt>
 				<dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
 					{info}
