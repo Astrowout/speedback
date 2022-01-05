@@ -2,8 +2,8 @@ import { useContext, useEffect } from 'react';
 import { NextPage } from 'next';
 import Head from 'next/head';
 
-import { Loader } from "../components";
-import { AuthContext } from '../context';
+import { Loader } from "../../components";
+import { AuthContext } from '../../context';
 
 const AppCallback: NextPage = () => {
 	const { methods } = useContext(AuthContext);

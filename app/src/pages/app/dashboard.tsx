@@ -11,7 +11,7 @@ import { Queries } from '../../helpers';
 import { AuthContext } from '../../context';
 
 const AppIndex: NextPage = () => {
-	const { user } = useContext(AuthContext);
+	const { user, isLoading } = useContext(AuthContext);
 
 	const { data, loading } = useQuery(Queries.getProjects, {
 		variables: { issuer: user?.issuer },
@@ -61,7 +61,7 @@ const AppIndex: NextPage = () => {
 				</Heading>
 
 				<section className="2xl:container container-spacing section-spacing">
-					{loading ? (
+					{(loading || isLoading) ? (
 						<Loader />
 					) : data?.projects.length ? (
 						<ProjectsTable className="max-w-3xl" rows={data.projects} compact></ProjectsTable>

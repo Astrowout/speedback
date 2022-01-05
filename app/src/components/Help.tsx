@@ -6,7 +6,7 @@ const Help: FunctionComponent = () => {
 			href="mailto:wout.workspace@gmail.com"
 			target="_blank"
 			rel="noopener noreferrer"
-			className="fixed z-50 right-0 bottom-8 text-sm rounded-l py-3 px-4 bg-indigo-500 text-white"
+			className="fixed z-50 right-0 bottom-6 shadow text-sm rounded-l py-3 px-4 bg-white border underline text-indigo-500"
 		>
 			Need help?
 		</a>

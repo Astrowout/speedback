@@ -50,12 +50,10 @@ const useAuth = () => {
 				email,
 			});
 
-			document.cookie = `userToken=${didToken}; max-age=900; Secure`
-
 			const userData = await magic!.user.getMetadata();
 			setUser(userData);
 
-			Router.replace("/app/dashboard");
+			Router.replace(`/app/dashboard?userToken=${didToken}`);
 		} catch (error) {
 			console.error(error);
 
@@ -77,7 +75,6 @@ const useAuth = () => {
 	const logout = async (): Promise<void> => {
 		await magic!.user.logout();
 		setUser(null);
-		document.cookie = "userToken= ; expires = Thu, 01 Jan 1970 00:00:00 GMT";
 		Router.replace("/");
 	}
 

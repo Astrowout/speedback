@@ -3,9 +3,19 @@ import { NextRequest, NextResponse } from 'next/server';
 export function middleware(
 	request: NextRequest
 ) {
-	if (request.cookies && !request.cookies.userToken) {
+	const searchParams = request.nextUrl.searchParams as any;
+
+	if (searchParams.get("userToken")) {
+		let response = NextResponse.next();
+		response.cookie('userToken', searchParams.get("userToken"), {
+			path: '/',
+			maxAge: 1000 * 60 * 60 * 24 * 7,
+		});
+
+		return response;
+	} else if (request.cookies && !request.cookies.userToken) {
 		return NextResponse.redirect("/login");
-	} else {
-		return NextResponse.next();
 	}
+
+	return NextResponse.next();
 }
