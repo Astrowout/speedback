@@ -21,7 +21,7 @@ const ProjectsTable: FunctionComponent<ProjectsTableProps> = ({ className, rows,
 	const handleProjectDetail = (e: MouseEvent & { target: Element }, id: string) => {
 		const clickElement = e.target.closest('#copyScriptTrigger');
 
-		if (clickElement && clickElement.hasAttribute('data-clipboard-text')) {
+		if (clickElement && clickElement.hasAttribute('data-clipboard-target')) {
 			return;
 		}
 

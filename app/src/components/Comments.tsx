@@ -1,4 +1,4 @@
-import { FunctionComponent, useEffect } from "react";
+import { FunctionComponent, Ref, useEffect, useRef } from "react";
 import ClipboardJS from "clipboard";
 import cn from "classnames";
 
@@ -12,6 +12,8 @@ type CommentsProps = {
 }
 
 const Comments: FunctionComponent<CommentsProps> = ({ className, comments, projectId }) => {
+	const tooltipRef = useRef(null as any);
+
 	useEffect(() => {
 		const clipboard = new ClipboardJS("#copyScriptTrigger");
 
@@ -19,6 +21,12 @@ const Comments: FunctionComponent<CommentsProps> = ({ className, comments, proje
 			clipboard.destroy();
 		}
 	}, []);
+
+	const showTooltip = () => {
+		if (tooltipRef.current) {
+			tooltipRef.current.toggleIsOpen();
+		}
+	}
 
 	return (
 		<div
@@ -35,11 +43,12 @@ const Comments: FunctionComponent<CommentsProps> = ({ className, comments, proje
 							Integrate the script in your website to start gathering feedback from your clients or customers.
 						</p>
 
-						<Tooltip content="Script copied!">
+						<Tooltip content="Script copied!" ref={tooltipRef}>
 							<button
 								type="button"
 								data-clipboard-text={`<script src="${window.location.origin}/script/index.js?id=${projectId}" crossorigin charset="utf-8"></script>`}
 								id="copyScriptTrigger"
+								onClick={showTooltip}
 								className="text-indigo-500 px-3 py-2 bg-indigo-100 rounded hover:bg-indigo-200 hover:text-indigo-800 flex items-center"
 							>
 								<ClipboardCopyIcon className="block h-5 w-5 mr-1" aria-hidden="true" />
