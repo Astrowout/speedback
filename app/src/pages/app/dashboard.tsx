@@ -39,7 +39,7 @@ const AppIndex: NextPage = () => {
 						lastCommentDate: get(globals, ["comments", "0", "createdAt"], null),
 					}}
 				>
-					<div className="-my-1.5 -mx-2 mt-5 flex flex-wrap lg:mt-0">
+					<div className="-my-1.5 -mx-2 mt-5 flex items-center flex-wrap lg:mt-0">
 						<Button
 							url="/app/projects"
 							icon={EyeIcon}

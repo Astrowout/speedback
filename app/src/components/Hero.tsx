@@ -37,7 +37,7 @@ const Hero: FunctionComponent<HeroProps> = ({ title, description, visual }) => {
 				</Button>
 			</div>
 
-			<div aria-hidden="true" className="absolute bottom-8 -right-8 max-w-lg lg:max-w-full z-0 lg:relative pointer-events-none">
+			<div aria-hidden="true" className="absolute bottom-8 -right-8 max-w-lg lg:max-w-2xl z-0 lg:relative pointer-events-none">
 				<Image src={visual.url} alt="image" width={visual.width} height={visual.height} />
 			</div>
 		</section>

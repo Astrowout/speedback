@@ -1,4 +1,5 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent, useEffect } from "react";
+import ClipboardJS from "clipboard";
 import cn from "classnames";
 
 import { Comment, EmptyState, Tooltip } from "./index";
@@ -11,6 +12,14 @@ type CommentsProps = {
 }
 
 const Comments: FunctionComponent<CommentsProps> = ({ className, comments, projectId }) => {
+	useEffect(() => {
+		const clipboard = new ClipboardJS("#copyScriptTrigger");
+
+		return () => {
+			clipboard.destroy();
+		}
+	}, []);
+
 	return (
 		<div
 			className={cn(className)}

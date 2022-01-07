@@ -17,7 +17,7 @@ const Modal: FC<ModalProps> = ({ children, isOpen = false, action, closeAction }
 
 	return typeof window !== 'undefined' ? createPortal(
 		<Transition.Root show={isOpen} as={Fragment}>
-			<Dialog as="div" className="fixed z-10 inset-0 overflow-y-auto" initialFocus={cancelButtonRef} onClose={closeAction}>
+			<Dialog as="div" className="fixed z-20 inset-0 overflow-y-auto" initialFocus={cancelButtonRef} onClose={closeAction}>
 				<div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20">
 					<Transition.Child
 						as={Fragment}
@@ -41,28 +41,28 @@ const Modal: FC<ModalProps> = ({ children, isOpen = false, action, closeAction }
 						leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
 						className="bg-white rounded mx-auto text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
 					>
-							<div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-								{children}
-							</div>
+						<div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+							{children}
+						</div>
 
-							<div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-								<Button
-									onClick={action}
-									danger
-									className="w-full sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-								>
-									Delete
-								</Button>
+						<div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+							<Button
+								onClick={action}
+								danger
+								className="w-full sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+							>
+								Delete
+							</Button>
 
-								<Button
-									onClick={() => closeAction(false)}
-									secondary
-									ref={cancelButtonRef}
-									className="mt-3 w-full sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-								>
-									Cancel
-								</Button>
-							</div>
+							<Button
+								onClick={() => closeAction(false)}
+								secondary
+								ref={cancelButtonRef}
+								className="mt-3 w-full sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+							>
+								Cancel
+							</Button>
+						</div>
 					</Transition.Child>
 				</div>
 			</Dialog>
