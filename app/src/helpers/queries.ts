@@ -137,6 +137,7 @@ Queries.getProject = gql`
 				resolved
 				metaInfo
 				createdAt
+				elementSelector
 			}
 		}
 	}

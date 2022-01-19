@@ -32,7 +32,7 @@ const Input: FunctionComponent<InputProps> = forwardRef(({
 	return (
 		<div className={cn(className)}>
 			{label && (
-				<label htmlFor={name} className="block text-sm text-gray-600">
+				<label htmlFor={name} className="block text-gray-500">
 					{label}
 				</label>
 			)}

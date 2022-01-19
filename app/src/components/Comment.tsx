@@ -19,6 +19,9 @@ const Comment: FunctionComponent<CommentProps> = ({ className, data, index }) =>
 		variables: { id: comment.id, resolved: !comment.resolved },
 	});
 
+	console.log(comment);
+
+
 	const handleResolveComment = async () => {
 		const { data: { updateComment: newComment } } = await resolveComment();
 
@@ -125,6 +128,13 @@ const Comment: FunctionComponent<CommentProps> = ({ className, data, index }) =>
 						>
 							<Disclosure.Panel>
 								<dl className="divide-y border-t overflow-hidden">
+									<div className="py-3 pl-4 pr-2 sm:grid sm:grid-cols-3 sm:gap-4">
+										<dt className="text-sm text-gray-500 flex items-center">Element selector</dt>
+										<dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 break-all prose">
+											<pre><code>{comment.elementSelector}</code></pre>
+										</dd>
+									</div>
+
 									{Object.keys(comment.metaInfo).map(key => {
 										const info = comment.metaInfo[key];
 

@@ -8,7 +8,7 @@ const commentTemplate = ({ text, resolved, loading = false }) => `
 			</p>
 
 			${loading ? `
-				<svg width="36" class="gthr-tooltip__spinner" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<svg width="28" class="gthr-tooltip__spinner" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
 					<path d="M4.5 12.5C4.5 16.9183 8.08172 20.5 12.5 20.5C16.9183 20.5 20.5 16.9183 20.5 12.5C20.5 8.08172 16.9183 4.5 12.5 4.5" stroke="#9CA3AF" stroke-width="1.2"/>
 				</svg>
 			` : `

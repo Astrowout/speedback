@@ -50,8 +50,8 @@ const NewProjectForm: FunctionComponent<NewProjectFormProps> = ({ className, id,
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	return (
-		<form className={cn(className, "space-y-10 mx-auto")} onSubmit={handleSubmit(onSubmit)}>
-			<div className="space-y-6">
+		<form className={cn(className, "space-y-6 mx-auto")} onSubmit={handleSubmit(onSubmit)}>
+			<div className="space-y-4">
 				<Input
 					type="text"
 					placeholder="My new project"

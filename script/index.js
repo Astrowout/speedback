@@ -33,13 +33,13 @@ const body = document.body;
 
 const throttledEvent = throttle((e) => mouseMove(e), 100);
 
+let feedbackMode = false;
 let commentMode = false;
 let id = null;
-let tippyInstance = null;
 let comments = [];
 
 const updateButton = () => {
-	if (commentMode) {
+	if (feedbackMode) {
 		button.innerHTML = `
 			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -59,7 +59,7 @@ const updateButton = () => {
 const renderElements = () => {
 	body.insertBefore(button, body.firstChild);
 
-	button.addEventListener("click", toggleCommentMode);
+	button.addEventListener("click", toggleFeedbackMode);
 }
 
 const handleInput = (e) => {
@@ -70,11 +70,6 @@ const handleInput = (e) => {
 	} else {
 		placeholder.style.visibility = "visible";
 	}
-}
-
-const destroyTippy = () => {
-	tippyInstance.destroy();
-	tippyInstance = null;
 }
 
 const handlePostComment = async (e, el) => {
@@ -134,7 +129,8 @@ const handleResolveComment = async ({ comment, el }) => {
 }
 
 const handleCloseInput = (el) => {
-	el._tippy.hide();
+	el._tippy.destroy();
+	el.remove();
 }
 
 const initTippy = () => {
@@ -145,9 +141,10 @@ const initTippy = () => {
 		arrow: false,
 		duration: 100,
 		maxWidth: 320,
+		appendTo: () => document.body,
 		placement: 'bottom-end',
-		interactive: true,
 		ignoreAttributes: true,
+		interactive: true,
 		inlinePositioning: true,
 		popperOptions: {
 			strategy: 'fixed'
@@ -177,8 +174,7 @@ const addComment = (el) => {
 			content: inputTemplate,
 			showOnCreate: true,
 			onShown() {
-				disableCommentMode();
-
+				handleCommentMode();
 				const postBtn = document.getElementById("gthr-action-post");
 				const cancelBtn = document.getElementById("gthr-action-cancel");
 				const inputEl = document.getElementById("gthr-action-input");
@@ -188,6 +184,7 @@ const addComment = (el) => {
 				inputEl.addEventListener("input", inputFn);
 			},
 			onHide() {
+				setTimeout(cleanupCommentMode);
 				const postBtn = document.getElementById("gthr-action-post");
 				const cancelBtn = document.getElementById("gthr-action-cancel");
 				const inputEl = document.getElementById("gthr-action-input");
@@ -204,16 +201,14 @@ const handleAddComment = (e) => {
 	click(e, addComment);
 }
 
-const handleCommentMode = () => {
-	placeComments();
+const handleFeedbackMode = () => {
 	body.addEventListener("click", handleAddComment);
 	body.addEventListener("mousemove", throttledEvent, false);
 
 	body.appendChild(overlay);
 }
 
-const cleanupCommentMode = () => {
-	hideComments();
+const cleanupFeedbackMode = () => {
 	body.removeEventListener("click", handleAddComment);
 	body.removeEventListener("mousemove", throttledEvent, false);
 
@@ -222,25 +217,28 @@ const cleanupCommentMode = () => {
 	overlay.remove();
 }
 
-const disableCommentMode = () => {
-	commentMode = false;
-
-	updateButton();
-
-	cleanupCommentMode();
+const handleCommentMode = () => {
+	console.log("irun");
+	body.removeEventListener("click", handleAddComment);
+	body.removeEventListener("mousemove", throttledEvent, false);
 }
 
-const toggleCommentMode = (e) => {
+const cleanupCommentMode = () => {
+	body.addEventListener("click", handleAddComment);
+	body.addEventListener("mousemove", throttledEvent, false);
+}
+
+const toggleFeedbackMode = (e) => {
 	e.stopPropagation();
 
-	commentMode = !commentMode;
+	feedbackMode = !feedbackMode;
 
 	updateButton();
 
-	if (commentMode) {
-		setTimeout(handleCommentMode);
+	if (feedbackMode) {
+		setTimeout(handleFeedbackMode);
 	} else {
-		cleanupCommentMode();
+		cleanupFeedbackMode();
 	}
 }
 
@@ -290,21 +288,11 @@ const placeComments = () => {
 	}
 }
 
-const hideComments = () => {
-	const comments = document.querySelectorAll(".gthr-dot");
-
-	for (let i = 0; i < comments.length; i++) {
-		const comment = comments[i];
-
-		comment.remove();
-	}
-}
-
 const getComments = async () => {
 	const res = await fetch(`${config.BASE_URL}/api/comments?projectId=${id}&pathname=${window.location.pathname}`);
 	comments = await res.json();
 
-	initTippy();
+	placeComments();
 }
 
 const init = async () => {
@@ -313,10 +301,14 @@ const init = async () => {
 	const scriptElement = document.querySelector(`script[src^='${config.BASE_URL}/script']`);
 	id = scriptElement.src.split("?id=")[1];
 
+	initTippy();
+
 	await getComments();
 
 	updateButton();
 	renderElements();
 }
 
-init();
+window.addEventListener("load", () => {
+	init();
+});
