@@ -295,6 +295,19 @@ const getComments = async () => {
 	placeComments();
 }
 
+const initEvents = () => {
+	let url = location.href;
+
+	document.body.addEventListener('click', () => {
+		requestAnimationFrame(() => {
+			url = location.href;
+			if (url !== location.href){
+				await getComments();
+			}
+		});
+	}, true);
+}
+
 const init = async () => {
 	addCss(`${config.BASE_URL}/script/main.css`);
 
@@ -302,11 +315,10 @@ const init = async () => {
 	id = scriptElement.src.split("?id=")[1];
 
 	initTippy();
-
-	await getComments();
-
 	updateButton();
+	await getComments();
 	renderElements();
+	initEvents();
 }
 
 window.addEventListener("load", () => {
