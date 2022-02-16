@@ -34,7 +34,6 @@ const body = document.body;
 const throttledEvent = throttle((e) => mouseMove(e), 100);
 
 let feedbackMode = false;
-let commentMode = false;
 let id = null;
 let comments = [];
 
@@ -95,8 +94,7 @@ const handlePostComment = async (e, el) => {
 	const comment = await res.json();
 
 	if (comment.id) {
-		const dot = el.querySelector(".gthr-dot");
-		dot.remove();
+		handleCloseInput(dot);
 		await getComments();
 	}
 }
@@ -129,8 +127,7 @@ const handleResolveComment = async ({ comment, el }) => {
 }
 
 const handleCloseInput = (el) => {
-	el._tippy.destroy();
-	el.remove();
+	el._tippy.hide();
 }
 
 const initTippy = () => {
@@ -155,12 +152,13 @@ const initTippy = () => {
 const addComment = (el) => {
 	dot.textContent = comments.length + 1;
 
+	// Append dot to selected element
 	if (!el.style.position) {
 		el.style.position = "relative";
 	}
-
 	el.appendChild(dot);
 
+	// Add tooltip to dot
 	const postFn = (e) => handlePostComment(e, el);
 
 	const cancelFn = () => handleCloseInput(dot);
@@ -174,7 +172,6 @@ const addComment = (el) => {
 			content: inputTemplate,
 			showOnCreate: true,
 			onShown() {
-				handleCommentMode();
 				const postBtn = document.getElementById("gthr-action-post");
 				const cancelBtn = document.getElementById("gthr-action-cancel");
 				const inputEl = document.getElementById("gthr-action-input");
@@ -182,9 +179,10 @@ const addComment = (el) => {
 				postBtn.addEventListener("click", postFn);
 				cancelBtn.addEventListener("click", cancelFn);
 				inputEl.addEventListener("input", inputFn);
+
+				handleCommentMode();
 			},
 			onHide() {
-				setTimeout(cleanupCommentMode);
 				const postBtn = document.getElementById("gthr-action-post");
 				const cancelBtn = document.getElementById("gthr-action-cancel");
 				const inputEl = document.getElementById("gthr-action-input");
@@ -193,6 +191,10 @@ const addComment = (el) => {
 				cancelBtn.removeEventListener("click", cancelFn);
 				inputEl.removeEventListener("input", inputFn);
 			},
+			onHidden() {
+				dot.remove();
+				setTimeout(cleanupCommentMode, 200);
+			}
 		});
 	}
 }
@@ -212,13 +214,13 @@ const cleanupFeedbackMode = () => {
 	body.removeEventListener("click", handleAddComment);
 	body.removeEventListener("mousemove", throttledEvent, false);
 
+	removeComments();
 	checkHighlightedElement();
 
 	overlay.remove();
 }
 
 const handleCommentMode = () => {
-	console.log("irun");
 	body.removeEventListener("click", handleAddComment);
 	body.removeEventListener("mousemove", throttledEvent, false);
 }
@@ -228,7 +230,7 @@ const cleanupCommentMode = () => {
 	body.addEventListener("mousemove", throttledEvent, false);
 }
 
-const toggleFeedbackMode = (e) => {
+const toggleFeedbackMode = async (e) => {
 	e.stopPropagation();
 
 	feedbackMode = !feedbackMode;
@@ -236,7 +238,8 @@ const toggleFeedbackMode = (e) => {
 	updateButton();
 
 	if (feedbackMode) {
-		setTimeout(handleFeedbackMode);
+		await getComments();
+		setTimeout(handleFeedbackMode, 200);
 	} else {
 		cleanupFeedbackMode();
 	}
@@ -246,23 +249,25 @@ const placeComments = () => {
 	for (let i = 0; i < comments.length; i++) {
 		const comment = comments[i];
 
+		// Check if element of comment can be found
 		const el = document.querySelector(comment.elementSelector);
 
 		if (!el) {
 			continue;
 		}
 
+		// Create dot element
 		const dot = document.createElement("span");
 		dot.classList.add("gthr-dot");
-
 		dot.textContent = i + 1;
 
+		// Place comment dot on selected element
 		if (!el.style.position) {
 			el.style.position = "relative";
 		}
-
 		el.appendChild(dot);
 
+		// Attach comment tooltip to the dot
 		const resolveFn = () => handleResolveComment({
 			comment,
 			el: dot
@@ -295,11 +300,19 @@ const getComments = async () => {
 	placeComments();
 }
 
+const removeComments = () => {
+	const commentEls = document.querySelectorAll(".gthr-dot");
+
+	commentEls.forEach(el => {
+		el.remove();
+	});
+}
+
 const initEvents = () => {
 	let url = location.href;
 
 	document.body.addEventListener('click', () => {
-		requestAnimationFrame(() => {
+		requestAnimationFrame(async () => {
 			url = location.href;
 			if (url !== location.href){
 				await getComments();
@@ -316,11 +329,7 @@ const init = async () => {
 
 	initTippy();
 	updateButton();
-	await getComments();
 	renderElements();
-	initEvents();
 }
 
-window.addEventListener("load", () => {
-	init();
-});
+window.addEventListener("load", init);
