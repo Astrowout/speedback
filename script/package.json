@@ -7,6 +7,7 @@
 		"start": "esbuild index.js main.css --watch --bundle --minify --outdir=../app/public/script"
 	},
 	"devDependencies": {
+		"date-fns": "^2.28.0",
 		"esbuild": "^0.14.5"
 	}
 }

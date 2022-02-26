@@ -120,6 +120,7 @@
 	resize: none;
 	appearance: none;
 	font-family: Verdana, Arial, Helvetica, sans-serif !important;
+	font-size: 16px !important;
 	padding: 4px 0 24px 0;
 	position: relative;
 }
@@ -131,10 +132,24 @@
 .gthr-tooltip__comment {
 	color: black !important;
 	margin: 0 !important;
+	font-size: 16px !important;
 }
 
 .gthr-tooltip__comment--resolved {
 	text-decoration: line-through;
+}
+
+.gthr-tooltip__date {
+	font-family: Verdana, Arial, Helvetica, sans-serif !important;
+	color: var(--primary-color);
+	font-size: 12px !important;
+	margin-top: 8px;
+}
+
+.gthr-tooltip__metainfo {
+	font-family: Verdana, Arial, Helvetica, sans-serif !important;
+	color: dimgray;
+	font-size: 12px !important;
 }
 
 .gthr-tooltip__placeholder {

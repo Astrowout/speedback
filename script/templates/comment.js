@@ -1,11 +1,29 @@
-const commentTemplate = ({ text, resolved, loading = false }) => `
+import { formatRelative } from 'date-fns';
+
+const commentTemplate = ({ text, resolved, metadata, createdAt, loading = false }) => `
 	<div class="gthr-tooltip">
 		<div class="gthr-tooltip__content">
-			<p
-				class="gthr-tooltip__comment ${resolved && 'gthr-tooltip__comment--resolved'}"
-			>
-				${text}
-			</p>
+			<div>
+				<p
+					class="gthr-tooltip__comment ${resolved && 'gthr-tooltip__comment--resolved'}"
+				>
+					${text}
+				</p>
+			
+				<p
+					class="gthr-tooltip__date"
+				>
+					${formatRelative(new Date(createdAt), new Date())}
+				</p>
+
+				<p
+					class="gthr-tooltip__metainfo"
+				>
+					${metadata.platform.type}
+					-
+					${metadata.browser.name}
+				</p>
+			</div>
 
 			${loading ? `
 				<svg width="28" class="gthr-tooltip__spinner" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -29,8 +29,6 @@ overlay.classList.add("gthr-overlay");
 const dot = document.createElement("span");
 dot.classList.add("gthr-dot", "gthr-dot--input");
 
-const body = document.body;
-
 const throttledEvent = throttle((e) => mouseMove(e), 100);
 
 let feedbackMode = false;
@@ -56,7 +54,7 @@ const updateButton = () => {
 }
 
 const renderElements = () => {
-	body.insertBefore(button, body.firstChild);
+	document.body.insertBefore(button, document.body.firstChild);
 
 	button.addEventListener("click", toggleFeedbackMode);
 }
@@ -204,15 +202,15 @@ const handleAddComment = (e) => {
 }
 
 const handleFeedbackMode = () => {
-	body.addEventListener("click", handleAddComment);
-	body.addEventListener("mousemove", throttledEvent, false);
+	document.body.addEventListener("click", handleAddComment);
+	document.body.addEventListener("mousemove", throttledEvent, false);
 
-	body.appendChild(overlay);
+	document.body.appendChild(overlay);
 }
 
 const cleanupFeedbackMode = () => {
-	body.removeEventListener("click", handleAddComment);
-	body.removeEventListener("mousemove", throttledEvent, false);
+	document.body.removeEventListener("click", handleAddComment);
+	document.body.removeEventListener("mousemove", throttledEvent, false);
 
 	removeComments();
 	checkHighlightedElement();
@@ -221,13 +219,13 @@ const cleanupFeedbackMode = () => {
 }
 
 const handleCommentMode = () => {
-	body.removeEventListener("click", handleAddComment);
-	body.removeEventListener("mousemove", throttledEvent, false);
+	document.body.removeEventListener("click", handleAddComment);
+	document.body.removeEventListener("mousemove", throttledEvent, false);
 }
 
 const cleanupCommentMode = () => {
-	body.addEventListener("click", handleAddComment);
-	body.addEventListener("mousemove", throttledEvent, false);
+	document.body.addEventListener("click", handleAddComment);
+	document.body.addEventListener("mousemove", throttledEvent, false);
 }
 
 const toggleFeedbackMode = async (e) => {
@@ -273,11 +271,14 @@ const placeComments = () => {
 			el: dot
 		});
 
+		console.log(comment);
+
 		tippy(dot, {
 			content: commentTemplate({
 				text: comment.text,
 				resolved: comment.resolved,
-				metadata: comment.metadata
+				metadata: comment.metaInfo,
+				createdAt: comment.createdAt,
 			}),
 			onShown() {
 				const resolveBtn = document.getElementById("gthr-action-resolve");

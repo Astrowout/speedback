@@ -36,7 +36,7 @@ const Pricing: FunctionComponent<PricingProps> = ({ monthlyCost, yearlyCost, eye
 					</p>
 				</div>
 
-				<Toggle enabled={yearly} setEnabled={setYearly} label="Paid yearly" className="mt-16" />
+				{/* <Toggle enabled={yearly} setEnabled={setYearly} label="Paid yearly" className="mt-16" /> */}
 
 				<div className="mt-10 flex flex-col md:flex-row md:mx-auto max-w-full self-stretch">
 					<div className="relative md:w-96 md:my-8 p-8 bg-white text-center rounded-t md:rounded shadow-xl">
