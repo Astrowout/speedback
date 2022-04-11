@@ -155,7 +155,7 @@
 .gthr-tooltip__placeholder {
 	position: absolute;
 	top: 4px;
-	left: 0;
+	left: 2px;
 	color: lightgrey;
 	pointer-events: none;
 	margin: 0 !important;

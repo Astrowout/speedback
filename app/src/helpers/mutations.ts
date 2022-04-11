@@ -82,12 +82,13 @@ Mutations.resolveComment = gql`
 `;
 
 Mutations.createComment = gql`
-	 mutation ($text: String!, $pathname: String!, $elementSelector: String!, $metainfo: Json!, $projectId: ID!) {
+	 mutation ($text: String!, $pathname: String!, $elementSelector: String!, $viewport: String!, $metainfo: Json!, $projectId: ID!) {
 		createComment(
 			data: {
 				text: $text,
 				pathname: $pathname,
 				elementSelector: $elementSelector,
+				viewport: $viewport,
 				metaInfo: $metainfo,
 				project: { connect: { id: $projectId } },
 			}

@@ -9,7 +9,7 @@ Queries.getLandingPage = gql`
 			heroDescription
 			heroVisual {
 				url(transformation: {
-					image: { resize: { width: 1200, fit: max } }
+					image: { resize: { width: 920, fit: max } }
 				})
 				width
 				height
@@ -32,7 +32,7 @@ Queries.getLandingPage = gql`
 				description
 				visual {
 					url(transformation: {
-						image: { resize: { width: 700, fit: max } }
+						image: { resize: { width: 680, fit: max } }
 					})
 					width
 					height
@@ -56,7 +56,7 @@ Queries.getLandingPage = gql`
 			footerDescription
 			footerVisual {
 				url(transformation: {
-					image: { resize: { width: 600, fit: max } }
+					image: { resize: { width: 400, fit: max } }
 				})
 				width
 				height

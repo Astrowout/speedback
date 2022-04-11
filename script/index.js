@@ -10,6 +10,7 @@ import addCss from "./helpers/add-css.js";
 import { checkHighlightedElement } from "./helpers/check-elements.js";
 import generateSelector from "./helpers/generate-selector.js";
 import throttle from "./helpers/throttle.js";
+import getViewport from "./helpers/get-viewport.js";
 
 // Vendors
 import tippy from "./vendors/tippy.js";
@@ -26,6 +27,7 @@ button.classList.add("gthr-btn");
 const overlay = document.createElement("div");
 overlay.classList.add("gthr-overlay");
 
+// TODO: here it's created but only on first click so fix this!
 const dot = document.createElement("span");
 dot.classList.add("gthr-dot", "gthr-dot--input");
 
@@ -78,6 +80,7 @@ const handlePostComment = async (e, el) => {
 		metainfo: Bowser.parse(window.navigator.userAgent),
 		text: input.innerText,
 		pathname: window.location.pathname,
+		viewport: getViewport(),
 		elementSelector: generateSelector(el),
 		projectId: id,
 	}
@@ -137,7 +140,7 @@ const initTippy = () => {
 		duration: 100,
 		maxWidth: 320,
 		appendTo: () => document.body,
-		placement: 'bottom-end',
+		placement: 'bottom',
 		ignoreAttributes: true,
 		interactive: true,
 		inlinePositioning: true,
@@ -157,7 +160,10 @@ const addComment = (el) => {
 	el.appendChild(dot);
 
 	// Add tooltip to dot
-	const postFn = (e) => handlePostComment(e, el);
+	const postFn = (e) => {
+		console.log(e, el);
+		// handlePostComment(e, el);
+	}
 
 	const cancelFn = () => handleCloseInput(dot);
 
