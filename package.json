@@ -1,0 +1,9 @@
+{
+	"name": "speedback",
+	"version": "0.1.0",
+	"private": true,
+	"scripts": {
+		"start:app": "yarn --cwd ./app dev",
+		"start:script": "yarn --cwd ./script start"
+	}
+}

@@ -3,7 +3,7 @@ import { formatRelative } from 'date-fns';
 const commentTemplate = ({ text, resolved, metadata, createdAt, loading = false }) => `
 	<div class="gthr-tooltip">
 		<div class="gthr-tooltip__content">
-			<div>
+			<div class="gthr-tooltip__info">
 				<p
 					class="gthr-tooltip__comment ${resolved && 'gthr-tooltip__comment--resolved'}"
 				>
@@ -16,13 +16,29 @@ const commentTemplate = ({ text, resolved, metadata, createdAt, loading = false 
 					${formatRelative(new Date(createdAt), new Date())}
 				</p>
 
-				<p
-					class="gthr-tooltip__metainfo"
-				>
-					${metadata.platform.type}
-					-
-					${metadata.browser.name}
-				</p>
+				<ul class="gthr-tooltip__metainfo">
+					<li
+						class="gthr-tooltip__metainfo-line"
+					>
+						Platform:
+						<b>${metadata.platform.type}</b>
+					</li>
+					<li
+						class="gthr-tooltip__metainfo-line"
+					>
+						Browser:
+						<b>${metadata.browser.name}</b>
+					</li>
+
+					${metadata.viewport ? `
+						<li
+							class="gthr-tooltip__metainfo-line"
+						>
+							Viewport:
+							<b>${metadata.viewport.x} x ${metadata.viewport.y}</b>
+						</li>
+					` : ''}
+				</ul>
 			</div>
 
 			${loading ? `

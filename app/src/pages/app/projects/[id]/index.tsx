@@ -12,7 +12,7 @@ import { ApolloClient, Mutations, Queries } from '../../../../helpers';
 const AppProjectDetail: NextPage = ({ id }: InferGetStaticPropsType<typeof getStaticProps>) => {
 	const { loading, data } = useQuery(Queries.getProject, {
 		variables: { id },
-		fetchPolicy: "cache-and-network",
+		fetchPolicy: "network-only",
 	});
 	const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
 	const [deleteProject] = useMutation(Mutations.deleteProject, {

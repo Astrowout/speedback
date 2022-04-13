@@ -87,14 +87,17 @@ Queries.getContentPage = gql`
 `;
 
 Queries.getGlobals = gql`
-	query {
+	query($issuer: String!) {
 		comments(
 			first: 1
 			orderBy: createdAt_DESC
+			where: { project: { authUser_every: { issuer: $issuer }}}
 		) {
 			createdAt
 		}
-		commentsConnection {
+		commentsConnection(
+			where: { project: { authUser_every: { issuer: $issuer }}}
+		) {
 			aggregate {
 				count
 			}

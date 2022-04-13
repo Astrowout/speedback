@@ -129,7 +129,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 			comment,
 			project
 		},
-		revalidate: 10, // In seconds
+		// revalidate: 10, // In seconds
 	}
 }
 

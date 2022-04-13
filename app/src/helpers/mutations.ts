@@ -4,7 +4,12 @@ const Mutations: { [key: string]: DocumentNode } = {};
 
 Mutations.createUser = gql`
 	 mutation ($issuer: String!, $email: String!) {
-		createAuthUser(data: {email: $email, issuer: $issuer, role: admin}) {
+		createAuthUser(data: {
+			email: $email,
+			issuer: $issuer,
+			role: admin,
+			pricingPlan: free,
+		}) {
 			id
 		}
 		publishAuthUser(where: {issuer: $issuer}, to: PUBLISHED) {
@@ -74,21 +79,18 @@ Mutations.resolveComment = gql`
 			where: { id: $id },
 			to: PUBLISHED
 		) {
-			id
-			text
 			resolved
 		}
 	}
 `;
 
 Mutations.createComment = gql`
-	 mutation ($text: String!, $pathname: String!, $elementSelector: String!, $viewport: String!, $metainfo: Json!, $projectId: ID!) {
+	 mutation ($text: String!, $pathname: String!, $elementSelector: String!, $metainfo: Json!, $projectId: ID!) {
 		createComment(
 			data: {
 				text: $text,
 				pathname: $pathname,
 				elementSelector: $elementSelector,
-				viewport: $viewport,
 				metaInfo: $metainfo,
 				project: { connect: { id: $projectId } },
 			}

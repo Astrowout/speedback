@@ -21,5 +21,9 @@ export default () => {
         viewPortWidth = document.getElementsByTagName('body')[0].clientWidth,
         viewPortHeight = document.getElementsByTagName('body')[0].clientHeight
     }
-    return [viewPortWidth, viewPortHeight];
+    
+    return {
+        width: viewPortWidth,
+        height: viewPortHeight,
+    };
 }

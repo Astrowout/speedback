@@ -20,7 +20,9 @@ const AppIndex: NextPage = () => {
 	});
 
 	const { data: globals } = useQuery(Queries.getGlobals, {
-		skip: !user
+		variables: { issuer: user?.issuer },
+		skip: !user,
+		fetchPolicy: "cache-and-network"
 	});
 
 	return (

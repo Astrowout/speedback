@@ -19,16 +19,13 @@ const Comment: FunctionComponent<CommentProps> = ({ className, data, index }) =>
 		variables: { id: comment.id, resolved: !comment.resolved },
 	});
 
-	console.log(comment);
-
-
 	const handleResolveComment = async () => {
-		const { data: { updateComment: newComment } } = await resolveComment();
+		const { data: { publishComment: newComment } } = await resolveComment();
 
 		setComment({
 			...comment,
 			...newComment
-		})
+		});
 	}
 
 	const renderMetainfo = (key: string, info: any): ReactElement => {

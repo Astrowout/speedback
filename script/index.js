@@ -27,10 +27,6 @@ button.classList.add("gthr-btn");
 const overlay = document.createElement("div");
 overlay.classList.add("gthr-overlay");
 
-// TODO: here it's created but only on first click so fix this!
-const dot = document.createElement("span");
-dot.classList.add("gthr-dot", "gthr-dot--input");
-
 const throttledEvent = throttle((e) => mouseMove(e), 100);
 
 let feedbackMode = false;
@@ -56,7 +52,7 @@ const updateButton = () => {
 }
 
 const renderElements = () => {
-	document.body.insertBefore(button, document.body.firstChild);
+	document.body.appendChild(button);
 
 	button.addEventListener("click", toggleFeedbackMode);
 }
@@ -77,10 +73,12 @@ const handlePostComment = async (e, el) => {
 	const input = document.querySelector(".gthr-tooltip__input");
 
 	const data = {
-		metainfo: Bowser.parse(window.navigator.userAgent),
+		metainfo: {
+			...Bowser.parse(window.navigator.userAgent),
+			viewport: getViewport(),
+		},
 		text: input.innerText,
 		pathname: window.location.pathname,
-		viewport: getViewport(),
 		elementSelector: generateSelector(el),
 		projectId: id,
 	}
@@ -108,7 +106,7 @@ const handleResolveComment = async ({ comment, el }) => {
 
 	const data = {
 		id: comment.id,
-	};
+	}
 
 	const res = await fetch(`${config.BASE_URL}/api/comments/resolve`, {
 		method: "POST",
@@ -143,20 +141,15 @@ const initTippy = () => {
 		placement: 'bottom',
 		ignoreAttributes: true,
 		interactive: true,
-		inlinePositioning: true,
-		popperOptions: {
-			strategy: 'fixed'
-		},
 	});
 }
 
 const addComment = (el) => {
+	const dot = document.createElement("span");
+	dot.classList.add("gthr-dot", "gthr-dot--input");
 	dot.textContent = comments.length + 1;
 
 	// Append dot to selected element
-	if (!el.style.position) {
-		el.style.position = "relative";
-	}
 	el.appendChild(dot);
 
 	// Add tooltip to dot
@@ -184,7 +177,7 @@ const addComment = (el) => {
 				cancelBtn.addEventListener("click", cancelFn);
 				inputEl.addEventListener("input", inputFn);
 
-				handleCommentMode();
+				handleTooltipActive();
 			},
 			onHide() {
 				const postBtn = document.getElementById("gthr-action-post");
@@ -224,12 +217,12 @@ const cleanupFeedbackMode = () => {
 	overlay.remove();
 }
 
-const handleCommentMode = () => {
+const handleTooltipActive = () => {
 	document.body.removeEventListener("click", handleAddComment);
 	document.body.removeEventListener("mousemove", throttledEvent, false);
 }
 
-const cleanupCommentMode = () => {
+const handleTooltipInactive = () => {
 	document.body.addEventListener("click", handleAddComment);
 	document.body.addEventListener("mousemove", throttledEvent, false);
 }
@@ -265,19 +258,17 @@ const placeComments = () => {
 		dot.classList.add("gthr-dot");
 		dot.textContent = i + 1;
 
-		// Place comment dot on selected element
-		if (!el.style.position) {
-			el.style.position = "relative";
-		}
-		el.appendChild(dot);
+		console.log(el.offsetTop);
+		// Place comment dot on selected element in the top center position
+		dot.style.top = `${el.offsetTop}px`;
+		dot.style.left = `${el.offsetLeft + el.offsetWidth / 2}px`;
+		document.body.appendChild(dot);
 
 		// Attach comment tooltip to the dot
 		const resolveFn = () => handleResolveComment({
 			comment,
 			el: dot
 		});
-
-		console.log(comment);
 
 		tippy(dot, {
 			content: commentTemplate({
@@ -291,10 +282,8 @@ const placeComments = () => {
 
 				resolveBtn.addEventListener("click", resolveFn);
 			},
-			onHide() {
-				const resolveBtn = document.getElementById("gthr-action-resolve");
-
-				resolveBtn.removeEventListener("click", resolveFn);
+			onShow() {
+				handleTooltipActive();
 			},
 		});
 	}
@@ -339,4 +328,4 @@ const init = async () => {
 	renderElements();
 }
 
-window.addEventListener("load", init);
+init();
