@@ -79,7 +79,12 @@ Mutations.resolveComment = gql`
 			where: { id: $id },
 			to: PUBLISHED
 		) {
+			id
+			text
 			resolved
+			metaInfo
+			createdAt
+			elementSelector
 		}
 	}
 `;

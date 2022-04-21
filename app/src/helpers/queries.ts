@@ -185,16 +185,12 @@ Queries.getComments = gql`
 	}
 `;
 
-Queries.getComment = gql`
+Queries.getCommentResolved = gql`
 	query ($id: ID!) {
 		comment(
 			where: { id: $id },
 		) {
-			id
-			text
 			resolved
-			metaInfo
-			elementSelector
 		}
 	}
 `;

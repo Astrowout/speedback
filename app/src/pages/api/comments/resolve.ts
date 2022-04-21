@@ -15,7 +15,7 @@ const resolveComment = async (req: NextApiRequest, res: NextApiResponse) => {
 
 	try {
 		const { data: { comment } } = await ApolloClient.query({
-			query: Queries.getComment,
+			query: Queries.getCommentResolved,
 			fetchPolicy: "network-only",
 			variables: { id: req.body.id }
 		});

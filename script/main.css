@@ -120,6 +120,10 @@
 	flex-grow: 1;
 }
 
+.gthr-tooltip__info--resolved {
+	opacity: 0.5;
+}
+
 .gthr-tooltip__input {
 	color: black;
 	resize: none;

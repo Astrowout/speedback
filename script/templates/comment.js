@@ -1,11 +1,11 @@
-import { formatRelative } from 'date-fns';
+import formatRelative from 'date-fns/formatRelative';
 
 const commentTemplate = ({ text, resolved, metadata, createdAt, loading = false }) => `
 	<div class="gthr-tooltip">
 		<div class="gthr-tooltip__content">
-			<div class="gthr-tooltip__info">
+			<div class="gthr-tooltip__info ${resolved ? 'gthr-tooltip__info--resolved' : ''}">
 				<p
-					class="gthr-tooltip__comment ${resolved && 'gthr-tooltip__comment--resolved'}"
+					class="gthr-tooltip__comment ${resolved ? 'gthr-tooltip__comment--resolved': ''}"
 				>
 					${text}
 				</p>

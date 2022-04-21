@@ -101,6 +101,9 @@ const handlePostComment = async (e, el) => {
 const handleResolveComment = async ({ comment, el }) => {
 	el._tippy.setContent(commentTemplate({
 		text: comment.text,
+		resolved: comment.resolved,
+		metadata: comment.metaInfo,
+		createdAt: comment.createdAt,
 		loading: true,
 	}));
 
@@ -115,11 +118,14 @@ const handleResolveComment = async ({ comment, el }) => {
 		},
 		body: JSON.stringify(data),
 	});
+
 	const updatedComment = await res.json();
 
 	el._tippy.setContent(commentTemplate({
 		text: updatedComment.text,
 		resolved: updatedComment.resolved,
+		metadata: updatedComment.metaInfo,
+		createdAt: updatedComment.createdAt,
 	}));
 
 	el._tippy.hide();
@@ -258,7 +264,6 @@ const placeComments = () => {
 		dot.classList.add("gthr-dot");
 		dot.textContent = i + 1;
 
-		console.log(el.offsetTop);
 		// Place comment dot on selected element in the top center position
 		dot.style.top = `${el.offsetTop}px`;
 		dot.style.left = `${el.offsetLeft + el.offsetWidth / 2}px`;
@@ -285,6 +290,9 @@ const placeComments = () => {
 			onShow() {
 				handleTooltipActive();
 			},
+			onHidden() {
+				setTimeout(handleTooltipInactive, 200);
+			}
 		});
 	}
 }
