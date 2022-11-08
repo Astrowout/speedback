@@ -5,6 +5,7 @@ export function middleware(
 ) {
 	const searchParams = request.nextUrl.searchParams as any;
 
+	console.log(request.cookies);
 	if (searchParams.get("userToken")) {
 		let response = NextResponse.next();
 		response.cookie('userToken', searchParams.get("userToken"), {
@@ -14,6 +15,7 @@ export function middleware(
 
 		return response;
 	} else if (request.cookies && !request.cookies.userToken) {
+
 		return NextResponse.redirect("/login");
 	}
 
