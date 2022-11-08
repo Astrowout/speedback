@@ -65,7 +65,7 @@ const Pricing: FunctionComponent<PricingProps> = ({ monthlyCost, yearlyCost, eye
 								<CheckIcon aria-hidden="true" className="mt-0.5 w-5 h-5 text-indigo-500" />
 
 								<span className="pl-2">
-									New features added every week
+									Gather feedback on any website
 								</span>
 							</p>
 
@@ -88,7 +88,7 @@ const Pricing: FunctionComponent<PricingProps> = ({ monthlyCost, yearlyCost, eye
 						</div>
 
 						<div className="absolute top-4 -left-1">
-							<p className="bg-indigo-500 font-bold text-white text-xs px-4 py-1 rounded uppercase">Popular</p>
+							<p className="bg-indigo-500 font-bold text-white text-xs px-4 py-1 rounded uppercase tracking-wider">Try it out</p>
 						</div>
 					</div>
 
@@ -120,7 +120,7 @@ const Pricing: FunctionComponent<PricingProps> = ({ monthlyCost, yearlyCost, eye
 								<p className="flex text-gray-300 text-left">
 									<CheckIcon aria-hidden="true" className="mt-0.5 w-5 h-5 text-indigo-300" />
 									<span className="pl-2">
-										All features from the free beta
+										All features from the free plan
 									</span>
 								</p>
 
