@@ -50,10 +50,21 @@ const useAuth = () => {
 				email,
 			});
 
-			const userData = await magic!.user.getMetadata();
-			setUser(userData);
+			// Validate didToken with server
+			const res = await fetch('/api/login', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: 'Bearer ' + didToken,
+				},
+			});
 
-			Router.replace(`/app/dashboard?userToken=${didToken}`);
+			if (res.status === 200) {
+				const userData = await magic!.user.getMetadata();
+				setUser(userData);
+
+				Router.replace(`/app/dashboard?userToken=${didToken}`);
+			}
 		} catch (error) {
 			console.error(error);
 
