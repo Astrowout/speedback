@@ -8,7 +8,6 @@ import { MenuIcon, XIcon } from '@heroicons/react/outline';
 import { Logo, User } from "./index";
 
 const navigation = [
-	{ name: 'Dashboard', href: '/app/dashboard' },
 	{ name: 'Projects', href: '/app/projects' },
 ]
 

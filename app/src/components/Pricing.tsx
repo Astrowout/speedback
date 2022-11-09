@@ -1,7 +1,7 @@
 import { FunctionComponent, useState } from 'react';
-import { CheckIcon } from '@heroicons/react/outline';
+import { CheckIcon, ClockIcon } from '@heroicons/react/outline';
 
-import { Toggle, Button } from './index';
+import { Button } from './index';
 interface IPricing {
 	id: string;
 	title: string;
@@ -39,9 +39,9 @@ const Pricing: FunctionComponent<PricingProps> = ({ monthlyCost, yearlyCost, eye
 				{/* <Toggle enabled={yearly} setEnabled={setYearly} label="Paid yearly" className="mt-16" /> */}
 
 				<div className="mt-10 flex flex-col md:flex-row md:mx-auto max-w-full self-stretch">
-					<div className="relative md:w-96 md:my-8 p-8 bg-white text-center rounded-t md:rounded shadow-xl">
+					<div className="relative md:w-96 px-8 py-12 md:p-8 bg-white text-center rounded-t md:rounded shadow-xl">
 						<h3 className="text-gray-900 font-brand text-3xl">
-							Free beta
+							Single project
 						</h3>
 
 						<p className="pt-2">
@@ -73,7 +73,15 @@ const Pricing: FunctionComponent<PricingProps> = ({ monthlyCost, yearlyCost, eye
 								<CheckIcon aria-hidden="true" className="mt-0.5 w-5 h-5 text-indigo-500" />
 
 								<span className="pl-2">
-									All bugs in one place
+									All bugs in the right place
+								</span>
+							</p>
+
+							<p className="flex text-gray-400 text-left pt-5">
+								<ClockIcon aria-hidden="true" className="mt-0.5 w-5 h-5 text-indigo-300" />
+
+								<span className="pl-2">
+									Integrate with your favourite tools (coming soon)
 								</span>
 							</p>
 
@@ -88,29 +96,29 @@ const Pricing: FunctionComponent<PricingProps> = ({ monthlyCost, yearlyCost, eye
 						</div>
 
 						<div className="absolute top-4 -left-1">
-							<p className="bg-indigo-500 font-bold text-white text-xs px-4 py-1 rounded uppercase tracking-wider">Try it out</p>
+							<p className="bg-indigo-500 font-bold text-white text-xs px-3 py-1 rounded uppercase tracking-wider">Preview</p>
 						</div>
 					</div>
 
-					<div className="md:w-80 p-8 bg-gray-900 text-center flex flex-col rounded-b md:rounded text-white shadow-xl">
+					{/* <div className="md:w-80 p-8 bg-gray-900 text-center flex flex-col rounded-b md:rounded text-white shadow-xl">
 						<h3 className="text-white font-brand text-3xl">
 							Premium
 						</h3>
 
 						<p className="pt-2">
-							{/* <span className="text-gray-400 align-top">€ </span> */}
+							<span className="text-gray-400 align-top">€ </span>
 
-							{/* <span className="text-3xl font-bold">
+							<span className="text-3xl font-bold">
 								{yearly ? yearlyCost : monthlyCost}{" "}
-							</span> */}
+							</span>
 
 							<span className="text-lg text-gray-400">
 								Coming soon...
 							</span>
 
-							{/* <span className="text-gray-400">
+							<span className="text-gray-400">
 								/ month
-							</span> */}
+							</span>
 						</p>
 
 						<hr className="mt-4 border-gray-600" />
@@ -157,7 +165,7 @@ const Pricing: FunctionComponent<PricingProps> = ({ monthlyCost, yearlyCost, eye
 								</Button>
 							</div>
 						</div>
-					</div>
+					</div> */}
 				</div>
 			</div>
 		</div>

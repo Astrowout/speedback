@@ -63,7 +63,7 @@ const useAuth = () => {
 				const userData = await magic!.user.getMetadata();
 				setUser(userData);
 
-				Router.replace(`/app/dashboard?userToken=${didToken}`);
+				Router.replace(`/app/projects?userToken=${didToken}`);
 			}
 		} catch (error) {
 			console.error(error);

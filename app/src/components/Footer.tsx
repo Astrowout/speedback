@@ -59,7 +59,7 @@ const Footer: FunctionComponent<FooterProps> = ({ visual, description }) => {
 							{description}
 						</p>
 
-						<Socials instaLabel="Follow our process" />
+						{/* <Socials instaLabel="Follow our process" /> */}
 					</div>
 
 					<div className="flex space-x-16 sm:space-x-32 flex-shrink-0">

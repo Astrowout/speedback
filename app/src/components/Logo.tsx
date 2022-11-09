@@ -10,7 +10,7 @@ type LogoProps = {
 	dark?: boolean,
 }
 
-const Logo: FunctionComponent<LogoProps> = ({ className, dark = false, size = 26, url = "/app/dashboard" }) => {
+const Logo: FunctionComponent<LogoProps> = ({ className, dark = false, size = 26, url = "/app/projects" }) => {
 
 	const handleScrollToTop = () => {
 		if (url === "/") {
