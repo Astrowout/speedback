@@ -39,7 +39,7 @@ const Comments: FunctionComponent<CommentsProps> = ({ className, comments, proje
 			{!comments.length ? (
 				<EmptyState title="No feedback added in this project." icon={ChatAlt2Icon}>
 					<div className="mt-2 flex flex-col space-y-6 items-center">
-						<p className="text-sm text-center text-gray-400">
+						<p className="text-sm text-center text-gray-400 max-w-prose">
 							Integrate the script in your website to start gathering feedback from your clients or customers.
 						</p>
 

@@ -2,14 +2,17 @@ import { FunctionComponent, MouseEvent, useEffect } from "react";
 import cn from "classnames";
 import ClipboardJS from "clipboard";
 import Router from "next/router";
+import { ArrowRightIcon } from "@heroicons/react/outline";
 
 type ProjectsTableProps = {
 	rows: any[],
 	className?: string,
-	compact?: boolean,
 }
 
-const ProjectsTable: FunctionComponent<ProjectsTableProps> = ({ className, rows, compact = false }) => {
+const ProjectsTable: FunctionComponent<ProjectsTableProps> = ({
+	className,
+	rows,
+}) => {
 	useEffect(() => {
 		const clipboard = new ClipboardJS("#copyScriptTrigger");
 
@@ -49,17 +52,15 @@ const ProjectsTable: FunctionComponent<ProjectsTableProps> = ({ className, rows,
 									Comment count
 								</th>
 
-								{!compact && (
-									<>
-										<th scope="col" className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-											Description
-										</th>
+								<th scope="col" className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+									Description
+								</th>
 
-										<th scope="col" className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-											ID
-										</th>
-									</>
-								)}
+								<th scope="col" className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+									ID
+								</th>
+
+								<th scope="col"></th>
 							</tr>
 						</thead>
 
@@ -67,7 +68,7 @@ const ProjectsTable: FunctionComponent<ProjectsTableProps> = ({ className, rows,
 							{rows?.map(row => (
 								<tr
 									key={row.id}
-									className="hover:bg-indigo-50 cursor-pointer"
+									className="group hover:bg-indigo-50 cursor-pointer"
 									role="button"
 									onClick={(e) => handleProjectDetail(e as any, row.id)}
 								>
@@ -77,32 +78,27 @@ const ProjectsTable: FunctionComponent<ProjectsTableProps> = ({ className, rows,
 										</strong>
 									</td>
 
-									<td className="p-4 whitespace-nowrap">
-										<a
-											href={row.url}
-											target="_blank"
-											rel="noopener noreferrer"
-											className="text-sm text-blue-500 underline"
-										>
-											{row.url}
-										</a>
+									<td className="p-4 whitespace-nowrap text-sm">
+										{row.url}
 									</td>
 
 									<td className="p-4 whitespace-nowrap font-bold">
 										{row.comments.length}
 									</td>
 
-									{!compact && (
-										<>
-											<td className="p-4 whitespace-nowrap text-sm">
-												{row.description}
-											</td>
+									<td className="p-4 whitespace-nowrap text-sm">
+										{row.description}
+									</td>
 
-											<td className="p-4 whitespace-nowrap text-sm">
-												{row.id}
-											</td>
-										</>
-									)}
+									<td className="p-4 whitespace-nowrap text-sm">
+										{row.id}
+									</td>
+
+									<td className="p-4 opacity-0 translate-x-2 transition group-hover:opacity-100 group-hover:translate-x-0">
+										<ArrowRightIcon
+											className="block text-indigo-500 w-5 h-5"
+										/>
+									</td>
 								</tr>
 							))}
 						</tbody>

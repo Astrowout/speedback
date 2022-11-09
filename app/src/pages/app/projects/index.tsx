@@ -11,7 +11,7 @@ import { Queries } from '../../../helpers';
 import { AuthContext } from '../../../context';
 
 const AppProjects: NextPage = () => {
-	const { isLoading: isUserLoading, user } = useContext(AuthContext);
+	const { isLoading: userLoading, user } = useContext(AuthContext);
 	const { data, loading } = useQuery(Queries.getProjects, {
 		variables: { issuer: user?.issuer },
 		skip: !user,
@@ -23,6 +23,8 @@ const AppProjects: NextPage = () => {
 		skip: !user,
 		fetchPolicy: "cache-and-network"
 	});
+
+	const isLoading = userLoading || loading;
 
 	return (
 		<AppLayout>
@@ -53,7 +55,7 @@ const AppProjects: NextPage = () => {
 				</Heading>
 
 				<section className="2xl:container container-spacing section-spacing">
-					{isUserLoading || loading ? (
+					{isLoading ? (
 						<Loader />
 					) : data?.projects.length ? (
 						<ProjectsTable rows={data.projects}></ProjectsTable>

@@ -64,12 +64,12 @@ const AppProjectDetail: NextPage = ({ id }: InferGetStaticPropsType<typeof getSt
 				) : (
 					<section className="2xl:container container-spacing section-spacing">
 						{data?.project ? (
-							<div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-								<ProjectDataDisplay className="max-w-xl col-span-2 md:col-span-1" data={data.project}></ProjectDataDisplay>
+							<div className="grid grid-cols-12 gap-x-8 gap-y-12 items-start">
+								<Comments className="col-span-12 md:col-span-7" projectId={data.project.id} comments={data.project.comments} />
 
-								<Comments className="col-span-2 md:col-span-1" projectId={data.project.id} comments={data.project.comments} />
+								<ProjectDataDisplay className="max-w-xl col-span-12 md:col-span-5" data={data.project}></ProjectDataDisplay>
 
-								<Snippet className="col-span-2" id={data.project.id} />
+								<Snippet className="col-span-12" id={data.project.id} />
 							</div>
 						) : (
 							<EmptyState title="This project was not found." icon={CollectionIcon}>
@@ -89,7 +89,7 @@ const AppProjectDetail: NextPage = ({ id }: InferGetStaticPropsType<typeof getSt
 
 			<ConfirmDeleteModal
 				title={`Deleting "${data?.project?.name}"`}
-				description="Are you sure you want to delete this project? This action cannot be reversed."
+				description="Are you sure you want to delete this project? This action cannot be undone."
 				action={handleDeleteProject}
 				closeAction={setIsConfirmModalOpen}
 				isOpen={isConfirmModalOpen}
