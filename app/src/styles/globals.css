@@ -29,4 +29,8 @@
 	.section-spacing {
 		@apply py-8 lg:py-12;
 	}
+
+	.section-spacing--sm {
+		@apply py-6 lg:py-10;
+	}
 }

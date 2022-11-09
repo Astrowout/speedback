@@ -41,11 +41,11 @@ const ProjectsTable: FunctionComponent<ProjectsTableProps> = ({
 						<thead className="bg-gray-100">
 							<tr>
 								<th scope="col" className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-									Name
+									Project name
 								</th>
 
 								<th scope="col" className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-									URL
+									Preview URL
 								</th>
 
 								<th scope="col" className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
