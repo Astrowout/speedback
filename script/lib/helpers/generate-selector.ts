@@ -1,10 +1,10 @@
 
-const getIndex = (node) => {
+const getIndex = (node: Element) => {
 	let i = 1;
-	let tagName = node.tagName;
+	let tagName: string = node.tagName;
 
 	while (node.previousSibling) {
-	  node = node.previousSibling;
+	  node = node.previousSibling as Element;
 	  if (
 		node.nodeType === 1 &&
 		tagName.toLowerCase() == node.tagName.toLowerCase()
@@ -15,8 +15,8 @@ const getIndex = (node) => {
 	return i;
 }
 
-const generateSelector = (context) => {
-	let index, pathSelector, localName;
+const generateSelector = (context: any) => {
+	let index, pathSelector;
 
 	if (context == "null") throw "not an dom reference";
 	// call getIndex function

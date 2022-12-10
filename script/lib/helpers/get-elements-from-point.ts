@@ -1,8 +1,8 @@
-const getAllElementsFromPoint = (x, y) => {
-    let element, elements = [];
+const getAllElementsFromPoint = (x: number, y: number) => {
+    let element: HTMLElement | null, elements = [];
     let old_visibility = [];
     while (true) {
-        element = document.elementFromPoint(x, y);
+        element = document.elementFromPoint(x, y) as HTMLElement;
         if (!element || element === document.documentElement) {
             break;
         }

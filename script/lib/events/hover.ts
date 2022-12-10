@@ -1,12 +1,12 @@
-import { checkElements, checkHighlightedElement } from "../helpers/check-elements.js";
-import getAllElementsFromPoint from "../helpers/get-elements-from-point.js";
-import { getTarget } from "../helpers/get-target.js";
+import { checkElements, checkHighlightedElement } from "../helpers/check-elements";
+import getAllElementsFromPoint from "../helpers/get-elements-from-point";
+import { getTarget } from "../helpers/get-target";
 
-const mouseMove = (e) => {
+const mouseMove = (e: MouseEvent) => {
 	const hoveredElements = getAllElementsFromPoint(e.clientX, e.clientY);
 	const hoveredElement = hoveredElements[hoveredElements.length - 2];
 
-	const targetEl = getTarget(hoveredElement);
+	const targetEl = getTarget(hoveredElement) as HTMLElement;
 
 	if (checkElements(targetEl)) {
 		checkHighlightedElement();

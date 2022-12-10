@@ -1,24 +1,21 @@
+import "./style.css";
+import throttle from "lodash/throttle";
+
 // Config
-import config from "./config.js";
+import config from "./config";
 
 // Templates
-import inputTemplate from "./templates/input.js";
-import commentTemplate from "./templates/comment.js";
+import inputTemplate from "./templates/input";
+import commentTemplate from "./templates/comment";
 
 // Helpers
-import addCss from "./helpers/add-css.js";
-import { checkHighlightedElement } from "./helpers/check-elements.js";
-import generateSelector from "./helpers/generate-selector.js";
-import throttle from "./helpers/throttle.js";
-import getViewport from "./helpers/get-viewport.js";
-
-// Vendors
-import tippy from "./vendors/tippy.js";
-import Bowser from "./vendors/bowser.js";
+import { checkHighlightedElement } from "./helpers/check-elements";
+import generateSelector from "./helpers/generate-selector";
+import getViewport from "./helpers/get-viewport";
 
 // Events
-import mouseMove from "./events/hover.js";
-import click from "./events/click.js";
+import mouseMove from "./events/hover";
+import click from "./events/click";
 
 // Globals
 const button = document.createElement("button");
@@ -30,8 +27,8 @@ overlay.classList.add("gthr-overlay");
 const throttledEvent = throttle((e) => mouseMove(e), 100);
 
 let feedbackMode = false;
-let id = null;
-let comments = [];
+let id: string | null = null;
+let comments: any[] = [];
 
 const updateButton = () => {
 	if (feedbackMode) {
@@ -57,7 +54,7 @@ const renderElements = () => {
 	button.addEventListener("click", toggleFeedbackMode);
 }
 
-const handleInput = (e) => {
+const handleInput = (e: InputEvent) => {
 	const placeholder = document.querySelector(".gthr-tooltip__placeholder");
 
 	if (e.target.innerText) {
@@ -326,14 +323,10 @@ const initEvents = () => {
 }
 
 const init = async () => {
-	addCss(`${config.BASE_URL}/script/main.css`);
-
-	const scriptElement = document.querySelector(`script[src^='${config.BASE_URL}/script']`);
-	id = scriptElement.src.split("?id=")[1];
-
 	initTippy();
 	updateButton();
 	renderElements();
 }
 
 init();
+

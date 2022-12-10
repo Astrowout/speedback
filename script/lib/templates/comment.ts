@@ -1,6 +1,20 @@
 import formatRelative from 'date-fns/formatRelative';
 
-const commentTemplate = ({ text, resolved, metadata, createdAt, loading = false }) => `
+export type Metadata = {
+	platform: any;
+	browser: any;
+	viewport: any;
+}
+
+export type CommentProps = {
+	text: string;
+	resolved: boolean;
+	metadata: Metadata;
+	createdAt: string;
+	loading: boolean;
+}
+
+const commentTemplate = ({ text, resolved, metadata, createdAt, loading = false }: CommentProps) => `
 	<div class="gthr-tooltip">
 		<div class="gthr-tooltip__content">
 			<div class="gthr-tooltip__info ${resolved ? 'gthr-tooltip__info--resolved' : ''}">

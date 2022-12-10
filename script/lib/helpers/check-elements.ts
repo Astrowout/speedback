@@ -1,4 +1,4 @@
-export const checkElements = (el) => {
+export const checkElements = (el: Element) => {
 	return el.classList.contains("gthr-btn")
 		|| el.classList.contains("gthr-overlay");
 }
