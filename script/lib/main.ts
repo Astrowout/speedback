@@ -323,7 +323,7 @@ const initEvents = () => {
 }
 
 const init = async () => {
-	initTippy();
+	// initTippy();
 	updateButton();
 	renderElements();
 }

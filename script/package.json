@@ -12,7 +12,9 @@
     }
   },
   "scripts": {
-    "dev": "vite",
+    "dev:src": "vite",
+    "dev:lib": "vite build --watch",
+    "dev": "yarn dev:src & yarn dev:lib",
     "build": "tsc && vite build",
     "preview": "vite preview"
   },
