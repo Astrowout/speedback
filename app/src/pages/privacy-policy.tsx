@@ -12,7 +12,6 @@ const PrivacyPolicy: NextPage = ({ data }: InferGetStaticPropsType<typeof getSta
 		<MarketingLayout
 			data={{
 				footerDescription: data.footerDescription,
-				footerVisual: data.footerVisual,
 			}}
 		>
 			<Head>

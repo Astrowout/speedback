@@ -24,9 +24,10 @@ const useAuth = () => {
 			setIsLoading(true);
 
 			try {
-				const userData = await magic!.user.getMetadata();
+				const isLoggedIn = await magic!.user.isLoggedIn();
 
-				if (userData) {
+				if (isLoggedIn) {
+					const userData = await magic!.user.getMetadata();
 					setUser(userData);
 				} else {
 					setUser(null);

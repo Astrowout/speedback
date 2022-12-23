@@ -14,7 +14,6 @@ const Home: NextPage = ({ data }: InferGetStaticPropsType<typeof getStaticProps>
 		<MarketingLayout
 			data={{
 				footerDescription: data.footerDescription,
-				footerVisual: data.footerVisual,
 			}}
 		>
 			<Head>

@@ -11,9 +11,8 @@ type LogoProps = {
 }
 
 const Logo: FunctionComponent<LogoProps> = ({ className, dark = false, size = 26, url = "/app/projects" }) => {
-
 	const handleScrollToTop = () => {
-		if (url === "/") {
+		if (window && url === "/") {
 			gsap.to(window, { scrollTo: 0, duration: 0.8, ease: "power2" });
 		}
 	}

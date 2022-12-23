@@ -37,6 +37,10 @@ const Input: FunctionComponent<InputProps> = forwardRef(({
 				</label>
 			)}
 
+			{error === 'required' && (
+				<p className="text-red-500 text-sm mb-1.5"><span className="capitalize">{label || name}</span> is required</p>
+			)}
+
 			<div className="relative">
 				{type === 'textarea' ? (
 					<textarea
@@ -79,10 +83,6 @@ const Input: FunctionComponent<InputProps> = forwardRef(({
 					</div>
 				)}
 			</div>
-
-			{error === 'required' && (
-				<p className="text-red-500 text-sm mt-1.5 text-right"><span>{label || name}</span> is required</p>
-			)}
 
 			{error === 'pattern' && (
 				<p className="text-red-500 text-sm mt-1.5 text-right">This field doesn&apos;t seem right. Please check again.</p>

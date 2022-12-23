@@ -12,7 +12,6 @@ const Cookies: NextPage = ({ data }: InferGetStaticPropsType<typeof getStaticPro
 		<MarketingLayout
 			data={{
 				footerDescription: data.footerDescription,
-				footerVisual: data.footerVisual,
 			}}
 		>
 			<Head>

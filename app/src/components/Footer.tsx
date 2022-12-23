@@ -1,9 +1,7 @@
 import { FunctionComponent } from 'react';
-import Image from 'next/image';
-import { gsap } from "gsap";
 import Link from 'next/link';
 
-import { Logo, Version, Socials } from './index';
+import { Logo, Version } from './index';
 
 const navigation = [
 	{
@@ -34,18 +32,11 @@ const legalNavigation = [
 	},
 ]
 
-interface IVisual {
-	url: string;
-	width: number;
-	height: number;
-}
-
 type FooterProps = {
 	description: string;
-	visual: IVisual;
 }
 
-const Footer: FunctionComponent<FooterProps> = ({ visual, description }) => {
+const Footer: FunctionComponent<FooterProps> = ({ description }) => {
 	const year = new Date().getFullYear();
 
 	return (
@@ -100,15 +91,6 @@ const Footer: FunctionComponent<FooterProps> = ({ visual, description }) => {
 								))}
 							</ul>
 						</div>
-					</div>
-
-					<div aria-hidden="true" className="hidden lg:block flex-shrink max-w-xs pointer-events-none">
-						<Image
-							src={visual.url}
-							alt="image"
-							width={visual.width}
-							height={visual.height}
-						/>
 					</div>
 				</div>
 

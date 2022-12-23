@@ -54,13 +54,6 @@ Queries.getLandingPage = gql`
 
 		global(where: { id: "ckuefco8wf1950b076fop8ulj" }) {
 			footerDescription
-			footerVisual {
-				url(transformation: {
-					image: { resize: { width: 400, fit: max } }
-				})
-				width
-				height
-			}
 		}
 	}
 `;
@@ -77,11 +70,6 @@ Queries.getContentPage = gql`
 
 		global(where: { id: "ckuefco8wf1950b076fop8ulj" }) {
 			footerDescription
-			footerVisual {
-				url
-				width
-				height
-			}
 		}
 	}
 `;
