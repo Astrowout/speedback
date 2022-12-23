@@ -58,18 +58,16 @@ const Header = () => {
 								<div className="flex space-x-3">
 									<Link
 										href="/login"
+										className="px-4 py-2 border border-gray-300 rounded shadow text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
 									>
-										<a className="px-4 py-2 border border-gray-300 rounded shadow text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-											Login
-										</a>
+										Login
 									</Link>
 
 									<Link
 										href="/login"
+										className="px-4 py-2 border border-transparent rounded shadow text-white bg-indigo-500 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
 									>
-										<a className="px-4 py-2 border border-transparent rounded shadow text-white bg-indigo-500 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-											Try it for free
-										</a>
+										Try it for free
 									</Link>
 								</div>
 							</div>
@@ -94,18 +92,16 @@ const Header = () => {
 						<div className="flex flex-col space-y-3 sm:space-y-0 sm:flex-row sm:space-x-3 mt-8">
 							<Link
 								href="/login"
+								className="sm:w-1/2 text-center px-4 py-2 border border-gray-300 rounded shadow text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
 							>
-								<a className="sm:w-1/2 text-center px-4 py-2 border border-gray-300 rounded shadow text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-									Login
-								</a>
+								Login
 							</Link>
 
 							<Link
 								href="/login"
+								className="sm:w-1/2 text-center px-4 py-2 border border-transparent rounded shadow text-white bg-indigo-500 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
 							>
-								<a className="sm:w-1/2 text-center px-4 py-2 border border-transparent rounded shadow text-white bg-indigo-500 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-									Try it for free
-								</a>
+								Try it for free
 							</Link>
 						</div>
 					</Disclosure.Panel>

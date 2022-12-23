@@ -26,16 +26,16 @@ const AppHeader = () => {
 								<div className="hidden md:block">
 									<div className="ml-12 flex items-baseline space-x-4">
 										{navigation.map((item) => (
-											<Link key={item.name} href={item.href}>
-												<a
-													className={cn('px-3 py-2 text-lg rounded font-brand', {
-														'bg-gray-900 text-white': router.pathname === item.href,
-														'text-gray-400 hover:bg-gray-700 hover:text-white': router.pathname !== item.href,
-													})}
-													aria-current={router.pathname === item.href ? 'page' : undefined}
-												>
-													{item.name}
-												</a>
+											<Link
+												key={item.name}
+												href={item.href}
+												className={cn('px-3 py-2 text-lg rounded font-brand', {
+													'bg-gray-900 text-white': router.pathname === item.href,
+													'text-gray-400 hover:bg-gray-700 hover:text-white': router.pathname !== item.href,
+												})}
+												aria-current={router.pathname === item.href ? 'page' : undefined}
+											>
+												{item.name}
 											</Link>
 										))}
 									</div>
@@ -61,16 +61,16 @@ const AppHeader = () => {
 					<Disclosure.Panel className="md:hidden">
 						<div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
 							{navigation.map((item) => (
-								<Link key={item.name} href={item.href}>
-									<a
-										className={cn('block px-3 py-2 rounded font-brand', {
-											'bg-gray-900 text-white': router.pathname === item.href,
-											'text-gray-300 hover:bg-gray-700 hover:text-white': router.pathname !== item.href,
-										})}
-										aria-current={router.pathname === item.href ? 'page' : undefined}
-									>
-										{item.name}
-									</a>
+								<Link
+									key={item.name}
+									href={item.href}
+									className={cn('block px-3 py-2 rounded font-brand', {
+										'bg-gray-900 text-white': router.pathname === item.href,
+										'text-gray-300 hover:bg-gray-700 hover:text-white': router.pathname !== item.href,
+									})}
+									aria-current={router.pathname === item.href ? 'page' : undefined}
+								>
+									{item.name}
 								</Link>
 							))}
 						</div>

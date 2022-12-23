@@ -1,5 +1,7 @@
-import "./style.css";
+import "./main.css";
 import throttle from "lodash/throttle";
+import App from './App.vue';
+import { createApp } from "petite-vue";
 
 // Config
 import config from "./config";
@@ -12,6 +14,7 @@ import commentTemplate from "./templates/comment";
 import { checkHighlightedElement } from "./helpers/check-elements";
 import generateSelector from "./helpers/generate-selector";
 import getViewport from "./helpers/get-viewport";
+import addCss from "./helpers/add-css";
 
 // Events
 import mouseMove from "./events/hover";
@@ -19,10 +22,24 @@ import click from "./events/click";
 
 // Globals
 const button = document.createElement("button");
-button.classList.add("gthr-btn");
-
-const overlay = document.createElement("div");
-overlay.classList.add("gthr-overlay");
+button.classList.add(
+	"spd-fixed",
+	"spd-bottom-8",
+	"spd-left-1/2",
+	"-spd-translate-x-1/2",
+	"spd-z-[99999999]",
+	"spd-flex",
+	"spd-items-center",
+	"spd-py-3",
+	"spd-px-6",
+	"spd-rounded-full",
+	"spd-text-neutral-400",
+	"spd-shadow-md",
+	"spd-border",
+	"spd-border-neutral-500",
+	"spd-text-white",
+	"spd-bg-black",
+);
 
 const throttledEvent = throttle((e) => mouseMove(e), 100);
 
@@ -31,24 +48,15 @@ let id: string | null = null;
 let comments: any[] = [];
 
 const updateButton = () => {
-	if (feedbackMode) {
-		button.innerHTML = `
-			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-			</svg>
-			Close feedback
-		`;
-	} else {
-		button.innerHTML = `
-			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
-			</svg>
-			Give feedback
-		`;
-	}
+	button.innerHTML = `
+		<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="spd-mr-2 spd-w-5 spd-h-5" stroke-width="1.5" stroke="currentColor">
+			<path stroke-linecap="round" stroke-linejoin="round" d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 01-.923 1.785A5.969 5.969 0 006 21c1.282 0 2.47-.402 3.445-1.087.81.22 1.668.337 2.555.337z" />
+		</svg><span class="spd-text-sm">Comment</span>
+	`;
 }
 
 const renderElements = () => {
+	// console.log("render el");
 	document.body.appendChild(button);
 
 	button.addEventListener("click", toggleFeedbackMode);
@@ -206,8 +214,6 @@ const handleAddComment = (e) => {
 const handleFeedbackMode = () => {
 	document.body.addEventListener("click", handleAddComment);
 	document.body.addEventListener("mousemove", throttledEvent, false);
-
-	document.body.appendChild(overlay);
 }
 
 const cleanupFeedbackMode = () => {
@@ -216,8 +222,6 @@ const cleanupFeedbackMode = () => {
 
 	removeComments();
 	checkHighlightedElement();
-
-	overlay.remove();
 }
 
 const handleTooltipActive = () => {
@@ -323,10 +327,21 @@ const initEvents = () => {
 }
 
 const init = async () => {
+	createApp().mount();
 	// initTippy();
+	addCss("/style.css");
 	updateButton();
 	renderElements();
 }
 
 init();
+// <script>
+
+// <div v-scope>
+//   <p>{{ count }}</p>
+//   <p>{{ plusOne }}</p>
+//   <button @click="increment">increment</button>
+// </div>
+
+createApp(App).mount('#app');
 

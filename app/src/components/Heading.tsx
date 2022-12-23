@@ -33,11 +33,13 @@ const Heading: FunctionComponent<HeadingProps> = ({ children, title, stats, back
 					{backLink && (
 						<Link
 							href={backLink.url}
+							className="mb-2 inline-flex items-center text-sm text-gray-600 hover:text-black"
 						>
-							<a className="mb-2 inline-flex items-center text-sm text-gray-600 hover:text-black">
-								<ArrowSmLeftIcon className="block mr-1 w-5 h-5" aria-hidden="true" />
+							<ArrowSmLeftIcon className="block mr-1 w-5 h-5" aria-hidden="true" />
+
+							<span>
 								{backLink.label}
-							</a>
+							</span>
 						</Link>
 					)}
 

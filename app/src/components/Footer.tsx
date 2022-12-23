@@ -71,8 +71,11 @@ const Footer: FunctionComponent<FooterProps> = ({ visual, description }) => {
 							<ul className="flex flex-col items-start space-y-2">
 								{navigation.map(item => (
 									<li key={item.anchor}>
-										<Link href={item.url + item.anchor}>
-											<a className="text-gray-600 hover:underline">{item.label}</a>
+										<Link
+											href={item.url + item.anchor}
+											className="text-gray-600 hover:underline"
+										>
+											{item.label}
 										</Link>
 									</li>
 								))}
@@ -87,8 +90,11 @@ const Footer: FunctionComponent<FooterProps> = ({ visual, description }) => {
 							<ul className="flex flex-col items-start space-y-2">
 								{legalNavigation.map(item => (
 									<li key={item.url}>
-										<Link href={item.url}>
-											<a className="text-gray-600 hover:underline">{item.label}</a>
+										<Link
+											href={item.url}
+											className="text-gray-600 hover:underline"
+										>
+											{item.label}
 										</Link>
 									</li>
 								))}

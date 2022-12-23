@@ -47,28 +47,28 @@ const Navigation: FunctionComponent<NavigationProps> = ({ className }) => {
 						<Link
 							key={item.anchor}
 							href={item.url + item.anchor}
+							className={cn('px-3 py-1.5 transition-colors text-lg font-brand relative', {
+								"text-gray-900 md:text-gray-500 hover:text-gray-900": activeAnchor !== item.anchor,
+								"text-gray-900": activeAnchor === item.anchor,
+							})}
 						>
-							<a
-								className={cn('px-3 py-1.5 transition-colors text-lg font-brand relative', {
-									"text-gray-900 md:text-gray-500 hover:text-gray-900": activeAnchor !== item.anchor,
-									"text-gray-900": activeAnchor === item.anchor,
-								})}
-							>
-								{activeAnchor === item.anchor && (
-									<motion.div
-										transition={{
-											duration: 0.2
-										}}
-										animate={{ opacity: 1 }}
-										layoutId="nav-background"
-										className={cn("absolute transition-colors inset-0 opacity-0 rounded", {
-											"bg-gray-200": activeAnchor !== item.anchor,
-											"bg-indigo-100": activeAnchor === item.anchor,
-										})}
-									/>
-								)}
-								<span className="z-10 relative">{item.name}</span>
-							</a>
+							{activeAnchor === item.anchor && (
+								<motion.div
+									transition={{
+										duration: 0.2
+									}}
+									animate={{ opacity: 1 }}
+									layoutId="nav-background"
+									className={cn("absolute transition-colors inset-0 opacity-0 rounded", {
+										"bg-gray-200": activeAnchor !== item.anchor,
+										"bg-indigo-100": activeAnchor === item.anchor,
+									})}
+								/>
+							)}
+
+							<span className="z-10 relative">
+								{item.name}
+							</span>
 						</Link>
 					))}
 				</nav>

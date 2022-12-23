@@ -41,15 +41,15 @@ const User: FunctionComponent<UserProps> = ({ className }) => {
 								{({ active }) => (
 									<Link
 										href="/profile/settings"
+										className={cn('flex items-center pointer-events-none hover:bg-indigo-50 w-full p-4 text-sm text-gray-400', {
+											'bg-indigo-50': active,
+										})}
 									>
-										<a
-											className={cn('flex items-center pointer-events-none hover:bg-indigo-50 w-full p-4 text-sm text-gray-400', {
-												'bg-indigo-50': active,
-											})}
-										>
-											<CogIcon className="block w-5 h-5 mr-2" aria-hidden="true" />
+										<CogIcon className="block w-5 h-5 mr-2" aria-hidden="true" />
+
+										<span>
 											Settings (coming soon)
-										</a>
+										</span>
 									</Link>
 								)}
 							</Menu.Item>
@@ -58,15 +58,15 @@ const User: FunctionComponent<UserProps> = ({ className }) => {
 								{({ active }) => (
 									<Link
 										href="/logout"
+										className={cn('flex items-center w-full text-left hover:bg-indigo-50 p-4 text-sm', {
+											'bg-indigo-50': active,
+										})}
 									>
-										<a
-											className={cn('flex items-center w-full text-left hover:bg-indigo-50 p-4 text-sm', {
-												'bg-indigo-50': active,
-											})}
-										>
-											<LogoutIcon className="block w-5 h-5 mr-2" aria-hidden="true" />
+										<LogoutIcon className="block w-5 h-5 mr-2" aria-hidden="true" />
+
+										<span>
 											Sign out
-										</a>
+										</span>
 									</Link>
 								)}
 							</Menu.Item>
@@ -92,13 +92,13 @@ const User: FunctionComponent<UserProps> = ({ className }) => {
 					<div className="mt-3 px-2">
 						<Link
 							href="/logout"
+							className={cn('flex items-center w-full text-left px-4 py-2 text-sm text-gray-300')}
 						>
-							<a
-								className={cn('flex items-center w-full text-left px-4 py-2 text-sm text-gray-300')}
-							>
-								<LogoutIcon className="block w-5 h-5 mr-2" aria-hidden="true" />
+							<LogoutIcon className="block w-5 h-5 mr-2" aria-hidden="true" />
+
+							<span>
 								Sign out
-							</a>
+							</span>
 						</Link>
 					</div>
 				</div>

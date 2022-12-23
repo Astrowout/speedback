@@ -11,49 +11,6 @@
 	--box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
 
-/* Button */
-.gthr-btn {
-	position: fixed;
-	right: 0;
-	top: 50%;
-	transform: translate3d(0, -50%, 0);
-	color: white;
-	display: flex;
-	align-items: center;
-	background-color: var(--primary-color);
-	padding: 10px 16px;
-	border: none;
-	border-bottom-left-radius: var(--border-radius);
-	border-top-left-radius: var(--border-radius);
-	cursor: pointer !important;
-	z-index: calc(var(--z-index) + 1);
-	box-shadow: var(--box-shadow);
-}
-
-.gthr-btn > svg {
-	margin-right: 8px;
-}
-
-.gthr-btn:hover {
-	background-color: var(--accent-color);
-}
-
-/* Overlay */
-.gthr-overlay {
-	position: fixed;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	z-index: var(--z-index);
-	cursor: crosshair !important;
-}
-
-/* Highlight */
-.gthr-highlight {
-	outline: 2px solid var(--primary-color);
-}
-
 /* Dot */
 .gthr-dot {
 	user-select: none;

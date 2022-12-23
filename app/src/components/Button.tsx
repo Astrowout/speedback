@@ -51,13 +51,10 @@ const Button: ForwardRefComponent<ButtonProps, any> = forwardRef<any, ButtonProp
 	return url ? (
 		<Link
 			href={url}
+			ref={ref as any}
+			className={classes}
 		>
-			<a
-				ref={ref as any}
-				className={classes}
-			>
-				{renderContent()}
-			</a>
+			{renderContent()}
 		</Link>
 	) : (
 		<button
