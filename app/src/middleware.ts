@@ -16,7 +16,9 @@ export function middleware(
 
 			return response;
 		} else if (request.cookies && !request.cookies.has("userToken")) {
-			return NextResponse.redirect("/login");
+			const url = request.nextUrl.clone();
+			url.pathname = '/login';
+			return NextResponse.redirect(url);
 		}
 
 		return NextResponse.next();
@@ -24,7 +26,9 @@ export function middleware(
 
 	if (request.nextUrl.pathname.startsWith('/login')) {
 		if (request.cookies && request.cookies.has("userToken")) {
-			return NextResponse.redirect("/app/projects");
+			const url = request.nextUrl.clone();
+			url.pathname = '/app/projects';
+			return NextResponse.redirect(url);
 		} else {
 			return NextResponse.next();
 		}
