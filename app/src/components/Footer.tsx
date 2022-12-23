@@ -103,7 +103,12 @@ const Footer: FunctionComponent<FooterProps> = ({ visual, description }) => {
 					</div>
 
 					<div aria-hidden="true" className="hidden lg:block flex-shrink max-w-xs pointer-events-none">
-						<Image src={visual.url} alt="image" width={visual.width} height={visual.height} />
+						<Image
+							src={visual.url}
+							alt="image"
+							width={visual.width}
+							height={visual.height}
+						/>
 					</div>
 				</div>
 

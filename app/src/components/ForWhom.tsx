@@ -70,8 +70,9 @@ const ForWhom: FunctionComponent<ForWhomProps> = ({ eyebrow, title, description,
 							<Image
 								src={audience.visual.url}
 								alt={audience.title}
-								objectFit="cover"
-								layout="fill"
+								width={audience.visual.width}
+								height={audience.visual.height}
+								className="object-cover w-full h-full"
 							/>
 						</div>
 					</div>
