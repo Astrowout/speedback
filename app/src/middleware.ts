@@ -9,15 +9,12 @@ export function middleware(
 
 		if (searchParams.get("userToken")) {
 			let response = NextResponse.next();
-			response.cookies.set('userToken', searchParams.get("userToken"), {
-				path: '/',
-				maxAge: 1000 * 60 * 60 * 24 * 7,
-			});
 
 			return response;
 		} else if (request.cookies && !request.cookies.has("userToken")) {
 			const url = request.nextUrl.clone();
 			url.pathname = '/login';
+
 			return NextResponse.redirect(url);
 		}
 
@@ -28,6 +25,7 @@ export function middleware(
 		if (request.cookies && request.cookies.has("userToken")) {
 			const url = request.nextUrl.clone();
 			url.pathname = '/app/projects';
+
 			return NextResponse.redirect(url);
 		} else {
 			return NextResponse.next();
@@ -35,10 +33,9 @@ export function middleware(
 	}
 
 	if (request.nextUrl.pathname.startsWith('/logout')) {
-		let response = NextResponse.next();
-		response.cookies.delete('userToken');
+		request.cookies.clear();
 
-		return response;
+		return NextResponse.next();
 	}
 }
 
