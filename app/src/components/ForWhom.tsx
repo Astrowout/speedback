@@ -25,7 +25,7 @@ type ForWhomProps = {
 
 const ForWhom: FunctionComponent<ForWhomProps> = ({ eyebrow, title, description, audiences = [] }) => {
 	return (
-		<div id="for-whom" className="py-16 border-t-2 border-indigo-100 lg:py-32 bg-white">
+		<div id="for-whom" className="py-16 border-t-2 border-indigo-50 lg:py-32 bg-white">
 			<div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 				<div className="text-center">
 					<h2 className="text-indigo-500 font-bold text-sm tracking-wider uppercase">

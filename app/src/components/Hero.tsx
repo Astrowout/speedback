@@ -17,8 +17,8 @@ type HeroProps = {
 
 const Hero: FunctionComponent<HeroProps> = ({ title, description, visual }) => {
 	return (
-		<section className="max-w-screen-xl mx-auto container-spacing relative flex space-x-8 items-end lg:items-center overflow-hidden">
-			<div className="py-12 pb-80 md:pb-72 lg:py-32 max-w-lg flex flex-col items-start relative z-10">
+		<section className="max-w-screen-xl mx-auto container-spacing relative flex space-x-8 items-end overflow-hidden">
+			<div className="py-12 pb-72 md:pb-64 lg:py-24 xl:pt-16 max-w-lg flex flex-col items-start relative z-10">
 				<h1 className="font-brand text-gray-900 text-4xl leading-tight md:text-5xl md:leading-tight xl:text-6xl xl:leading-tight">
 					{title}
 				</h1>
@@ -37,7 +37,7 @@ const Hero: FunctionComponent<HeroProps> = ({ title, description, visual }) => {
 			</div>
 
 			{visual && (
-				<div aria-hidden="true" className="absolute bottom-8 -right-8 max-w-lg lg:max-w-2xl z-0 lg:relative pointer-events-none">
+				<div aria-hidden="true" className="absolute -right-8 max-w-lg lg:max-w-2xl z-0 lg:relative pointer-events-none">
 					<Image
 						src={visual.url}
 						alt="image"
