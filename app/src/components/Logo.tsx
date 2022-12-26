@@ -1,6 +1,5 @@
 import { FunctionComponent } from 'react';
 import Link from 'next/link';
-import { gsap } from "gsap";
 import cn from "classnames";
 
 type LogoProps = {
@@ -11,12 +10,6 @@ type LogoProps = {
 }
 
 const Logo: FunctionComponent<LogoProps> = ({ className, dark = false, size = 26, url = "/app/projects" }) => {
-	const handleScrollToTop = () => {
-		if (window && url === "/") {
-			gsap.to(window, { scrollTo: 0, duration: 0.8, ease: "power2" });
-		}
-	}
-
 	return (
 		<Link
 			href={url}
@@ -24,7 +17,6 @@ const Logo: FunctionComponent<LogoProps> = ({ className, dark = false, size = 26
 				'text-white': dark,
 				'text-black': !dark,
 			})}
-			onClick={handleScrollToTop}
 		>
 			<svg className="fill-current" height={size} viewBox="0 0 127 26" fill="none" xmlns="http://www.w3.org/2000/svg">
 				<path fillRule="evenodd" clipRule="evenodd" d="M3 6C2.73478 6 2.48043 6.10536 2.29289 6.29289C2.10536 6.48043 2 6.73478 2 7V15C2 15.2652 2.10536 15.5196 2.29289 15.7071C2.48043 15.8946 2.73478 16 3 16H6C6.26522 16 6.51957 16.1054 6.70711 16.2929L10 19.5858L13.2929 16.2929C13.4804 16.1054 13.7348 16 14 16H17C17.2652 16 17.5196 15.8946 17.7071 15.7071C17.8946 15.5196 18 15.2652 18 15V7C18 6.73478 17.8946 6.48043 17.7071 6.29289C17.5196 6.10536 17.2652 6 17 6H3ZM0.87868 4.87868C1.44129 4.31607 2.20435 4 3 4H17C17.7957 4 18.5587 4.31607 19.1213 4.87868C19.6839 5.44129 20 6.20435 20 7V15C20 15.7957 19.6839 16.5587 19.1213 17.1213C18.5587 17.6839 17.7957 18 17 18H14.4142L10.7071 21.7071C10.3166 22.0976 9.68342 22.0976 9.29289 21.7071L5.58579 18H3C2.20435 18 1.44129 17.6839 0.87868 17.1213C0.31607 16.5587 0 15.7956 0 15V7C0 6.20435 0.31607 5.44129 0.87868 4.87868ZM4 9C4 8.44772 4.44772 8 5 8H15C15.5523 8 16 8.44772 16 9C16 9.55228 15.5523 10 15 10H5C4.44772 10 4 9.55228 4 9ZM4 13C4 12.4477 4.44772 12 5 12H9C9.55229 12 10 12.4477 10 13C10 13.5523 9.55229 14 9 14H5C4.44772 14 4 13.5523 4 13Z" />

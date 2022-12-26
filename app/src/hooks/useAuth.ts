@@ -6,6 +6,7 @@ let magic: Magic | null = null;
 
 const useAuth = () => {
 	const [user, setUser] = useState<MagicUserMetadata | null>(null);
+	const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const [error, setError] = useState<string | null | unknown>(null);
 
@@ -25,6 +26,7 @@ const useAuth = () => {
 
 			try {
 				const isLoggedIn = await magic!.user.isLoggedIn();
+				setIsLoggedIn(isLoggedIn);
 
 				if (isLoggedIn) {
 					const userData = await magic!.user.getMetadata();
@@ -64,7 +66,7 @@ const useAuth = () => {
 				const userData = await magic!.user.getMetadata();
 				setUser(userData);
 
-				Router.replace(`/app/projects?userToken=${didToken}`);
+				Router.replace("/app/projects");
 			}
 		} catch (error) {
 			console.error(error);
@@ -92,7 +94,7 @@ const useAuth = () => {
 
 	return {
 		user,
-		isLoggedIn: !!user,
+		isLoggedIn,
 		isLoading,
 		error,
 		methods: {

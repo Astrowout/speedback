@@ -6,7 +6,7 @@ import { ApolloClient } from '../helpers';
 import { AuthContext, GlobalContext } from '../context';
 import { useAuth, useUser } from '../hooks';
 
-import '../styles/globals.css';
+import '../styles/main.css';
 
 const App = ({ Component, pageProps }: AppProps) => {
 	const { user, isLoggedIn, isLoading, methods } = useAuth();

@@ -1,19 +1,26 @@
 import { FunctionComponent } from 'react';
-import Link from 'next/link';
 import cn from "classnames";
 
 type VersionProps = {
-	version: string,
+	className?: string;
+	version?: string;
 }
 
-const Version: FunctionComponent<VersionProps> = ({ version }) => {
+const Version: FunctionComponent<VersionProps> = ({
+	className = "",
+	version = "beta",
+}) => {
 	return (
-		<div className="self-center my-6 px-2 py-1 inline-block rounded border-2 border-gray-200 text-gray-300">
+		<div className={cn(className, "self-center px-2 py-1 inline-block rounded border-2 border-gray-200 text-gray-300")}>
 			<span className="font-brand">
 				speedback
 			</span>
-			{" "}
-			{version}
+
+			{version && (
+				<span>
+					{" "}{version}
+				</span>
+			)}
 	  	</div>
 	)
 }

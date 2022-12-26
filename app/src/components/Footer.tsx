@@ -44,7 +44,7 @@ const Footer: FunctionComponent<FooterProps> = ({ description }) => {
 			<div className="max-w-screen-xl mx-auto container-spacing">
 				<div className="flex flex-col md:flex-row space-y-12 md:space-y-0 md:space-x-16 justify-between pb-16">
 					<div className="flex flex-col items-start space-y-6 md:max-w-xs">
-						<Logo />
+						<Logo url="/" />
 
 						<p className="text-gray-600">
 							{description}
@@ -97,7 +97,9 @@ const Footer: FunctionComponent<FooterProps> = ({ description }) => {
 						Copyright © {year} speedback. All rights reserved.
 					</p>
 
-					<Version version="beta" />
+					<Version
+						className="my-6"
+					/>
 				</div>
 			</div>
 		</footer>

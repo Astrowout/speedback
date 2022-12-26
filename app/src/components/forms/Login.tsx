@@ -31,6 +31,7 @@ const LoginForm: FunctionComponent<LoginFormProps> = ({ className }) => {
 					required: true,
 					pattern: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
 				})}
+				autocomplete="on"
 				error={errors.email?.type}
 			/>
 

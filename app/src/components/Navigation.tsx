@@ -24,10 +24,12 @@ const navigation = [
 ]
 
 type NavigationProps = {
-	className?: string,
+	className?: string;
 }
 
-const Navigation: FunctionComponent<NavigationProps> = ({ className }) => {
+const Navigation: FunctionComponent<NavigationProps> = ({
+	className = "",
+}) => {
 	const [activeAnchor, setActiveAnchor] = useState<string | null>(null);
 	const activeSectionId = useScrollSpy(navigation.map((item) => item.anchor));
 
