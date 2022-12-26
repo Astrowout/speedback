@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive } from 'petite-vue';
+import { reactive } from "vue";
 
 defineProps<{ msg: string }>()
 
@@ -11,7 +11,7 @@ const state = reactive({
 <template>
   <h1>{{ msg }}</h1>
 
-  <div class="card">
+  <div class="flex flex-col spd-bg-purple-500">
     <button type="button" @click="state.count++">count is {{ state.count }}</button>
     <p>
       Edit

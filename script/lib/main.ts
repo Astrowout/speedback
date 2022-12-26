@@ -1,7 +1,7 @@
 import "./main.css";
 import throttle from "lodash/throttle";
 import App from './App.vue';
-import { createApp } from "petite-vue";
+import { createApp } from "vue";
 
 // Config
 import config from "./config";
@@ -326,22 +326,27 @@ const initEvents = () => {
 	}, true);
 }
 
+const loadElement = () => {
+	const vueEl = document.createElement("div");
+	vueEl.setAttribute("id", "speedback-app");
+
+	document.body.appendChild(vueEl);
+
+	console.log(vueEl);
+	
+}
+
+const initApp = () => {
+	createApp(App).mount("#speedback-app");
+}
+
 const init = async () => {
-	createApp().mount();
+	loadElement();
+	initApp();
 	// initTippy();
-	addCss("/style.css");
-	updateButton();
-	renderElements();
+	// addCss("/style.css");
+	// updateButton();
+	// renderElements();
 }
 
 init();
-// <script>
-
-// <div v-scope>
-//   <p>{{ count }}</p>
-//   <p>{{ plusOne }}</p>
-//   <button @click="increment">increment</button>
-// </div>
-
-createApp(App).mount('#app');
-

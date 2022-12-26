@@ -1,5 +1,6 @@
-import { resolve } from "path";
 import { defineConfig } from "vite";
+import vue from "@vitejs/plugin-vue";
+import { resolve } from "path";
 
 export default defineConfig({
   root: "./src",
@@ -13,6 +14,10 @@ export default defineConfig({
       fileName: 'speedback'
     },
   },
+  define: {
+    'process.env': {}
+  },
+  plugins: [vue()],
   server: {
     port: 9000,
   }
