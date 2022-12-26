@@ -89,7 +89,9 @@ const useAuth = () => {
 
 	const logout = async (): Promise<void> => {
 		await magic!.user.logout();
+		setIsLoggedIn(false);
 		setUser(null);
+
 		Router.replace("/");
 	}
 

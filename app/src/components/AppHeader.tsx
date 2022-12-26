@@ -42,7 +42,7 @@ const AppHeader = () => {
 								</div>
 							</div>
 
-							<User className="hidden md:block" />
+							<User />
 
 							<div className="-mr-2 flex md:hidden">
 								{/* Mobile menu button */}
@@ -75,7 +75,7 @@ const AppHeader = () => {
 							))}
 						</div>
 
-						<User className="md:hidden" />
+						<User />
 					</Disclosure.Panel>
 				</>
 			)}
