@@ -41,8 +41,8 @@ const useAuth = () => {
 			}
 		}
 
-		checkUser();
 		preloadMagic();
+		checkUser();
 	}, []);
 
 	const loginWithEmail = async (email: string): Promise<void> => {
@@ -63,10 +63,11 @@ const useAuth = () => {
 			});
 
 			if (res.status === 200) {
+				const isLoggedIn = await magic!.user.isLoggedIn();
+				setIsLoggedIn(isLoggedIn);
+
 				const userData = await magic!.user.getMetadata();
 				setUser(userData);
-
-				Router.replace("/app/projects");
 			}
 		} catch (error) {
 			console.error(error);

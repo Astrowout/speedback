@@ -5,13 +5,13 @@ import { AppHeader, Version, Help } from "../components";
 import { AuthContext } from "../context";
 
 const AppLayout: FunctionComponent = ({ children }) => {
-	const { isLoggedIn } = useContext(AuthContext);
+	const { isLoggedIn, isLoading } = useContext(AuthContext);
 
 	useEffect(() => {
-		if (!isLoggedIn) {
+		if (!isLoading && !isLoggedIn) {
 			Router.replace("/login");
 		}
-	}, []); // eslint-disable-line react-hooks/exhaustive-deps
+	}, [isLoading]); // eslint-disable-line react-hooks/exhaustive-deps
 
 	return (
 		<>

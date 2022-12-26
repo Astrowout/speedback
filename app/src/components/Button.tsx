@@ -31,7 +31,7 @@ const Button: ForwardRefComponent<ButtonProps, any> = forwardRef<any, ButtonProp
 }, ref) => {
 	const Icon = icon;
 
-	const classes = cn(className, "inline-flex items-center whitespace-nowrap justify-center group transition-colors rounded-lg shadow-lg shadow-indigo-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:pointer-events-none disabled:opacity-50", {
+	const classes = cn(className, "inline-flex items-center whitespace-nowrap justify-center transition-colors rounded-lg shadow-lg shadow-indigo-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:pointer-events-none disabled:opacity-50", {
 		"text-white bg-indigo-500 hover:bg-indigo-700": !secondary && !danger,
 		"border border-gray-300 text-gray-800 bg-white hover:bg-gray-100": secondary,
 		"border border-red-300 text-red-600 focus:ring-red-500 bg-white hover:bg-red-50": danger,
@@ -43,7 +43,7 @@ const Button: ForwardRefComponent<ButtonProps, any> = forwardRef<any, ButtonProp
 
 	const renderContent = () => (
 		<>
-			{icon && Icon && <Icon className="-ml-1 mr-2 h-5 w-5 transition-transform group-hover:scale-90" aria-hidden="true" />}
+			{icon && Icon && <Icon className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />}
 			{children}
 		</>
 	)

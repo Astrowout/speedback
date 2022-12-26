@@ -7,13 +7,13 @@ import { AuthContext } from '../../context';
 import Router from 'next/router';
 
 const AppLogin: NextPage = () => {
-	const { isLoggedIn } = useContext(AuthContext);
+	const { isLoggedIn, isLoading } = useContext(AuthContext);
 
 	useEffect(() => {
-		if (isLoggedIn) {
-			Router.replace("/app/dashbooard");
+		if (!isLoading && isLoggedIn) {
+			Router.replace("/app/projects");
 		}
-	}, []); // eslint-disable-line react-hooks/exhaustive-deps
+	}, [isLoading]); // eslint-disable-line react-hooks/exhaustive-deps
 
 	return (
 		<>
