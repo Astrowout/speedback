@@ -7,17 +7,19 @@ import { resolve } from "path";
 export default defineConfig({
 	root: "./src",
 	build: {
-	  outDir: "public",
-	  lib: {
-		// Could also be a dictionary or array of multiple entry points
-		entry: resolve(__dirname, "lib/main.ts"),
-		name: "Speedback script",
-		// the proper extensions will be added
-		fileName: "speedback"
-	  },
+		outDir: "public",
+		lib: {
+			// Could also be a dictionary or array of multiple entry points
+			entry: resolve(__dirname, "lib/main.ts"),
+			name: "Speedback script",
+			// the proper extensions will be added
+			fileName: "speedback"
+		},
 	},
 	plugins: [
-		svelte(),
+		svelte({
+			configFile: "../svelte.config.js"
+		}),
 		eslint({
 			fix: true,
 		}),

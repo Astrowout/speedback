@@ -13,7 +13,7 @@
      */
     "allowJs": true,
     "checkJs": true,
-    "isolatedModules": true
+    "isolatedModules": true,
   },
   "include": ["lib/**/*.d.ts", "lib/**/*.ts", "lib/**/*.js", "lib/**/*.svelte"],
   "references": [{ "path": "./tsconfig.node.json" }]

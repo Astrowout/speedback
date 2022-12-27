@@ -1,13 +1,10 @@
 <script lang="ts">
   import svelteLogo from "./assets/svelte.svg";
-//   import Counter from "./lib/Counter.svelte";
+  import Counter from "./lib/Counter.svelte";
 </script>
 
 <main>
-  <div class="flex flex-col">
-    <a href="https://vitejs.dev" target="_blank" rel="noreferrer"> 
-      <img src="/vite.svg" alt="Vite Logo" />
-    </a>
+  <div class="spd-flex spd-bg-amber-600">
     <a href="https://svelte.dev" target="_blank" rel="noreferrer"> 
       <img src={svelteLogo} alt="Svelte Logo" />
     </a>
@@ -15,7 +12,7 @@
   <h1>Vite + Svelte</h1>
 
   <div>
-    <!-- <Counter /> -->
+    <Counter />
   </div>
 
   <p>

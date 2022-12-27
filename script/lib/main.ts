@@ -1,5 +1,6 @@
 import "./main.css";
 import App from "./App.svelte";
+import addCss from "./helpers/add-css";
 
 let app = null;
 
@@ -23,8 +24,8 @@ const initApp = () => {
 const init = async () => {
 	loadElement();
 	initApp();
+	addCss("/style.css");
 	// initTippy();
-	// addCss("/style.css");
 	// updateButton();
 	// renderElements();
 };
