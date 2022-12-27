@@ -15,23 +15,29 @@
     "dev:src": "vite",
     "dev:lib": "vite build --watch",
     "dev": "yarn dev:src & yarn dev:lib",
-    "build": "vue-tsc && vite build",
-    "preview": "vite preview"
+    "build": "vite build",
+    "preview": "vite preview",
+    "check": "svelte-check --tsconfig ./tsconfig.json"
   },
   "devDependencies": {
-    "@tailwindcss/aspect-ratio": "^0.4.2",
+    "@sveltejs/vite-plugin-svelte": "^2.0.0",
+    "@tsconfig/svelte": "^3.0.0",
     "@types/lodash": "^4.14.191",
-    "@vitejs/plugin-vue": "^4.0.0",
+    "@typescript-eslint/eslint-plugin": "^5.47.1",
+    "@typescript-eslint/parser": "^5.47.1",
     "autoprefixer": "^10.4.13",
-    "postcss": "^8.4.19",
+    "date-fns": "^2.29.3",
+    "eslint": "^8.30.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-svelte3": "^4.0.0",
+    "lodash": "^4.17.21",
+    "postcss": "^8.4.20",
+    "svelte": "^3.54.0",
+    "svelte-check": "^2.10.0",
     "tailwindcss": "^3.2.4",
+    "tslib": "^2.4.1",
     "typescript": "^4.9.3",
     "vite": "^4.0.0",
-    "vue-tsc": "^1.0.11"
-  },
-  "dependencies": {
-    "date-fns": "^2.29.3",
-    "lodash": "^4.17.21",
-    "vue": "^3.2.45"
+    "vite-plugin-eslint": "^1.8.1"
   }
 }

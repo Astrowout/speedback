@@ -1,7 +1,7 @@
 export const checkElements = (el: Element) => {
 	return el.classList.contains("gthr-btn")
 		|| el.classList.contains("gthr-overlay");
-}
+};
 
 export const checkHighlightedElement = () => {
 	const highlightedElement = document.querySelector(".gthr-highlight");
@@ -9,4 +9,4 @@ export const checkHighlightedElement = () => {
 	if (highlightedElement) {
 		highlightedElement.classList.remove("gthr-highlight");
 	}
-}
+};

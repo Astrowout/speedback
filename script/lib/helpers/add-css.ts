@@ -6,4 +6,4 @@ export default (filePath: string) => {
 	link.href = filePath;
 
 	head.appendChild(link);
-}
+};

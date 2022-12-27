@@ -1,11 +1,11 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  prefix: 'spd-',
+  prefix: "spd-",
   content: [
-    "./lib/*.{js,ts,jsx,tsx}",
+    "./lib/**/*.svelte",
   ],
   theme: {
     extend: {},
   },
   plugins: [],
-}
+};

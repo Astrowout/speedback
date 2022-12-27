@@ -6,7 +6,7 @@ export const getTarget = (target: Element) => {
 	}
 
 	return targetEl;
-}
+};
 
 export const getTargetFromEvent = (e: MouseEvent) => {
 	let targetEl: any = e.target;
@@ -16,4 +16,4 @@ export const getTargetFromEvent = (e: MouseEvent) => {
 	}
 
 	return targetEl;
-}
+};

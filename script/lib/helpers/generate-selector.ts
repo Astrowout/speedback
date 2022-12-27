@@ -13,7 +13,7 @@ const getIndex = (node: Element) => {
 	  }
 	}
 	return i;
-}
+};
 
 const generateSelector = (context: any) => {
 	let index, pathSelector;
@@ -30,7 +30,7 @@ const generateSelector = (context: any) => {
 	// selector path for nth of type
 	pathSelector = pathSelector + `:nth-of-type(${index})`;
 	return pathSelector;
-}
+};
 
 export default generateSelector;
 

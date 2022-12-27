@@ -3,13 +3,13 @@
 (function() {
 	var Accordion = function(element) {
 		this.element = element;
-		this.items = Util.getChildrenByClassName(this.element, 'js-accordion__item');
-		this.version = this.element.getAttribute('data-version') ? '-'+this.element.getAttribute('data-version') : '';
-		this.showClass = 'accordion'+this.version+'__item--is-open';
-		this.animateHeight = (this.element.getAttribute('data-animation') == 'on');
-		this.multiItems = !(this.element.getAttribute('data-multi-items') == 'off'); 
+		this.items = Util.getChildrenByClassName(this.element, "js-accordion__item");
+		this.version = this.element.getAttribute("data-version") ? "-"+this.element.getAttribute("data-version") : "";
+		this.showClass = "accordion"+this.version+"__item--is-open";
+		this.animateHeight = (this.element.getAttribute("data-animation") == "on");
+		this.multiItems = !(this.element.getAttribute("data-multi-items") == "off"); 
 		// deep linking options
-		this.deepLinkOn = this.element.getAttribute('data-deep-link') == 'on';
+		this.deepLinkOn = this.element.getAttribute("data-deep-link") == "on";
 		// init accordion
 		this.initAccordion();
 	};
@@ -17,12 +17,12 @@
 	Accordion.prototype.initAccordion = function() {
 		//set initial aria attributes
 		for( var i = 0; i < this.items.length; i++) {
-			var button = this.items[i].getElementsByTagName('button')[0],
-				content = this.items[i].getElementsByClassName('js-accordion__panel')[0],
-				isOpen = Util.hasClass(this.items[i], this.showClass) ? 'true' : 'false';
-			Util.setAttributes(button, {'aria-expanded': isOpen, 'aria-controls': 'accordion-content-'+i, 'id': 'accordion-header-'+i});
-			Util.addClass(button, 'js-accordion__trigger');
-			Util.setAttributes(content, {'aria-labelledby': 'accordion-header-'+i, 'id': 'accordion-content-'+i});
+			var button = this.items[i].getElementsByTagName("button")[0],
+				content = this.items[i].getElementsByClassName("js-accordion__panel")[0],
+				isOpen = Util.hasClass(this.items[i], this.showClass) ? "true" : "false";
+			Util.setAttributes(button, {"aria-expanded": isOpen, "aria-controls": "accordion-content-"+i, "id": "accordion-header-"+i});
+			Util.addClass(button, "js-accordion__trigger");
+			Util.setAttributes(content, {"aria-labelledby": "accordion-header-"+i, "id": "accordion-content-"+i});
 		}
 
 		//listen for Accordion events
@@ -35,31 +35,31 @@
 	Accordion.prototype.initAccordionEvents = function() {
 		var self = this;
 
-		this.element.addEventListener('click', function(event) {
-			var trigger = event.target.closest('.js-accordion__trigger');
+		this.element.addEventListener("click", function(event) {
+			var trigger = event.target.closest(".js-accordion__trigger");
 			//check index to make sure the click didn't happen inside a children accordion
 			if( trigger && Util.getIndexInArray(self.items, trigger.parentElement) >= 0) self.triggerAccordion(trigger);
 		});
 	};
 
 	Accordion.prototype.triggerAccordion = function(trigger) {
-		var bool = (trigger.getAttribute('aria-expanded') === 'true');
+		var bool = (trigger.getAttribute("aria-expanded") === "true");
 
 		this.animateAccordion(trigger, bool, false);
 
 		if(!bool && this.deepLinkOn) {
-			history.replaceState(null, '', '#'+trigger.getAttribute('aria-controls'));
+			history.replaceState(null, "", "#"+trigger.getAttribute("aria-controls"));
 		}
 	};
 
 	Accordion.prototype.animateAccordion = function(trigger, bool, deepLink) {
 		var self = this;
-		var item = trigger.closest('.js-accordion__item'),
-			content = item.getElementsByClassName('js-accordion__panel')[0],
-			ariaValue = bool ? 'false' : 'true';
+		var item = trigger.closest(".js-accordion__item"),
+			content = item.getElementsByClassName("js-accordion__panel")[0],
+			ariaValue = bool ? "false" : "true";
 
 		if(!bool) Util.addClass(item, this.showClass);
-		trigger.setAttribute('aria-expanded', ariaValue);
+		trigger.setAttribute("aria-expanded", ariaValue);
 		self.resetContentVisibility(item, content, bool);
 
 		if( !this.multiItems && !bool || deepLink) this.closeSiblings(item);
@@ -78,7 +78,7 @@
 		var index = Util.getIndexInArray(this.items, item);
 		for( var i = 0; i < this.items.length; i++) {
 			if(Util.hasClass(this.items[i], this.showClass) && i != index) {
-				this.animateAccordion(this.items[i].getElementsByClassName('js-accordion__trigger')[0], true, false);
+				this.animateAccordion(this.items[i].getElementsByClassName("js-accordion__trigger")[0], true, false);
 				return false;
 			}
 		}
@@ -97,9 +97,9 @@
 	Accordion.prototype.initDeepLink = function() {
 		if(!this.deepLinkOn) return;
 		var hash = window.location.hash.substr(1);
-		if(!hash || hash == '') return;
-		var trigger = this.element.querySelector('.js-accordion__trigger[aria-controls="'+hash+'"]');
-		if(trigger && trigger.getAttribute('aria-expanded') !== 'true') {
+		if(!hash || hash == "") return;
+		var trigger = this.element.querySelector(".js-accordion__trigger[aria-controls=\""+hash+"\"]");
+		if(trigger && trigger.getAttribute("aria-expanded") !== "true") {
 			this.animateAccordion(trigger, false, true);
 			setTimeout(function(){trigger.scrollIntoView(true);});
 		}
@@ -108,7 +108,7 @@
 	window.Accordion = Accordion;
 	
 	//initialize the Accordion objects
-	var accordions = document.getElementsByClassName('js-accordion');
+	var accordions = document.getElementsByClassName("js-accordion");
 	if( accordions.length > 0 ) {
 		for( var i = 0; i < accordions.length; i++) {
 			(function(i){new Accordion(accordions[i]);})(i);
@@ -118,19 +118,19 @@
 // File#: _1_anim-menu-btn
 // Usage: codyhouse.co/license
 (function() {
-	var menuBtns = document.getElementsByClassName('js-anim-menu-btn');
+	var menuBtns = document.getElementsByClassName("js-anim-menu-btn");
 	if( menuBtns.length > 0 ) {
 		for(var i = 0; i < menuBtns.length; i++) {(function(i){
 			initMenuBtn(menuBtns[i]);
 		})(i);}
 
 		function initMenuBtn(btn) {
-			btn.addEventListener('click', function(event){	
+			btn.addEventListener("click", function(event){	
 				event.preventDefault();
-				var status = !Util.hasClass(btn, 'anim-menu-btn--state-b');
-				Util.toggleClass(btn, 'anim-menu-btn--state-b', status);
+				var status = !Util.hasClass(btn, "anim-menu-btn--state-b");
+				Util.toggleClass(btn, "anim-menu-btn--state-b", status);
 				// emit custom event
-				var event = new CustomEvent('anim-menu-btn-clicked', {detail: status});
+				var event = new CustomEvent("anim-menu-btn-clicked", {detail: status});
 				btn.dispatchEvent(event);
 			});
 		};
@@ -139,7 +139,7 @@
 // File#: _1_google-maps
 // Usage: codyhouse.co/license
 function initGoogleMap() {
-  var contactMap = document.getElementsByClassName('js-google-maps');
+  var contactMap = document.getElementsByClassName("js-google-maps");
   if(contactMap.length > 0) {
     for(var i = 0; i < contactMap.length; i++) {
       initContactMap(contactMap[i]);
@@ -148,7 +148,7 @@ function initGoogleMap() {
 };
 
 function initContactMap(wrapper) {
-  var coordinate = wrapper.getAttribute('data-coordinates').split(',');
+  var coordinate = wrapper.getAttribute("data-coordinates").split(",");
   var map = new google.maps.Map(wrapper, {zoom: 10, center: {lat: Number(coordinate[0]), lng:  Number(coordinate[1])}});
   var marker = new google.maps.Marker({position: {lat: Number(coordinate[0]), lng:  Number(coordinate[1])}, map: map});
 };
@@ -157,10 +157,10 @@ function initContactMap(wrapper) {
 (function() {
   var ImmerseSectionTr = function(element) {
     this.element = element;
-    this.media = this.element.getElementsByClassName('js-immerse-section-tr__media');
-    this.scrollContent = this.element.getElementsByClassName('js-immerse-section-tr__content');
+    this.media = this.element.getElementsByClassName("js-immerse-section-tr__media");
+    this.scrollContent = this.element.getElementsByClassName("js-immerse-section-tr__content");
     if(this.media.length < 1) return;
-    this.figure = this.media[0].getElementsByClassName('js-immerse-section-tr__figure');
+    this.figure = this.media[0].getElementsByClassName("js-immerse-section-tr__figure");
     if(this.figure.length < 1) return;
     this.visibleFigure = false;
     this.mediaScale = 1;
@@ -178,7 +178,7 @@ function initContactMap(wrapper) {
     resetSection(element);
 
     // listen to resize event and reset values
-    element.element.addEventListener('update-immerse-section', function(event){
+    element.element.addEventListener("update-immerse-section", function(event){
       resetSection(element);
     });
 
@@ -191,26 +191,26 @@ function initContactMap(wrapper) {
     getVisibleFigure(element);
     checkEffectActive(element);
     if(element.active) {
-      Util.removeClass(element.element, 'immerse-section-tr--disabled');
+      Util.removeClass(element.element, "immerse-section-tr--disabled");
       updateMediaHeight(element);
       getMediaScale(element); 
       updateMargin(element);
       setScaleValue.bind(element)();
     } else {
       // reset appearance
-      Util.addClass(element.element, 'immerse-section-tr--disabled');
-      element.media[0].style = '';
-      element.scrollContent[0].style = '';
+      Util.addClass(element.element, "immerse-section-tr--disabled");
+      element.media[0].style = "";
+      element.scrollContent[0].style = "";
       updateScale(element, 1);
       updateOpacity(element, 0);
     }
-    element.element.dispatchEvent(new CustomEvent('immersive-section-updated', {detail: {active: element.active, asset: element.visibleFigure}}));
+    element.element.dispatchEvent(new CustomEvent("immersive-section-updated", {detail: {active: element.active, asset: element.visibleFigure}}));
   };
 
   function getVisibleFigure(element) { // get visible figure element
     element.visibleFigure = false;
     for(var i = 0; i < element.figure.length; i++) {
-      if(window.getComputedStyle(element.figure[i]).getPropertyValue('display') != 'none') {
+      if(window.getComputedStyle(element.figure[i]).getPropertyValue("display") != "none") {
         element.visibleFigure = element.figure[i];
         break;
       }
@@ -224,9 +224,9 @@ function initContactMap(wrapper) {
       : (window.innerWidth - element.visibleFigure.offsetWidth)/2;
     if(element.scrollDelta > window.innerHeight) element.scrollDelta = window.innerHeight;
     if(element.scrollDelta < 200) element.scrollDelta = 200;
-    element.media[0].style.height = window.innerHeight+'px';
-    element.media[0].style.paddingTop = (window.innerHeight - element.visibleFigure.offsetHeight)/2+'px';
-    element.media[0].style.marginTop = (element.visibleFigure.offsetHeight - window.innerHeight)/2+'px';
+    element.media[0].style.height = window.innerHeight+"px";
+    element.media[0].style.paddingTop = (window.innerHeight - element.visibleFigure.offsetHeight)/2+"px";
+    element.media[0].style.marginTop = (element.visibleFigure.offsetHeight - window.innerHeight)/2+"px";
   };
 
   function getMediaScale(element) { // get media final scale value
@@ -234,7 +234,7 @@ function initContactMap(wrapper) {
       scaleY = roundValue(window.innerHeight/element.visibleFigure.offsetHeight);
 
     element.mediaScale = Math.max(scaleX, scaleY);
-    element.elementPadding = parseInt(window.getComputedStyle(element.element).getPropertyValue('padding-top'));
+    element.elementPadding = parseInt(window.getComputedStyle(element.element).getPropertyValue("padding-top"));
   };
 
   function roundValue(value) {
@@ -242,7 +242,7 @@ function initContactMap(wrapper) {
   };
 
   function updateMargin(element) { // update distance between media and content elements
-    if(element.scrollContent.length > 0) element.scrollContent[0].style.marginTop = element.scrollDelta+'px';
+    if(element.scrollContent.length > 0) element.scrollContent[0].style.marginTop = element.scrollDelta+"px";
   };
 
   function setScaleValue() { // update asset scale value
@@ -266,12 +266,12 @@ function initContactMap(wrapper) {
   };
 
   function updateScale(element, value) { // apply new scale value
-    element.visibleFigure.style.transform = 'scale('+value+')';
-    element.visibleFigure.style.msTransform = 'scale('+value+')';
+    element.visibleFigure.style.transform = "scale("+value+")";
+    element.visibleFigure.style.msTransform = "scale("+value+")";
   };
 
   function updateOpacity(element, value) { // update layer opacity
-    element.element.style.setProperty('--immerse-section-tr-opacity', value);
+    element.element.style.setProperty("--immerse-section-tr-opacity", value);
   };
 
   function immerseSectionTrCallback(entries) { // intersectionObserver callback
@@ -280,14 +280,14 @@ function initContactMap(wrapper) {
       immerseSectionTrScrollEvent(this);
     } else {
       if(!this.scrollingFn) return; // listener for scroll event already removed
-      window.removeEventListener('scroll', this.scrollingFn);
+      window.removeEventListener("scroll", this.scrollingFn);
       this.scrollingFn = false;
     }
   };
 
   function immerseSectionTrScrollEvent(element) { // listen to scroll when asset element is inside the viewport
     element.scrollingFn = immerseSectionTrScrolling.bind(element);
-    window.addEventListener('scroll', element.scrollingFn);
+    window.addEventListener("scroll", element.scrollingFn);
   };
 
   function immerseSectionTrScrolling() { // update asset scale on scroll
@@ -298,7 +298,7 @@ function initContactMap(wrapper) {
 
   function initContainer(element) {
     // add a padding to the container to fix the collapsing-margin issue
-    if(parseInt(window.getComputedStyle(element.element).getPropertyValue('padding-top')) == 0) element.element.style.paddingTop = '1px';
+    if(parseInt(window.getComputedStyle(element.element).getPropertyValue("padding-top")) == 0) element.element.style.paddingTop = "1px";
   };
 
   function checkEffectActive(element) { //check if effect needs to be activated
@@ -308,9 +308,9 @@ function initContactMap(wrapper) {
   };
 
   //initialize the ImmerseSectionTr objects
-  var immerseSections = document.getElementsByClassName('js-immerse-section-tr'),
+  var immerseSections = document.getElementsByClassName("js-immerse-section-tr"),
     reducedMotion = Util.osHasReducedMotion(),
-    intObserverSupported = ('IntersectionObserver' in window && 'IntersectionObserverEntry' in window && 'intersectionRatio' in window.IntersectionObserverEntry.prototype);
+    intObserverSupported = ("IntersectionObserver" in window && "IntersectionObserverEntry" in window && "intersectionRatio" in window.IntersectionObserverEntry.prototype);
 
   if(immerseSections.length < 1 ) return;
 	if( !reducedMotion && intObserverSupported) {
@@ -321,21 +321,21 @@ function initContactMap(wrapper) {
 
     if(immerseSectionsArray.length > 0) {
       var resizingId = false,
-        customEvent = new CustomEvent('update-immerse-section');
+        customEvent = new CustomEvent("update-immerse-section");
       
-      window.addEventListener('resize', function() {
+      window.addEventListener("resize", function() {
         clearTimeout(resizingId);
         resizingId = setTimeout(doneResizing, 500);
       });
 
       function doneResizing() {
         for( var i = 0; i < immerseSectionsArray.length; i++) {
-          (function(i){immerseSectionsArray[i].element.dispatchEvent(customEvent)})(i);
+          (function(i){immerseSectionsArray[i].element.dispatchEvent(customEvent);})(i);
         };
       };
     };
   } else { // effect deactivated
-    for( var i = 0; i < immerseSections.length; i++) Util.addClass(immerseSections[i], 'immerse-section-tr--disabled');
+    for( var i = 0; i < immerseSections.length; i++) Util.addClass(immerseSections[i], "immerse-section-tr--disabled");
   }
 }());
 // File#: _1_modal-window
@@ -343,11 +343,11 @@ function initContactMap(wrapper) {
 (function() {
 	var Modal = function(element) {
 		this.element = element;
-		this.triggers = document.querySelectorAll('[aria-controls="'+this.element.getAttribute('id')+'"]');
+		this.triggers = document.querySelectorAll("[aria-controls=\""+this.element.getAttribute("id")+"\"]");
 		this.firstFocusable = null;
 		this.lastFocusable = null;
 		this.moveFocusEl = null; // focus will be moved to this element when modal is open
-		this.modalFocus = this.element.getAttribute('data-modal-first-focus') ? this.element.querySelector(this.element.getAttribute('data-modal-first-focus')) : null;
+		this.modalFocus = this.element.getAttribute("data-modal-first-focus") ? this.element.querySelector(this.element.getAttribute("data-modal-first-focus")) : null;
 		this.selectedTrigger = null;
 		this.preventScrollEl = this.getPreventScrollEl();
 		this.showClass = "modal--is-visible";
@@ -356,7 +356,7 @@ function initContactMap(wrapper) {
 
 	Modal.prototype.getPreventScrollEl = function() {
 		var scrollEl = false;
-		var querySelector = this.element.getAttribute('data-modal-prevent-scroll');
+		var querySelector = this.element.getAttribute("data-modal-prevent-scroll");
 		if(querySelector) scrollEl = document.querySelector(querySelector);
 		return scrollEl;
 	};
@@ -366,7 +366,7 @@ function initContactMap(wrapper) {
 		//open modal when clicking on trigger buttons
 		if ( this.triggers ) {
 			for(var i = 0; i < this.triggers.length; i++) {
-				this.triggers[i].addEventListener('click', function(event) {
+				this.triggers[i].addEventListener("click", function(event) {
 					event.preventDefault();
 					if(Util.hasClass(self.element, self.showClass)) {
 						self.closeModal();
@@ -380,14 +380,14 @@ function initContactMap(wrapper) {
 		}
 
 		// listen to the openModal event -> open modal without a trigger button
-		this.element.addEventListener('openModal', function(event){
+		this.element.addEventListener("openModal", function(event){
 			if(event.detail) self.selectedTrigger = event.detail;
 			self.showModal();
 			self.initModalEvents();
 		});
 
 		// listen to the closeModal event -> close modal without a trigger button
-		this.element.addEventListener('closeModal', function(event){
+		this.element.addEventListener("closeModal", function(event){
 			if(event.detail) self.selectedTrigger = event.detail;
 			self.closeModal();
 		});
@@ -408,14 +408,14 @@ function initContactMap(wrapper) {
 				self.element.removeEventListener("transitionend", cb);
 			});
 		}
-		this.emitModalEvents('modalIsOpen');
+		this.emitModalEvents("modalIsOpen");
 		// change the overflow of the preventScrollEl
-		if(this.preventScrollEl) this.preventScrollEl.style.overflow = 'hidden';
+		if(this.preventScrollEl) this.preventScrollEl.style.overflow = "hidden";
 	};
 
 	Modal.prototype.closeModal = function() {
 		if(!Util.hasClass(this.element, this.showClass)) return;
-		console.log('close')
+		console.log("close");
 		Util.removeClass(this.element, this.showClass);
 		this.firstFocusable = null;
 		this.lastFocusable = null;
@@ -423,39 +423,39 @@ function initContactMap(wrapper) {
 		if(this.selectedTrigger) this.selectedTrigger.focus();
 		//remove listeners
 		this.cancelModalEvents();
-		this.emitModalEvents('modalIsClose');
+		this.emitModalEvents("modalIsClose");
 		// change the overflow of the preventScrollEl
-		if(this.preventScrollEl) this.preventScrollEl.style.overflow = '';
+		if(this.preventScrollEl) this.preventScrollEl.style.overflow = "";
 	};
 
 	Modal.prototype.initModalEvents = function() {
 		//add event listeners
-		this.element.addEventListener('keydown', this);
-		this.element.addEventListener('click', this);
+		this.element.addEventListener("keydown", this);
+		this.element.addEventListener("click", this);
 	};
 
 	Modal.prototype.cancelModalEvents = function() {
 		//remove event listeners
-		this.element.removeEventListener('keydown', this);
-		this.element.removeEventListener('click', this);
+		this.element.removeEventListener("keydown", this);
+		this.element.removeEventListener("click", this);
 	};
 
 	Modal.prototype.handleEvent = function (event) {
 		switch(event.type) {
-			case 'click': {
+			case "click": {
 				this.initClick(event);
 			}
-			case 'keydown': {
+			case "keydown": {
 				this.initKeyDown(event);
 			}
 		}
 	};
 
 	Modal.prototype.initKeyDown = function(event) {
-		if( event.keyCode && event.keyCode == 9 || event.key && event.key == 'Tab' ) {
+		if( event.keyCode && event.keyCode == 9 || event.key && event.key == "Tab" ) {
 			//trap focus inside modal
 			this.trapFocus(event);
-		} else if( (event.keyCode && event.keyCode == 13 || event.key && event.key == 'Enter') && event.target.closest('.js-modal__close')) {
+		} else if( (event.keyCode && event.keyCode == 13 || event.key && event.key == "Enter") && event.target.closest(".js-modal__close")) {
 			event.preventDefault();
 			this.closeModal(); // close modal when pressing Enter on close button
 		}	
@@ -463,7 +463,7 @@ function initContactMap(wrapper) {
 
 	Modal.prototype.initClick = function(event) {
 		//close modal when clicking on close button or modal bg layer 
-		if( !event.target.closest('.js-modal__close') && !Util.hasClass(event.target, 'js-modal') ) return;
+		if( !event.target.closest(".js-modal__close") && !Util.hasClass(event.target, "js-modal") ) return;
 		event.preventDefault();
 		this.closeModal();
 	};
@@ -479,7 +479,7 @@ function initContactMap(wrapper) {
 			event.preventDefault();
 			this.firstFocusable.focus();
 		}
-	}
+	};
 
 	Modal.prototype.getFocusableElements = function() {
 		//get all focusable elements inside the modal
@@ -542,17 +542,17 @@ function initContactMap(wrapper) {
 	window.Modal = Modal;
 
 	//initialize the Modal objects
-	var modals = document.getElementsByClassName('js-modal');
+	var modals = document.getElementsByClassName("js-modal");
 	// generic focusable elements string selector
-	var focusableElString = '[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, [tabindex]:not([tabindex="-1"]), [contenteditable], audio[controls], video[controls], summary';
+	var focusableElString = "[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, [tabindex]:not([tabindex=\"-1\"]), [contenteditable], audio[controls], video[controls], summary";
 	if( modals.length > 0 ) {
 		var modalArrays = [];
 		for( var i = 0; i < modals.length; i++) {
 			(function(i){modalArrays.push(new Modal(modals[i]));})(i);
 		}
 
-		window.addEventListener('keydown', function(event){ //close modal window on esc
-			if(event.keyCode && event.keyCode == 27 || event.key && event.key.toLowerCase() == 'escape') {
+		window.addEventListener("keydown", function(event){ //close modal window on esc
+			if(event.keyCode && event.keyCode == 27 || event.key && event.key.toLowerCase() == "escape") {
 				for( var i = 0; i < modalArrays.length; i++) {
 					(function(i){modalArrays[i].closeModal();})(i);
 				};
@@ -564,15 +564,15 @@ function initContactMap(wrapper) {
 // Usage: codyhouse.co/license
 (function() {
   function initNoticeEvents(notice) {
-    notice.addEventListener('click', function(event){
-      if(event.target.closest('.js-notice__hide-control')) {
+    notice.addEventListener("click", function(event){
+      if(event.target.closest(".js-notice__hide-control")) {
         event.preventDefault();
-        Util.addClass(notice, 'notice--hide');
+        Util.addClass(notice, "notice--hide");
       }
     });
   };
   
-  var noticeElements = document.getElementsByClassName('js-notice');
+  var noticeElements = document.getElementsByClassName("js-notice");
   if(noticeElements.length > 0) {
     for(var i=0; i < noticeElements.length; i++) {(function(i){
       initNoticeEvents(noticeElements[i]);
@@ -582,23 +582,23 @@ function initContactMap(wrapper) {
 // File#: _1_reading-progressbar
 // Usage: codyhouse.co/license
 (function() {
-  var readingIndicator = document.getElementsByClassName('js-reading-progressbar')[0],
-		readingIndicatorContent = document.getElementsByClassName('js-reading-content')[0];
+  var readingIndicator = document.getElementsByClassName("js-reading-progressbar")[0],
+		readingIndicatorContent = document.getElementsByClassName("js-reading-content")[0];
   
   if( readingIndicator && readingIndicatorContent) {
     var progressInfo = [],
       progressEvent = false,
-      progressFallback = readingIndicator.getElementsByClassName('js-reading-progressbar__fallback')[0],
-      progressIsSupported = 'value' in readingIndicator;
+      progressFallback = readingIndicator.getElementsByClassName("js-reading-progressbar__fallback")[0],
+      progressIsSupported = "value" in readingIndicator;
 
     var boundingClientRect = readingIndicatorContent.getBoundingClientRect();
 
-    progressInfo['height'] = readingIndicatorContent.offsetHeight;
-    progressInfo['top'] = boundingClientRect.top;
-    progressInfo['bottom'] = boundingClientRect.bottom;
-    progressInfo['window'] = window.innerHeight;
-    progressInfo['class'] = 'reading-progressbar--is-active';
-    progressInfo['hideClass'] = 'reading-progressbar--is-out';
+    progressInfo["height"] = readingIndicatorContent.offsetHeight;
+    progressInfo["top"] = boundingClientRect.top;
+    progressInfo["bottom"] = boundingClientRect.bottom;
+    progressInfo["window"] = window.innerHeight;
+    progressInfo["class"] = "reading-progressbar--is-active";
+    progressInfo["hideClass"] = "reading-progressbar--is-out";
     
     //init indicator
     setProgressIndicator();
@@ -609,12 +609,12 @@ function initContactMap(wrapper) {
       });
     }
     // listen to window resize - update progress
-    window.addEventListener('resize', function(event){
+    window.addEventListener("resize", function(event){
       triggerReset();
     });
 
     //listen to the window scroll event - update progress
-    window.addEventListener('scroll', function(event){
+    window.addEventListener("scroll", function(event){
       if(progressEvent) return;
       progressEvent = true;
       (!window.requestAnimationFrame) ? setTimeout(function(){setProgressIndicator();}, 250) : window.requestAnimationFrame(setProgressIndicator);
@@ -622,22 +622,22 @@ function initContactMap(wrapper) {
     
     function setProgressIndicator() {
       var boundingClientRect = readingIndicatorContent.getBoundingClientRect();
-      progressInfo['top'] = boundingClientRect.top;
-      progressInfo['bottom'] = boundingClientRect.bottom;
+      progressInfo["top"] = boundingClientRect.top;
+      progressInfo["bottom"] = boundingClientRect.bottom;
 
-      if(progressInfo['height'] <= progressInfo['window']) {
+      if(progressInfo["height"] <= progressInfo["window"]) {
         // short content - hide progress indicator
-        Util.removeClass(readingIndicator, progressInfo['class']);
+        Util.removeClass(readingIndicator, progressInfo["class"]);
         progressEvent = false;
         return;
       }
       // get new progress and update element
-      Util.addClass(readingIndicator, progressInfo['class']);
-      var value = (progressInfo['top'] >= 0) ? 0 : 100*(0 - progressInfo['top'])/(progressInfo['height'] - progressInfo['window']);
-      readingIndicator.setAttribute('value', value);
-      if(!progressIsSupported && progressFallback) progressFallback.style.width = value+'%';
+      Util.addClass(readingIndicator, progressInfo["class"]);
+      var value = (progressInfo["top"] >= 0) ? 0 : 100*(0 - progressInfo["top"])/(progressInfo["height"] - progressInfo["window"]);
+      readingIndicator.setAttribute("value", value);
+      if(!progressIsSupported && progressFallback) progressFallback.style.width = value+"%";
       // hide progress bar when target is outside the viewport
-      Util.toggleClass(readingIndicator, progressInfo['hideClass'], progressInfo['bottom'] <= 0);
+      Util.toggleClass(readingIndicator, progressInfo["hideClass"], progressInfo["bottom"] <= 0);
       progressEvent = false;
     };
 
@@ -648,8 +648,8 @@ function initContactMap(wrapper) {
     };
 
     function resetProgressIndicator() {
-      progressInfo['height'] = readingIndicatorContent.offsetHeight;
-      progressInfo['window'] = window.innerHeight;
+      progressInfo["height"] = readingIndicatorContent.offsetHeight;
+      progressInfo["window"] = window.innerHeight;
       setProgressIndicator();
     };
   }
@@ -657,8 +657,8 @@ function initContactMap(wrapper) {
 // File#: _1_reveal-effects
 // Usage: codyhouse.co/license
 (function() {
-	var fxElements = document.getElementsByClassName('reveal-fx');
-	var intersectionObserverSupported = ('IntersectionObserver' in window && 'IntersectionObserverEntry' in window && 'intersectionRatio' in window.IntersectionObserverEntry.prototype);
+	var fxElements = document.getElementsByClassName("reveal-fx");
+	var intersectionObserverSupported = ("IntersectionObserver" in window && "IntersectionObserverEntry" in window && "intersectionRatio" in window.IntersectionObserverEntry.prototype);
 	if(fxElements.length > 0) {
 		// deactivate effect if Reduced Motion is enabled
 		if (Util.osHasReducedMotion() || !intersectionObserverSupported) {
@@ -681,9 +681,9 @@ function initContactMap(wrapper) {
 		
 		
 		// add event listeners
-		window.addEventListener('load', fxReveal);
-		window.addEventListener('resize', fxResize);
-		window.addEventListener('restartAll', fxRestart);
+		window.addEventListener("load", fxReveal);
+		window.addEventListener("resize", fxResize);
+		window.addEventListener("restartAll", fxRestart);
 
 		// observe reveal elements
 		var observer = [];
@@ -707,7 +707,7 @@ function initContactMap(wrapper) {
 
 		function fxRevealAll() { // reveal all elements - small devices
 			for(var i = 0; i < fxElements.length; i++) {
-				Util.addClass(fxElements[i], 'reveal-fx--is-visible');
+				Util.addClass(fxElements[i], "reveal-fx--is-visible");
 			}
 		};
 
@@ -738,10 +738,10 @@ function initContactMap(wrapper) {
 			if(fxElementDelays[index] && fxElementDelays[index] != 0) {
 				// wait before revealing element if a delay was added
 				setTimeout(function(){
-					Util.addClass(fxElements[index], 'reveal-fx--is-visible');
+					Util.addClass(fxElements[index], "reveal-fx--is-visible");
 				}, fxElementDelays[index]);
 			} else {
-				Util.addClass(fxElements[index], 'reveal-fx--is-visible');
+				Util.addClass(fxElements[index], "reveal-fx--is-visible");
 			}
 		};
 
@@ -757,7 +757,7 @@ function initContactMap(wrapper) {
 		function fxGetDelays() { // get anmation delays
 			var delays = [];
 			for(var i = 0; i < fxElements.length; i++) {
-				delays.push( fxElements[i].getAttribute('data-reveal-fx-delay') ? parseInt(fxElements[i].getAttribute('data-reveal-fx-delay')) : 0);
+				delays.push( fxElements[i].getAttribute("data-reveal-fx-delay") ? parseInt(fxElements[i].getAttribute("data-reveal-fx-delay")) : 0);
 			}
 			return delays;
 		};
@@ -765,13 +765,13 @@ function initContactMap(wrapper) {
 		function fxGetDeltas() { // get reveal delta
 			var deltas = [];
 			for(var i = 0; i < fxElements.length; i++) {
-				deltas.push( fxElements[i].getAttribute('data-reveal-fx-delta') ? parseInt(fxElements[i].getAttribute('data-reveal-fx-delta')) : fxRevealDelta);
+				deltas.push( fxElements[i].getAttribute("data-reveal-fx-delta") ? parseInt(fxElements[i].getAttribute("data-reveal-fx-delta")) : fxRevealDelta);
 			}
 			return deltas;
 		};
 
 		function fxDisabled(element) { // check if elements need to be animated - no animation on small devices
-			return !(window.getComputedStyle(element, '::before').getPropertyValue('content').replace(/'|"/g, "") == 'reveal-fx');
+			return !(window.getComputedStyle(element, "::before").getPropertyValue("content").replace(/'|"/g, "") == "reveal-fx");
 		};
 
 		function fxElementIsVisible(element, i) { // element is inside viewport
@@ -785,19 +785,19 @@ function initContactMap(wrapper) {
 		function fxResetEvents() { 
 			if(fxElements.length > fxRevealedItems.length) return;
 			// remove event listeners if all elements have been revealed
-			window.removeEventListener('load', fxReveal);
-			window.removeEventListener('resize', fxResize);
+			window.removeEventListener("load", fxReveal);
+			window.removeEventListener("resize", fxResize);
 		};
 
 		function fxRemoveClasses() {
 			// Reduced Motion on or Intersection Observer not supported
 			while(fxElements[0]) {
 				// remove all classes starting with 'reveal-fx--'
-				var classes = fxElements[0].getAttribute('class').split(" ").filter(function(c) {
-					return c.lastIndexOf('reveal-fx--', 0) !== 0;
+				var classes = fxElements[0].getAttribute("class").split(" ").filter(function(c) {
+					return c.lastIndexOf("reveal-fx--", 0) !== 0;
 				});
-				fxElements[0].setAttribute('class', classes.join(" ").trim());
-				Util.removeClass(fxElements[0], 'reveal-fx');
+				fxElements[0].setAttribute("class", classes.join(" ").trim());
+				Util.removeClass(fxElements[0], "reveal-fx");
 			}
 		};
 
@@ -808,8 +808,8 @@ function initContactMap(wrapper) {
       }
       // check if we need to add the event listensers back
       if(fxElements.length <= fxRevealedItems.length) {
-        window.addEventListener('load', fxReveal);
-        window.addEventListener('resize', fxResize);
+        window.addEventListener("load", fxReveal);
+        window.addEventListener("resize", fxResize);
       }
       // remove observer and reset the observer array
       for(var i = 0; i < observer.length; i++) {
@@ -818,7 +818,7 @@ function initContactMap(wrapper) {
       observer = [];
       // remove visible class
       for(var i = 0; i < fxElements.length; i++) {
-        Util.removeClass(fxElements[i], 'reveal-fx--is-visible');
+        Util.removeClass(fxElements[i], "reveal-fx--is-visible");
       }
       // reset fxRevealedItems array
       fxRevealedItems = [];
@@ -832,15 +832,15 @@ function initContactMap(wrapper) {
 (function() {
   function initSkipLinkEvents(skipLink) {
     // toggle class skip-link--focus if link is in focus/loses focus
-    skipLink.addEventListener('focusin', function(){
-      Util.addClass(skipLink, 'skip-link--focus');
+    skipLink.addEventListener("focusin", function(){
+      Util.addClass(skipLink, "skip-link--focus");
     });
-    skipLink.addEventListener('focusout', function(){
-      Util.removeClass(skipLink, 'skip-link--focus');
+    skipLink.addEventListener("focusout", function(){
+      Util.removeClass(skipLink, "skip-link--focus");
     });
   };
 
-  var skipLinks = document.getElementsByClassName('skip-link');
+  var skipLinks = document.getElementsByClassName("skip-link");
 	if( skipLinks.length > 0 ) {
 		for( var i = 0; i < skipLinks.length; i++) {
 			initSkipLinkEvents(skipLinks[i]);
@@ -851,56 +851,56 @@ function initContactMap(wrapper) {
 // Usage: codyhouse.co/license
 (function() {
   function initSocialShare(button) {
-    button.addEventListener('click', function(event){
+    button.addEventListener("click", function(event){
       event.preventDefault();
-      var social = button.getAttribute('data-social');
+      var social = button.getAttribute("data-social");
       var url = getSocialUrl(button, social);
-      (social == 'mail')
+      (social == "mail")
         ? window.location.href = url
-        : window.open(url, social+'-share-dialog', 'width=626,height=436');
+        : window.open(url, social+"-share-dialog", "width=626,height=436");
     });
   };
 
   function getSocialUrl(button, social) {
     var params = getSocialParams(social);
-    var newUrl = '';
+    var newUrl = "";
     for(var i = 0; i < params.length; i++) {
-      var paramValue = button.getAttribute('data-'+params[i]);
-      if(params[i] == 'hashtags') paramValue = encodeURI(paramValue.replace(/\#| /g, ''));
+      var paramValue = button.getAttribute("data-"+params[i]);
+      if(params[i] == "hashtags") paramValue = encodeURI(paramValue.replace(/\#| /g, ""));
       if(paramValue) {
-        (social == 'facebook') 
-          ? newUrl = newUrl + 'u='+encodeURIComponent(paramValue)+'&'
-          : newUrl = newUrl + params[i]+'='+encodeURIComponent(paramValue)+'&';
+        (social == "facebook") 
+          ? newUrl = newUrl + "u="+encodeURIComponent(paramValue)+"&"
+          : newUrl = newUrl + params[i]+"="+encodeURIComponent(paramValue)+"&";
       }
     }
-    if(social == 'linkedin') newUrl = 'mini=true&'+newUrl;
-    return button.getAttribute('href')+'?'+newUrl;
+    if(social == "linkedin") newUrl = "mini=true&"+newUrl;
+    return button.getAttribute("href")+"?"+newUrl;
   };
 
   function getSocialParams(social) {
     var params = [];
     switch (social) {
-      case 'twitter':
-        params = ['text', 'hashtags'];
+      case "twitter":
+        params = ["text", "hashtags"];
         break;
-      case 'facebook':
-      case 'linkedin':
-        params = ['url'];
+      case "facebook":
+      case "linkedin":
+        params = ["url"];
         break;
-      case 'pinterest':
-        params = ['url', 'media', 'description'];
+      case "pinterest":
+        params = ["url", "media", "description"];
         break;
-      case 'mail':
-        params = ['subject', 'body'];
+      case "mail":
+        params = ["subject", "body"];
         break;
     }
     return params;
   };
 
-  var socialShare = document.getElementsByClassName('js-social-share');
+  var socialShare = document.getElementsByClassName("js-social-share");
   if(socialShare.length > 0) {
     for( var i = 0; i < socialShare.length; i++) {
-      (function(i){initSocialShare(socialShare[i])})(i);
+      (function(i){initSocialShare(socialShare[i]);})(i);
     }
   }
 }());
@@ -909,7 +909,7 @@ function initContactMap(wrapper) {
 (function() {
 	var StickyBackground = function(element) {
 		this.element = element;
-		this.scrollingElement = this.element.getElementsByClassName('sticky-hero__content')[0];
+		this.scrollingElement = this.element.getElementsByClassName("sticky-hero__content")[0];
 		this.nextElement = this.element.nextElementSibling;
 		this.scrollingTreshold = 0;
 		this.nextTreshold = 0;
@@ -928,16 +928,16 @@ function initContactMap(wrapper) {
 			? this.scrollingTreshold = threshold
 			: this.nextTreshold = threshold;
 
-		Util.toggleClass(this.element, 'sticky-hero--media-is-fixed', (this.nextTreshold > 0 || this.scrollingTreshold > 0));
+		Util.toggleClass(this.element, "sticky-hero--media-is-fixed", (this.nextTreshold > 0 || this.scrollingTreshold > 0));
 	};
 
 
-	var stickyBackground = document.getElementsByClassName('js-sticky-hero'),
-		intersectionObserverSupported = ('IntersectionObserver' in window && 'IntersectionObserverEntry' in window && 'intersectionRatio' in window.IntersectionObserverEntry.prototype);
+	var stickyBackground = document.getElementsByClassName("js-sticky-hero"),
+		intersectionObserverSupported = ("IntersectionObserver" in window && "IntersectionObserverEntry" in window && "intersectionRatio" in window.IntersectionObserverEntry.prototype);
 	if(stickyBackground.length > 0 && intersectionObserverSupported) { // if IntersectionObserver is not supported, animations won't be triggeres
 		for(var i = 0; i < stickyBackground.length; i++) {
 			(function(i){ // if animations are enabled -> init the StickyBackground object
-        if( Util.hasClass(stickyBackground[i], 'sticky-hero--overlay-layer') || Util.hasClass(stickyBackground[i], 'sticky-hero--scale')) new StickyBackground(stickyBackground[i]);
+        if( Util.hasClass(stickyBackground[i], "sticky-hero--overlay-layer") || Util.hasClass(stickyBackground[i], "sticky-hero--scale")) new StickyBackground(stickyBackground[i]);
       })(i);
 		}
 	}
@@ -947,10 +947,10 @@ function initContactMap(wrapper) {
 (function() {
 	var VTimeline = function(element) {
     this.element = element;
-    this.sections = this.element.getElementsByClassName('js-v-timeline__section');
-    this.animate = this.element.getAttribute('data-animation') && this.element.getAttribute('data-animation') == 'on' ? true : false;
-    this.animationClass = 'v-timeline__section--animate';
-    this.animationDelta = '-150px';
+    this.sections = this.element.getElementsByClassName("js-v-timeline__section");
+    this.animate = this.element.getAttribute("data-animation") && this.element.getAttribute("data-animation") == "on" ? true : false;
+    this.animationClass = "v-timeline__section--animate";
+    this.animationDelta = "-150px";
     initVTimeline(this);
   };
 
@@ -971,22 +971,22 @@ function initContactMap(wrapper) {
   };
 
   //initialize the VTimeline objects
-  var timelines = document.querySelectorAll('.js-v-timeline'),
-    intersectionObserverSupported = ('IntersectionObserver' in window && 'IntersectionObserverEntry' in window && 'intersectionRatio' in window.IntersectionObserverEntry.prototype),
+  var timelines = document.querySelectorAll(".js-v-timeline"),
+    intersectionObserverSupported = ("IntersectionObserver" in window && "IntersectionObserverEntry" in window && "intersectionRatio" in window.IntersectionObserverEntry.prototype),
     reducedMotion = Util.osHasReducedMotion();
 	if( timelines.length > 0) {
 		for( var i = 0; i < timelines.length; i++) {
       if(intersectionObserverSupported && !reducedMotion) (function(i){new VTimeline(timelines[i]);})(i);
-      else timelines[i].removeAttribute('data-animation');
+      else timelines[i].removeAttribute("data-animation");
 		}
 	}
 }());
 // File#: _2_flexi-header
 // Usage: codyhouse.co/license
 (function() {
-  var flexHeader = document.getElementsByClassName('js-f-header');
+  var flexHeader = document.getElementsByClassName("js-f-header");
 	if(flexHeader.length > 0) {
-		var menuTrigger = flexHeader[0].getElementsByClassName('js-anim-menu-btn')[0],
+		var menuTrigger = flexHeader[0].getElementsByClassName("js-anim-menu-btn")[0],
 			firstFocusableElement = getMenuFirstFocusable();
 
 		// we'll use these to store the node that needs to receive focus when the mobile menu is closed 
@@ -995,64 +995,64 @@ function initContactMap(wrapper) {
 		resetFlexHeaderOffset();
 		setAriaButtons();
 
-		menuTrigger.addEventListener('anim-menu-btn-clicked', function(event){
+		menuTrigger.addEventListener("anim-menu-btn-clicked", function(event){
 			toggleMenuNavigation(event.detail);
 		});
 
 		// listen for key events
-		window.addEventListener('keyup', function(event){
+		window.addEventListener("keyup", function(event){
 			// listen for esc key
-			if( (event.keyCode && event.keyCode == 27) || (event.key && event.key.toLowerCase() == 'escape' )) {
+			if( (event.keyCode && event.keyCode == 27) || (event.key && event.key.toLowerCase() == "escape" )) {
 				// close navigation on mobile if open
-				if(menuTrigger.getAttribute('aria-expanded') == 'true' && isVisible(menuTrigger)) {
+				if(menuTrigger.getAttribute("aria-expanded") == "true" && isVisible(menuTrigger)) {
 					focusMenu = menuTrigger; // move focus to menu trigger when menu is close
 					menuTrigger.click();
 				}
 			}
 			// listen for tab key
-			if( (event.keyCode && event.keyCode == 9) || (event.key && event.key.toLowerCase() == 'tab' )) {
+			if( (event.keyCode && event.keyCode == 9) || (event.key && event.key.toLowerCase() == "tab" )) {
 				// close navigation on mobile if open when nav loses focus
-				if(menuTrigger.getAttribute('aria-expanded') == 'true' && isVisible(menuTrigger) && !document.activeElement.closest('.js-f-header')) menuTrigger.click();
+				if(menuTrigger.getAttribute("aria-expanded") == "true" && isVisible(menuTrigger) && !document.activeElement.closest(".js-f-header")) menuTrigger.click();
 			}
 		});
 
 		// detect click on a dropdown control button - expand-on-mobile only
-		flexHeader[0].addEventListener('click', function(event){
-			var btnLink = event.target.closest('.js-f-header__dropdown-control');
+		flexHeader[0].addEventListener("click", function(event){
+			var btnLink = event.target.closest(".js-f-header__dropdown-control");
 			if(!btnLink) return;
-			!btnLink.getAttribute('aria-expanded') ? btnLink.setAttribute('aria-expanded', 'true') : btnLink.removeAttribute('aria-expanded');
+			!btnLink.getAttribute("aria-expanded") ? btnLink.setAttribute("aria-expanded", "true") : btnLink.removeAttribute("aria-expanded");
 		});
 
 		// detect mouseout from a dropdown control button - expand-on-mobile only
-		flexHeader[0].addEventListener('mouseout', function(event){
-			var btnLink = event.target.closest('.js-f-header__dropdown-control');
+		flexHeader[0].addEventListener("mouseout", function(event){
+			var btnLink = event.target.closest(".js-f-header__dropdown-control");
 			if(!btnLink) return;
 			// check layout type
-			if(getLayout() == 'mobile') return;
-			btnLink.removeAttribute('aria-expanded');
+			if(getLayout() == "mobile") return;
+			btnLink.removeAttribute("aria-expanded");
 		});
 
 		// close dropdown on focusout - expand-on-mobile only
-		flexHeader[0].addEventListener('focusin', function(event){
-			var btnLink = event.target.closest('.js-f-header__dropdown-control'),
-				dropdown = event.target.closest('.f-header__dropdown');
+		flexHeader[0].addEventListener("focusin", function(event){
+			var btnLink = event.target.closest(".js-f-header__dropdown-control"),
+				dropdown = event.target.closest(".f-header__dropdown");
 			if(dropdown) return;
-			if(btnLink && btnLink.hasAttribute('aria-expanded')) return;
+			if(btnLink && btnLink.hasAttribute("aria-expanded")) return;
 			// check layout type
-			if(getLayout() == 'mobile') return;
-			var openDropdown = flexHeader[0].querySelector('.js-f-header__dropdown-control[aria-expanded="true"]');
-			if(openDropdown) openDropdown.removeAttribute('aria-expanded');
+			if(getLayout() == "mobile") return;
+			var openDropdown = flexHeader[0].querySelector(".js-f-header__dropdown-control[aria-expanded=\"true\"]");
+			if(openDropdown) openDropdown.removeAttribute("aria-expanded");
 		});
 
 		// listen for resize
 		var resizingId = false;
-		window.addEventListener('resize', function() {
+		window.addEventListener("resize", function() {
 			clearTimeout(resizingId);
 			resizingId = setTimeout(doneResizing, 500);
 		});
 
 		function getMenuFirstFocusable() {
-			var focusableEle = flexHeader[0].getElementsByClassName('f-header__nav')[0].querySelectorAll('[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, [tabindex]:not([tabindex="-1"]), [contenteditable], audio[controls], video[controls], summary'),
+			var focusableEle = flexHeader[0].getElementsByClassName("f-header__nav")[0].querySelectorAll("[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, [tabindex]:not([tabindex=\"-1\"]), [contenteditable], audio[controls], video[controls], summary"),
 				firstFocusable = false;
 			for(var i = 0; i < focusableEle.length; i++) {
 				if( focusableEle[i].offsetWidth || focusableEle[i].offsetHeight || focusableEle[i].getClientRects().length ) {
@@ -1069,16 +1069,16 @@ function initContactMap(wrapper) {
 		};
 
 		function doneResizing() {
-			if( !isVisible(menuTrigger) && Util.hasClass(flexHeader[0], 'f-header--expanded')) {
+			if( !isVisible(menuTrigger) && Util.hasClass(flexHeader[0], "f-header--expanded")) {
 				menuTrigger.click();
 			}
 			resetFlexHeaderOffset();
 		};
 		
 		function toggleMenuNavigation(bool) { // toggle menu visibility on small devices
-			Util.toggleClass(document.getElementsByClassName('f-header__nav')[0], 'f-header__nav--is-visible', bool);
-			Util.toggleClass(flexHeader[0], 'f-header--expanded', bool);
-			menuTrigger.setAttribute('aria-expanded', bool);
+			Util.toggleClass(document.getElementsByClassName("f-header__nav")[0], "f-header__nav--is-visible", bool);
+			Util.toggleClass(flexHeader[0], "f-header--expanded", bool);
+			menuTrigger.setAttribute("aria-expanded", bool);
 			if(bool) firstFocusableElement.focus(); // move focus to first focusable element
 			else if(focusMenu) {
 				focusMenu.focus();
@@ -1088,25 +1088,25 @@ function initContactMap(wrapper) {
 
 		function resetFlexHeaderOffset() {
 			// on mobile -> update max height of the flexi header based on its offset value (e.g., if there's a fixed pre-header element)
-			document.documentElement.style.setProperty('--f-header-offset', flexHeader[0].getBoundingClientRect().top+'px');
+			document.documentElement.style.setProperty("--f-header-offset", flexHeader[0].getBoundingClientRect().top+"px");
 		};
 
 		function setAriaButtons() {
-			var btnDropdown = flexHeader[0].getElementsByClassName('js-f-header__dropdown-control');
+			var btnDropdown = flexHeader[0].getElementsByClassName("js-f-header__dropdown-control");
 			for(var i = 0; i < btnDropdown.length; i++) {
-				var id = 'f-header-dropdown-'+i,
+				var id = "f-header-dropdown-"+i,
 					dropdown = btnDropdown[i].nextElementSibling;
-				if(dropdown.hasAttribute('id')) {
-					id = dropdown.getAttribute('id');
+				if(dropdown.hasAttribute("id")) {
+					id = dropdown.getAttribute("id");
 				} else {
-					dropdown.setAttribute('id', id);
+					dropdown.setAttribute("id", id);
 				}
-				btnDropdown[i].setAttribute('aria-controls', id);	
+				btnDropdown[i].setAttribute("aria-controls", id);	
 			}
 		};
 
 		function getLayout() {
-			return getComputedStyle(flexHeader[0], ':before').getPropertyValue('content').replace(/\'|"/g, '');
+			return getComputedStyle(flexHeader[0], ":before").getPropertyValue("content").replace(/\'|"/g, "");
 		};
 	}
 }());
@@ -1114,13 +1114,13 @@ function initContactMap(wrapper) {
 // Usage: codyhouse.co/license
 (function() {
   function initPoi(element) {
-    element.addEventListener('click', function(event){
-      var poiItem = event.target.closest('.js-poi__item');
-      if(poiItem) Util.addClass(poiItem, 'poi__item--visited');
+    element.addEventListener("click", function(event){
+      var poiItem = event.target.closest(".js-poi__item");
+      if(poiItem) Util.addClass(poiItem, "poi__item--visited");
     });
   };
 
-  var poi = document.getElementsByClassName('js-poi');
+  var poi = document.getElementsByClassName("js-poi");
   for(var i = 0; i < poi.length; i++) {
     (function(i){initPoi(poi[i]);})(i);
   }
@@ -1130,17 +1130,17 @@ function initContactMap(wrapper) {
 (function() {
 	// NOTE: you need the js code only when using the --has-switch variation of the pricing table
 	// default version does not require js
-	var pTable = document.getElementsByClassName('js-p-table--has-switch');
+	var pTable = document.getElementsByClassName("js-p-table--has-switch");
 	if(pTable.length > 0) {
 		for(var i = 0; i < pTable.length; i++) {
 			(function(i){ addPTableEvent(pTable[i]);})(i);
 		}
 
 		function addPTableEvent(element) {
-			var pSwitch = element.getElementsByClassName('js-p-table__switch')[0];
+			var pSwitch = element.getElementsByClassName("js-p-table__switch")[0];
 			if(pSwitch) {
-				pSwitch.addEventListener('change', function(event) {
-          Util.toggleClass(element, 'p-table--yearly', (event.target.value == 'yearly'));
+				pSwitch.addEventListener("change", function(event) {
+          Util.toggleClass(element, "p-table--yearly", (event.target.value == "yearly"));
 				});
 			}
 		}
@@ -1151,10 +1151,10 @@ function initContactMap(wrapper) {
 (function() {
   var StickyShareBar = function(element) {
     this.element = element;
-    this.contentTarget = document.getElementsByClassName('js-sticky-sharebar-target');
-    this.contentTargetOut = document.getElementsByClassName('js-sticky-sharebar-target-out');
-    this.showClass = 'sticky-sharebar--on-target';
-    this.threshold = '50%'; // Share Bar will be revealed when .js-sticky-sharebar-target element reaches 50% of the viewport
+    this.contentTarget = document.getElementsByClassName("js-sticky-sharebar-target");
+    this.contentTargetOut = document.getElementsByClassName("js-sticky-sharebar-target-out");
+    this.showClass = "sticky-sharebar--on-target";
+    this.threshold = "50%"; // Share Bar will be revealed when .js-sticky-sharebar-target element reaches 50% of the viewport
     initShareBar(this);
     initTargetOut(this);
   };
@@ -1203,8 +1203,8 @@ function initContactMap(wrapper) {
   };
 
   //initialize the StickyShareBar objects
-  var stickyShareBar = document.getElementsByClassName('js-sticky-sharebar'),
-    intersectionObserverSupported = ('IntersectionObserver' in window && 'IntersectionObserverEntry' in window && 'intersectionRatio' in window.IntersectionObserverEntry.prototype);
+  var stickyShareBar = document.getElementsByClassName("js-sticky-sharebar"),
+    intersectionObserverSupported = ("IntersectionObserver" in window && "IntersectionObserverEntry" in window && "intersectionRatio" in window.IntersectionObserverEntry.prototype);
   
 	if( stickyShareBar.length > 0 ) {
 		for( var i = 0; i < stickyShareBar.length; i++) {
