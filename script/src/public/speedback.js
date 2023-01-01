@@ -1,252 +1,314 @@
-function d() {
+function a() {
 }
-function v(t) {
+function P(t) {
   return t();
 }
-function S() {
+function B() {
   return /* @__PURE__ */ Object.create(null);
 }
 function w(t) {
-  t.forEach(v);
+  t.forEach(P);
 }
-function Q(t) {
+function D(t) {
   return typeof t == "function";
 }
-function W(t, e) {
+function A(t, e) {
   return t != t ? e == e : t !== e || t && typeof t == "object" || typeof t == "function";
 }
-let h;
-function J(t, e) {
-  return h || (h = document.createElement("a")), h.href = e, t === h.href;
-}
-function V(t) {
+function R(t) {
   return Object.keys(t).length === 0;
 }
-function c(t, e) {
+function U(t, ...e) {
+  if (t == null)
+    return a;
+  const n = t.subscribe(...e);
+  return n.unsubscribe ? () => n.unsubscribe() : n;
+}
+function V(t, e, n) {
+  t.$$.on_destroy.push(U(e, n));
+}
+function b(t, e) {
   t.appendChild(e);
 }
-function Z(t, e, n) {
+function M(t, e, n) {
   t.insertBefore(e, n || null);
 }
-function Y(t) {
+function v(t) {
   t.parentNode && t.parentNode.removeChild(t);
 }
-function g(t) {
+function O(t) {
   return document.createElement(t);
 }
-function p(t) {
+function q(t) {
+  return document.createElementNS("http://www.w3.org/2000/svg", t);
+}
+function N(t) {
   return document.createTextNode(t);
 }
-function C() {
-  return p(" ");
+function W() {
+  return N(" ");
 }
-function q(t, e, n, i) {
-  return t.addEventListener(e, n, i), () => t.removeEventListener(e, n, i);
+function X(t, e, n, r) {
+  return t.addEventListener(e, n, r), () => t.removeEventListener(e, n, r);
 }
-function j(t, e, n) {
+function p(t, e, n) {
   n == null ? t.removeAttribute(e) : t.getAttribute(e) !== n && t.setAttribute(e, n);
 }
-function K(t) {
+function Y(t) {
   return Array.from(t.childNodes);
 }
-function tt(t, e) {
-  e = "" + e, t.wholeText !== e && (t.data = e);
+let S;
+function g(t) {
+  S = t;
 }
-let k;
-function L(t) {
-  k = t;
+const _ = [], L = [], y = [], T = [], Z = Promise.resolve();
+let E = !1;
+function tt() {
+  E || (E = !0, Z.then(F));
 }
-const T = [], $ = [], m = [], b = [], et = Promise.resolve();
-let _ = !1;
-function nt() {
-  _ || (_ = !0, et.then(G));
+function C(t) {
+  y.push(t);
 }
-function O(t) {
-  m.push(t);
-}
-const z = /* @__PURE__ */ new Set();
-let E = 0;
-function G() {
-  const t = k;
+const k = /* @__PURE__ */ new Set();
+let $ = 0;
+function F() {
+  const t = S;
   do {
-    for (; E < T.length; ) {
-      const e = T[E];
-      E++, L(e), it(e.$$);
+    for (; $ < _.length; ) {
+      const e = _[$];
+      $++, g(e), et(e.$$);
     }
-    for (L(null), T.length = 0, E = 0; $.length; )
-      $.pop()();
-    for (let e = 0; e < m.length; e += 1) {
-      const n = m[e];
-      z.has(n) || (z.add(n), n());
+    for (g(null), _.length = 0, $ = 0; L.length; )
+      L.pop()();
+    for (let e = 0; e < y.length; e += 1) {
+      const n = y[e];
+      k.has(n) || (k.add(n), n());
     }
-    m.length = 0;
-  } while (T.length);
-  for (; b.length; )
-    b.pop()();
-  _ = !1, z.clear(), L(t);
+    y.length = 0;
+  } while (_.length);
+  for (; T.length; )
+    T.pop()();
+  E = !1, k.clear(), g(t);
 }
-function it(t) {
+function et(t) {
   if (t.fragment !== null) {
     t.update(), w(t.before_update);
     const e = t.dirty;
-    t.dirty = [-1], t.fragment && t.fragment.p(t.ctx, e), t.after_update.forEach(O);
+    t.dirty = [-1], t.fragment && t.fragment.p(t.ctx, e), t.after_update.forEach(C);
   }
 }
 const x = /* @__PURE__ */ new Set();
-let Mt;
-function B(t, e) {
+let nt;
+function G(t, e) {
   t && t.i && (x.delete(t), t.i(e));
 }
-function ut(t, e, n, i) {
+function rt(t, e, n, r) {
   if (t && t.o) {
     if (x.has(t))
       return;
-    x.add(t), Mt.c.push(() => {
-      x.delete(t), i && (n && t.d(1), i());
+    x.add(t), nt.c.push(() => {
+      x.delete(t), r && (n && t.d(1), r());
     }), t.o(e);
   } else
-    i && i();
+    r && r();
 }
-function rt(t) {
+function st(t) {
   t && t.c();
 }
-function R(t, e, n, i) {
-  const { fragment: u, after_update: l } = t.$$;
-  u && u.m(e, n), i || O(() => {
-    const r = t.$$.on_mount.map(v).filter(Q);
-    t.$$.on_destroy ? t.$$.on_destroy.push(...r) : w(r), t.$$.on_mount = [];
-  }), l.forEach(O);
+function H(t, e, n, r) {
+  const { fragment: o, after_update: u } = t.$$;
+  o && o.m(e, n), r || C(() => {
+    const l = t.$$.on_mount.map(P).filter(D);
+    t.$$.on_destroy ? t.$$.on_destroy.push(...l) : w(l), t.$$.on_mount = [];
+  }), u.forEach(C);
 }
-function H(t, e) {
+function J(t, e) {
   const n = t.$$;
   n.fragment !== null && (w(n.on_destroy), n.fragment && n.fragment.d(e), n.on_destroy = n.fragment = null, n.ctx = []);
 }
-function ct(t, e) {
-  t.$$.dirty[0] === -1 && (T.push(t), nt(), t.$$.dirty.fill(0)), t.$$.dirty[e / 31 | 0] |= 1 << e % 31;
+function ot(t, e) {
+  t.$$.dirty[0] === -1 && (_.push(t), tt(), t.$$.dirty.fill(0)), t.$$.dirty[e / 31 | 0] |= 1 << e % 31;
 }
-function P(t, e, n, i, u, l, r, s = [-1]) {
-  const a = k;
-  L(t);
-  const M = t.$$ = {
+function K(t, e, n, r, o, u, l, i = [-1]) {
+  const d = S;
+  g(t);
+  const s = t.$$ = {
     fragment: null,
     ctx: [],
-    props: l,
-    update: d,
-    not_equal: u,
-    bound: S(),
+    props: u,
+    update: a,
+    not_equal: o,
+    bound: B(),
     on_mount: [],
     on_destroy: [],
     on_disconnect: [],
     before_update: [],
     after_update: [],
-    context: new Map(e.context || (a ? a.$$.context : [])),
-    callbacks: S(),
-    dirty: s,
+    context: new Map(e.context || (d ? d.$$.context : [])),
+    callbacks: B(),
+    dirty: i,
     skip_bound: !1,
-    root: e.target || a.$$.root
+    root: e.target || d.$$.root
   };
-  r && r(M.root);
-  let N = !1;
-  if (M.ctx = n ? n(t, e.props || {}, (o, f, ...I) => {
-    const D = I.length ? I[0] : f;
-    return M.ctx && u(M.ctx[o], M.ctx[o] = D) && (!M.skip_bound && M.bound[o] && M.bound[o](D), N && ct(t, o)), f;
-  }) : [], M.update(), N = !0, w(M.before_update), M.fragment = i ? i(M.ctx) : !1, e.target) {
+  l && l(s.root);
+  let f = !1;
+  if (s.ctx = n ? n(t, e.props || {}, (c, m, ...j) => {
+    const z = j.length ? j[0] : m;
+    return s.ctx && o(s.ctx[c], s.ctx[c] = z) && (!s.skip_bound && s.bound[c] && s.bound[c](z), f && ot(t, c)), m;
+  }) : [], s.update(), f = !0, w(s.before_update), s.fragment = r ? r(s.ctx) : !1, e.target) {
     if (e.hydrate) {
-      const o = K(e.target);
-      M.fragment && M.fragment.l(o), o.forEach(Y);
+      const c = Y(e.target);
+      s.fragment && s.fragment.l(c), c.forEach(v);
     } else
-      M.fragment && M.fragment.c();
-    e.intro && B(t.$$.fragment), R(t, e.target, e.anchor, e.customElement), G();
+      s.fragment && s.fragment.c();
+    e.intro && G(t.$$.fragment), H(t, e.target, e.anchor, e.customElement), F();
   }
-  L(a);
+  g(d);
 }
-class X {
+class Q {
   $destroy() {
-    H(this, 1), this.$destroy = d;
+    J(this, 1), this.$destroy = a;
   }
   $on(e, n) {
-    if (!Q(n))
-      return d;
-    const i = this.$$.callbacks[e] || (this.$$.callbacks[e] = []);
-    return i.push(n), () => {
-      const u = i.indexOf(n);
-      u !== -1 && i.splice(u, 1);
+    if (!D(n))
+      return a;
+    const r = this.$$.callbacks[e] || (this.$$.callbacks[e] = []);
+    return r.push(n), () => {
+      const o = r.indexOf(n);
+      o !== -1 && r.splice(o, 1);
     };
   }
   $set(e) {
-    this.$$set && !V(e) && (this.$$.skip_bound = !0, this.$$set(e), this.$$.skip_bound = !1);
+    this.$$set && !R(e) && (this.$$.skip_bound = !0, this.$$set(e), this.$$.skip_bound = !1);
   }
 }
-const ot = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBhcmlhLWhpZGRlbj0idHJ1ZSIgcm9sZT0iaW1nIiBjbGFzcz0iaWNvbmlmeSBpY29uaWZ5LS1sb2dvcyIgd2lkdGg9IjI2LjYiIGhlaWdodD0iMzIiIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIG1lZXQiIHZpZXdCb3g9IjAgMCAyNTYgMzA4Ij48cGF0aCBmaWxsPSIjRkYzRTAwIiBkPSJNMjM5LjY4MiA0MC43MDdDMjExLjExMy0uMTgyIDE1NC42OS0xMi4zMDEgMTEzLjg5NSAxMy42OUw0Mi4yNDcgNTkuMzU2YTgyLjE5OCA4Mi4xOTggMCAwIDAtMzcuMTM1IDU1LjA1NmE4Ni41NjYgODYuNTY2IDAgMCAwIDguNTM2IDU1LjU3NmE4Mi40MjUgODIuNDI1IDAgMCAwLTEyLjI5NiAzMC43MTlhODcuNTk2IDg3LjU5NiAwIDAgMCAxNC45NjQgNjYuMjQ0YzI4LjU3NCA0MC44OTMgODQuOTk3IDUzLjAwNyAxMjUuNzg3IDI3LjAxNmw3MS42NDgtNDUuNjY0YTgyLjE4MiA4Mi4xODIgMCAwIDAgMzcuMTM1LTU1LjA1N2E4Ni42MDEgODYuNjAxIDAgMCAwLTguNTMtNTUuNTc3YTgyLjQwOSA4Mi40MDkgMCAwIDAgMTIuMjktMzAuNzE4YTg3LjU3MyA4Ny41NzMgMCAwIDAtMTQuOTYzLTY2LjI0NCI+PC9wYXRoPjxwYXRoIGZpbGw9IiNGRkYiIGQ9Ik0xMDYuODg5IDI3MC44NDFjLTIzLjEwMiA2LjAwNy00Ny40OTctMy4wMzYtNjEuMTAzLTIyLjY0OGE1Mi42ODUgNTIuNjg1IDAgMCAxLTkuMDAzLTM5Ljg1YTQ5Ljk3OCA0OS45NzggMCAwIDEgMS43MTMtNi42OTNsMS4zNS00LjExNWwzLjY3MSAyLjY5N2E5Mi40NDcgOTIuNDQ3IDAgMCAwIDI4LjAzNiAxNC4wMDdsMi42NjMuODA4bC0uMjQ1IDIuNjU5YTE2LjA2NyAxNi4wNjcgMCAwIDAgMi44OSAxMC42NTZhMTcuMTQzIDE3LjE0MyAwIDAgMCAxOC4zOTcgNi44MjhhMTUuNzg2IDE1Ljc4NiAwIDAgMCA0LjQwMy0xLjkzNWw3MS42Ny00NS42NzJhMTQuOTIyIDE0LjkyMiAwIDAgMCA2LjczNC05Ljk3N2ExNS45MjMgMTUuOTIzIDAgMCAwLTIuNzEzLTEyLjAxMWExNy4xNTYgMTcuMTU2IDAgMCAwLTE4LjQwNC02LjgzMmExNS43OCAxNS43OCAwIDAgMC00LjM5NiAxLjkzM2wtMjcuMzUgMTcuNDM0YTUyLjI5OCA1Mi4yOTggMCAwIDEtMTQuNTUzIDYuMzkxYy0yMy4xMDEgNi4wMDctNDcuNDk3LTMuMDM2LTYxLjEwMS0yMi42NDlhNTIuNjgxIDUyLjY4MSAwIDAgMS05LjAwNC0zOS44NDlhNDkuNDI4IDQ5LjQyOCAwIDAgMSAyMi4zNC0zMy4xMTRsNzEuNjY0LTQ1LjY3N2E1Mi4yMTggNTIuMjE4IDAgMCAxIDE0LjU2My02LjM5OGMyMy4xMDEtNi4wMDcgNDcuNDk3IDMuMDM2IDYxLjEwMSAyMi42NDhhNTIuNjg1IDUyLjY4NSAwIDAgMSA5LjAwNCAzOS44NWE1MC41NTkgNTAuNTU5IDAgMCAxLTEuNzEzIDYuNjkybC0xLjM1IDQuMTE2bC0zLjY3LTIuNjkzYTkyLjM3MyA5Mi4zNzMgMCAwIDAtMjguMDM3LTE0LjAxM2wtMi42NjQtLjgwOWwuMjQ2LTIuNjU4YTE2LjA5OSAxNi4wOTkgMCAwIDAtMi44OS0xMC42NTZhMTcuMTQzIDE3LjE0MyAwIDAgMC0xOC4zOTgtNi44MjhhMTUuNzg2IDE1Ljc4NiAwIDAgMC00LjQwMiAxLjkzNWwtNzEuNjcgNDUuNjc0YTE0Ljg5OCAxNC44OTggMCAwIDAtNi43MyA5Ljk3NWExNS45IDE1LjkgMCAwIDAgMi43MDkgMTIuMDEyYTE3LjE1NiAxNy4xNTYgMCAwIDAgMTguNDA0IDYuODMyYTE1Ljg0MSAxNS44NDEgMCAwIDAgNC40MDItMS45MzVsMjcuMzQ1LTE3LjQyN2E1Mi4xNDcgNTIuMTQ3IDAgMCAxIDE0LjU1Mi02LjM5N2MyMy4xMDEtNi4wMDYgNDcuNDk3IDMuMDM3IDYxLjEwMiAyMi42NWE1Mi42ODEgNTIuNjgxIDAgMCAxIDkuMDAzIDM5Ljg0OGE0OS40NTMgNDkuNDUzIDAgMCAxLTIyLjM0IDMzLjEybC03MS42NjQgNDUuNjczYTUyLjIxOCA1Mi4yMTggMCAwIDEtMTQuNTYzIDYuMzk4Ij48L3BhdGg+PC9zdmc+";
-function lt(t) {
-  let e, n, i, u, l;
+const h = [];
+function ct(t, e = a) {
+  let n;
+  const r = /* @__PURE__ */ new Set();
+  function o(i) {
+    if (A(t, i) && (t = i, n)) {
+      const d = !h.length;
+      for (const s of r)
+        s[1](), h.push(s, t);
+      if (d) {
+        for (let s = 0; s < h.length; s += 2)
+          h[s][0](h[s + 1]);
+        h.length = 0;
+      }
+    }
+  }
+  function u(i) {
+    o(i(t));
+  }
+  function l(i, d = a) {
+    const s = [i, d];
+    return r.add(s), r.size === 1 && (n = e(o) || a), i(t), () => {
+      r.delete(s), r.size === 0 && (n(), n = null);
+    };
+  }
+  return { set: o, update: u, subscribe: l };
+}
+const I = ct(!1);
+function ut(t) {
+  let e;
   return {
     c() {
-      e = g("button"), n = p("count is "), i = p(t[0]);
+      e = N("Comment");
     },
-    m(r, s) {
-      Z(r, e, s), c(e, n), c(e, i), u || (l = q(e, "click", t[1]), u = !0);
+    m(n, r) {
+      M(n, e, r);
     },
-    p(r, [s]) {
-      s & 1 && tt(i, r[0]);
-    },
-    i: d,
-    o: d,
-    d(r) {
-      r && Y(e), u = !1, l();
+    d(n) {
+      n && v(e);
     }
   };
 }
-function st(t, e, n) {
-  let i = 0;
-  return [i, () => {
-    n(0, i += 1);
+function it(t) {
+  let e;
+  return {
+    c() {
+      e = N("Close comments");
+    },
+    m(n, r) {
+      M(n, e, r);
+    },
+    d(n) {
+      n && v(e);
+    }
+  };
+}
+function lt(t) {
+  let e, n, r, o, u, l, i;
+  function d(c, m) {
+    return c[0] ? it : ut;
+  }
+  let s = d(t), f = s(t);
+  return {
+    c() {
+      e = O("button"), n = q("svg"), r = q("path"), o = W(), u = O("span"), f.c(), p(r, "fill-rule", "evenodd"), p(r, "d", "M2 10c0-3.967 3.69-7 8-7 4.31 0 8 3.033 8 7s-3.69 7-8 7a9.165 9.165 0 01-1.504-.123 5.976 5.976 0 01-3.935 1.107.75.75 0 01-.584-1.143 3.478 3.478 0 00.522-1.756C2.979 13.825 2 12.025 2 10z"), p(r, "clip-rule", "evenodd"), p(n, "xmlns", "http://www.w3.org/2000/svg"), p(n, "viewBox", "0 0 20 20"), p(n, "fill", "currentColor"), p(n, "class", "spd-w-5 spd-h-5 spd-mr-2 spd-flex-shrink-0"), p(e, "class", "spd-flex spd-items-center spd-fixed spd-bottom-8 spd-left-1/2 spd-rounded-full -spd-translate-x-1/2 spd-px-6 spd-h-11 spd-z-[99999] spd-text-neutral-500 hover:spd-text-neutral-200 spd-bg-black spd-shadow-md hover:spd-shadow-xl spd-border spd-border-neutral-600 spd-font-sans spd-text-base spd-transition-colors");
+    },
+    m(c, m) {
+      M(c, e, m), b(e, n), b(n, r), b(e, o), b(e, u), f.m(u, null), l || (i = X(e, "click", t[1]), l = !0);
+    },
+    p(c, [m]) {
+      s !== (s = d(c)) && (f.d(1), f = s(c), f && (f.c(), f.m(u, null)));
+    },
+    i: a,
+    o: a,
+    d(c) {
+      c && v(e), f.d(), l = !1, i();
+    }
+  };
+}
+function dt(t, e, n) {
+  let r;
+  return V(t, I, (u) => n(0, r = u)), [r, () => {
+    I.update((u) => !u);
   }];
 }
-class Nt extends X {
+class ft extends Q {
   constructor(e) {
-    super(), P(this, e, st, lt, W, {});
+    super(), K(this, e, dt, lt, A, {});
   }
 }
-function gt(t) {
-  let e, n, i, u, l, r, s, a, M, N, o, f, I, D, y;
-  return N = new Nt({}), {
+function at(t) {
+  let e, n;
+  return e = new ft({}), {
     c() {
-      e = g("main"), n = g("div"), i = g("a"), u = g("img"), r = C(), s = g("h1"), s.textContent = "Vite + Svelte", a = C(), M = g("div"), rt(N.$$.fragment), o = C(), f = g("p"), f.innerHTML = 'Check out <a href="https://github.com/sveltejs/kit#readme" target="_blank" rel="noreferrer">SvelteKit</a>, the official Svelte app framework powered by Vite!', I = C(), D = g("p"), D.textContent = "Click on the Vite and Svelte logos to learn more", J(u.src, l = ot) || j(u, "src", l), j(u, "alt", "Svelte Logo"), j(i, "href", "https://svelte.dev"), j(i, "target", "_blank"), j(i, "rel", "noreferrer"), j(n, "class", "spd-flex spd-bg-amber-600");
+      st(e.$$.fragment);
     },
-    m(A, F) {
-      Z(A, e, F), c(e, n), c(n, i), c(i, u), c(e, r), c(e, s), c(e, a), c(e, M), R(N, M, null), c(e, o), c(e, f), c(e, I), c(e, D), y = !0;
+    m(r, o) {
+      H(e, r, o), n = !0;
     },
-    p: d,
-    i(A) {
-      y || (B(N.$$.fragment, A), y = !0);
+    p: a,
+    i(r) {
+      n || (G(e.$$.fragment, r), n = !0);
     },
-    o(A) {
-      ut(N.$$.fragment, A), y = !1;
+    o(r) {
+      rt(e.$$.fragment, r), n = !1;
     },
-    d(A) {
-      A && Y(e), H(N);
+    d(r) {
+      J(e, r);
     }
   };
 }
-class at extends X {
+class pt extends Q {
   constructor(e) {
-    super(), P(this, e, null, gt, W, {});
+    super(), K(this, e, null, at, A, {});
   }
 }
-const At = (t) => {
+const mt = (t) => {
   const e = document.head, n = document.createElement("link");
   n.rel = "stylesheet", n.href = t, e.appendChild(n);
-};
-let U = null;
-const ft = () => {
+}, ht = () => {
   const t = document.createElement("div");
-  t.setAttribute("id", "speedback-app"), document.body.appendChild(t), console.log(t);
-}, Dt = () => {
-  U = new at({
+  t.setAttribute("id", "speedback-app"), document.body.appendChild(t);
+}, _t = () => {
+  new pt({
     target: document.getElementById("speedback-app")
-  }), console.log(U);
-}, jt = async () => {
-  ft(), Dt(), At("/style.css");
+  });
+}, gt = async () => {
+  ht(), _t(), mt("/style.css");
 };
-jt();
+gt();

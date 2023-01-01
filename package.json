@@ -4,6 +4,6 @@
 	"private": true,
 	"scripts": {
 		"start:app": "yarn --cwd ./app dev",
-		"start:script": "yarn --cwd ./script start"
+		"start:script": "yarn --cwd ./script dev"
 	}
 }

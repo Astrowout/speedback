@@ -326,23 +326,7 @@ const initEvents = () => {
 	}, true);
 };
 
-const loadElement = () => {
-	const vueEl = document.createElement("div");
-	vueEl.setAttribute("id", "speedback-app");
-
-	document.body.appendChild(vueEl);
-
-	console.log(vueEl);
-	
-};
-
-const initApp = () => {
-	createApp(App).mount("#speedback-app");
-};
-
 const init = async () => {
-	loadElement();
-	initApp();
 	// initTippy();
 	// addCss("/style.css");
 	// updateButton();
