@@ -3,12 +3,12 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "main": "./public/speedback.umd.cjs",
-  "module": "./public/speedback.js",
+  "main": "./src/public/speedback.umd.cjs",
+  "module": "./src/public/speedback.js",
   "exports": {
     ".": {
-      "import": "./public/speedback.js",
-      "require": "./public/speedback.umd.cjs"
+      "import": "./src/public/speedback.js",
+      "require": "./src/public/speedback.umd.cjs"
     }
   },
   "scripts": {
@@ -20,6 +20,7 @@
     "check": "svelte-check --tsconfig ./tsconfig.json"
   },
   "devDependencies": {
+    "@floating-ui/dom": "^1.1.0",
     "@sveltejs/vite-plugin-svelte": "^2.0.0",
     "@tsconfig/svelte": "^3.0.0",
     "@types/lodash": "^4.14.191",

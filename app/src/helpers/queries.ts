@@ -191,10 +191,11 @@ Queries.getCommentsByProject = gql`
 		) {
 			id
 			text
-			resolved
-			metaInfo
-			createdAt
+			props
 			elementSelector
+			metadata
+			createdAt
+			resolved
 		}
 	}
 `;

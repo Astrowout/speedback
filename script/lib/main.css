@@ -1,3 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+	.spd-tootlip {
+		width: max-content;
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
+
+	.spd-cursor *:not(.spd-toggle):not(.spd-toggle *) {
+		cursor: url("./assets/cursor.png"), auto !important;
+	}
+}

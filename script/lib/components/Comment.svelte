@@ -14,8 +14,7 @@
 	export let loading = false;
 </script>
 
-<div class="gthr-tooltip">
-	<div class="gthr-tooltip__content">
+<div class="spd-tooltip">
 		<div class="gthr-tooltip__info ${resolved ? 'gthr-tooltip__info--resolved' : ''}">
 			<p
 				class="gthr-tooltip__comment ${resolved ? 'gthr-tooltip__comment--resolved': ''}"
@@ -72,5 +71,4 @@
 				{/if}
 			</button>
 		{/if}
-	</div>
 </div>
