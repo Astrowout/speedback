@@ -5,6 +5,7 @@
 
 	import Comment from "./components/Comment.svelte";
 	import Toggle from "./components/Toggle.svelte";
+	import Input from "./components/Input.svelte";
 
 	import { comments } from "./store/comments";
 	import { commentModeActive } from "./store/ui";
@@ -77,3 +78,5 @@
 		{/each}
 	{/if}
 {/await}
+
+<Input />
