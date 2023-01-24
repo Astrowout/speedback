@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { onMount } from "svelte";
+
 	import config from "./config";
 
 	import Comment from "./components/Comment.svelte";
@@ -17,7 +19,6 @@
 			const res = await fetch(`${config.BASE_URL}/api/comments?projectId=${id}&pathname=${window.location.pathname}`);
 			const data = await res.json();
 			console.log(data);
-			
 			
 			if (res.ok && data) {
 				comments.set(data);
@@ -50,6 +51,10 @@
 			document.body.classList.remove("spd-cursor");
 		}
 	});
+
+	onMount(() => {
+		document.body.style.position = "relative";
+	});
 </script>
 
 <svelte:window
@@ -60,15 +65,15 @@
 
 {#await getComments() then comments}
 	{#if commentModeActive}
-		<div>
-			{#each comments as comment}
-				<Comment
-					resolved={comment.resolved}
-					text={comment.text}
-					metadata={comment.metadata}
-					createdAt={comment.createdAt}
-				/>
-			{/each}
-		</div>
+		{#each comments as comment}
+			<Comment
+				resolved={comment.resolved}
+				text={comment.text}
+				metadata={comment.metadata}
+				position={comment.position}
+				pathname={comment.pathname}
+				createdAt={comment.createdAt}
+			/>
+		{/each}
 	{/if}
 {/await}

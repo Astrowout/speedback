@@ -191,7 +191,8 @@ Queries.getCommentsByProject = gql`
 		) {
 			id
 			text
-			props
+			pathname
+			position
 			elementSelector
 			metadata
 			createdAt
