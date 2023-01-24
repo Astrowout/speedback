@@ -3,15 +3,29 @@
 	import { clickOutside } from "../helpers/directives";
 	
 	let text = "";
-	let triggerEl;
 	let inputEl;
 	let inputVisible: boolean = false;
 	const ANIM_DURATION = 300;
 
 	export let loading: boolean = false;
 
-	const updateInputPosition = async () => {
-		const { x, y } = await computePosition(triggerEl, inputEl, {
+	const updateInputPosition = async ({ clientX, clientY }) => {
+		const virtualEl = {
+			getBoundingClientRect() {
+			return {
+				width: 0,
+				height: 0,
+				x: clientX,
+				y: clientY,
+				top: clientY,
+				left: clientX,
+				right: clientX,
+				bottom: clientY,
+			};
+			},
+		};
+
+		const { x, y } = await computePosition(virtualEl, inputEl, {
 			placement: "right-start",
 			middleware: [
 				inline(),
@@ -27,12 +41,12 @@
 		});
 	};
 
-	const showInput = () => {
+	const showInput = (e) => {
 		if (!inputVisible) {
 			inputEl.style.display = "";
 			inputVisible = true;
 	
-			updateInputPosition();
+			updateInputPosition(e);
 		}
 	};
 
@@ -45,15 +59,11 @@
 			}, ANIM_DURATION);
 		}
 	};
-
-	const toggleComment = () => {
-		if (inputVisible) {
-			hideInput();
-		} else {
-			showInput();
-		}
-	}
 </script>
+
+<svelte:window
+	on:click={showInput}
+/>
 
 <form
 	class="spd-flex spd-flex-col spd-transition spd-delay-100 spd-duration-300 spd-ease-out spd-absolute spd-top-0 spd-left-0 spd-w-max spd-z-[999999] spd-shadow-lg spd-border spd-border-zinc-600 spd-bg-black spd-px-6 spd-py-3 spd-rounded-md spd-text-white"
