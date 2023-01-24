@@ -2381,7 +2381,7 @@ function aa(t) {
   let e, n;
   return {
     c() {
-      e = X("svg"), n = X("path"), d(n, "d", "M4.5 12.5C4.5 16.9183 8.08172 20.5 12.5 20.5C16.9183 20.5 20.5 16.9183 20.5 12.5C20.5 8.08172 16.9183 4.5 12.5 4.5"), d(n, "stroke", "#9CA3AF"), d(n, "stroke-width", "1.2"), d(e, "width", "28"), d(e, "class", "gthr-tooltip__spinner"), d(e, "viewBox", "0 0 25 25"), d(e, "fill", "none"), d(e, "xmlns", "http://www.w3.org/2000/svg");
+      e = X("svg"), n = X("path"), d(n, "d", "M4.5 12.5C4.5 16.9183 8.08172 20.5 12.5 20.5C16.9183 20.5 20.5 16.9183 20.5 12.5C20.5 8.08172 16.9183 4.5 12.5 4.5"), d(n, "stroke", "#9CA3AF"), d(n, "stroke-width", "1.2"), d(e, "class", "spd-animate-spin spd-w-5 spd-h-5"), d(e, "viewBox", "0 0 25 25"), d(e, "fill", "none"), d(e, "xmlns", "http://www.w3.org/2000/svg");
     },
     m(r, o) {
       W(r, e, o), h(e, n);
