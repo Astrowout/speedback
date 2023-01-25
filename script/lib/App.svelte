@@ -58,25 +58,23 @@
 	});
 </script>
 
-<svelte:window
-	on:keydown|preventDefault={onKeyDown}
-/>
-
-<Toggle />
+<svelte:window on:keydown|preventDefault={onKeyDown} />
 
 {#await getComments() then comments}
-	{#if commentModeActive}
-		{#each comments as comment}
-			<Comment
-				resolved={comment.resolved}
-				text={comment.text}
-				metadata={comment.metadata}
-				position={comment.position}
-				pathname={comment.pathname}
-				createdAt={comment.createdAt}
-			/>
-		{/each}
-	{/if}
+	{#each comments as comment}
+		<Comment
+			resolved={comment.resolved}
+			text={comment.text}
+			metadata={comment.metadata}
+			position={comment.position}
+			pathname={comment.pathname}
+			createdAt={comment.createdAt}
+		/>
+	{/each}
 {/await}
 
-<Input />
+{#key $commentModeActive}
+	<Input />
+{/key}
+
+<Toggle />

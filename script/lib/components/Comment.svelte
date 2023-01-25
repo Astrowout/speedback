@@ -133,12 +133,12 @@
 </script>
 
 <button
-	class="spd-absolute spd-z-[999999]"
+	class="spd-absolute spd-z-[99999] spd-transition-transform spd-origin-top-left spd-ease-out hover:spd-scale-125"
+	class:spd-scale-125={commentVisible}
 	style:left={`${position.x * 100}%`}
 	style:top={`${position.y * 100}%`}
 	type="button"
 	bind:this={triggerEl}
-	on:mouseenter={showComment}
 	on:click={toggleComment}
 	use:clickOutside={hideComment}
 >
@@ -164,7 +164,6 @@
 	class:spd-opacity-100={commentVisible}
 	class:spd-translate-y-0={commentVisible}
 	bind:this={commentEl}
-	on:mouseleave={hideComment}
 	data-clickable
 >
 	<div class="spd-flex spd-flex-col">
@@ -175,10 +174,12 @@
 
 			<button
 				type="button"
-				class="spd-p-1.5 spd-rounded-md spd-text-zinc-500 hover:spd-bg-zinc-900 spd-text-sm spd-flex spd-items-center spd-self-end"
+				class="spd-p-1.5 spd-rounded-md spd-transition-colors hover:spd-bg-zinc-900 spd-text-sm spd-flex spd-items-center spd-self-end"
+				class:spd-text-zinc-500={!metainfoVisible}
+				class:spd-text-white={metainfoVisible}
+				class:spd-bg-zinc-900={metainfoVisible}
 				bind:this={metainfoTriggerEl}
 				on:click={toggleMetainfo}
-				on:mouseenter={showMetainfo}
 				use:clickOutside={hideMetainfo}
 				data-ignore-clickable
 			>
@@ -194,7 +195,7 @@
 
 			<button
 				type="button"
-				class="spd-p-1.5 spd-rounded-md spd-text-zinc-500 hover:spd-bg-zinc-900 spd-text-sm spd-flex spd-items-center spd-self-end"
+				class="spd-p-1.5 spd-rounded-md spd-text-zinc-500 hover:spd-bg-zinc-900 spd-transition-colors spd-text-sm spd-flex spd-items-center spd-self-end"
 			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -252,13 +253,12 @@
 </div>
 
 <div
-	class="spd-flex spd-max-w-sm spd-flex-col spd-transition spd-delay-200 spd-duration-300 spd-ease-out spd-absolute spd-top-0 spd-left-0 spd-w-max spd-z-[999999] spd-shadow-lg spd-border spd-border-zinc-800 spd-bg-black spd-px-6 spd-py-3 spd-rounded-md spd-text-white"
+	class="spd-flex spd-max-w-sm spd-flex-col spd-transition spd-delay-200 spd-duration-300 spd-ease-out spd-absolute spd-top-0 spd-left-0 spd-w-max spd-z-[999999] spd-shadow-lg spd-border spd-border-zinc-800 spd-bg-black spd-px-5 spd-py-3 spd-rounded-md spd-text-white"
 	class:spd-opacity-0={!metainfoVisible}
 	class:spd-translate-y-2={!metainfoVisible}
 	class:spd-opacity-100={metainfoVisible}
 	class:spd-translate-y-0={metainfoVisible}
 	bind:this={metainfoEl}
-	use:clickOutside={hideMetainfo}
 	data-clickable
 >
 	<dl class="spd-flex spd-flex-col spd-space-y-3 spd-text-sm spd-text-white">

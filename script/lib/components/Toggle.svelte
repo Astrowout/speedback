@@ -12,7 +12,8 @@
 
 <button
 	on:click={toggleCommentMode}
-	class="spd-toggle spd-flex spd-items-center spd-fixed spd-bottom-8 spd-left-1/2 spd-bg-black spd-rounded-full -spd-translate-x-1/2 spd-pl-5 spd-pr-6 spd-h-11 !spd-z-[99999] spd-shadow-md spd-border spd-border-zinc-600 spd-font-sans spd-text-base spd-transition-colors {$commentModeActive ? 'spd-text-zinc-400 hover:spd-text-zinc-50 spd-outline spd-outline-2 spd-outline-zinc-900/60' : 'spd-text-zinc-500 hover:spd-text-zinc-50'}"
+	class="spd-flex spd-items-center spd-fixed spd-bottom-8 spd-left-1/2 spd-bg-black spd-rounded-full -spd-translate-x-1/2 spd-pl-5 spd-pr-6 spd-h-11 !spd-z-[99999] spd-shadow-md spd-border spd-border-zinc-600 spd-font-sans spd-text-base spd-transition-colors {$commentModeActive ? 'spd-text-zinc-400 hover:spd-text-zinc-50 spd-outline spd-outline-2 spd-outline-zinc-900/60' : 'spd-text-zinc-500 hover:spd-text-zinc-50'}"
+	data-ignore-cursor
 >
 	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="spd-w-5 spd-h-5 spd-mr-2 spd-flex-shrink-0">
 		{#if $commentModeActive}

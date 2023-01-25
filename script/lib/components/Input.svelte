@@ -6,6 +6,7 @@
 	let text = "";
 	let inputEl;
 	let inputVisible: boolean = false;
+	const ANIM_DURATION = 300;
 
 	export let loading: boolean = false;
 
@@ -27,10 +28,7 @@
 				return [];
 			}
 		};
-
-		console.log(inputEl);
 		
-
 		const { x, y } = await computePosition(virtualEl, inputEl, {
 			placement: "right-start",
 			middleware: [
@@ -52,46 +50,48 @@
 			return;
 		}
 	
-		inputEl.style.display = "";
-		inputVisible = true;
-
 		updateInputPosition(e);
+
+		if (!inputVisible) {
+			inputEl.style.display = "";
+			inputVisible = true;
+		}
 	};
 
-	// const hideInput = () => {
-	// 	if (inputVisible) {
-	// 		inputVisible = false;
+	const hideInput = () => {
+		if (inputVisible) {
+			inputVisible = false;
 
-	// 		setTimeout(() => {
-	// 			inputEl.style.display = "none";
-	// 		}, ANIM_DURATION);
-	// 	}
-	// };
+			setTimeout(() => {
+				inputEl.style.display = "none";
+			}, ANIM_DURATION);
+		}
+	};
 </script>
 
-<svelte:window
-	on:click={showInput}
-/>
+<svelte:window on:click|capture={showInput} />
 
 {#if $commentModeActive}
 	<form
-		class="spd-flex spd-flex-col spd-transition spd-delay-100 spd-duration-300 spd-ease-out spd-absolute spd-top-0 spd-left-0 spd-w-max spd-z-[999999] spd-shadow-lg spd-border spd-border-zinc-600 spd-bg-black spd-rounded-md spd-text-white"
+		class="spd-flex spd-flex-col spd-transition !spd-cursor-auto spd-delay-100 spd-duration-300 spd-ease-out spd-absolute spd-top-0 spd-left-0 spd-w-max spd-z-[999999] spd-shadow-lg spd-border spd-border-zinc-600 spd-bg-black spd-rounded-md spd-text-white"
 		class:spd-opacity-0={!inputVisible}
 		class:spd-translate-y-2={!inputVisible}
 		class:spd-opacity-100={inputVisible}
 		class:spd-translate-y-0={inputVisible}
 		bind:this={inputEl}
 		on:submit|preventDefault
+		data-ignore-cursor
 	>
 		<textarea
 			bind:value={text}
-			class="spd-px-5 spd-py-3 spd-rounded-md spd-bg-black spd-resize-none spd-appearance-none placeholder:spd-text-zinc-500 focus:spd-outline-none focus:placeholder:spd-text-zinc-700 hover:spd-text-zinc-200 spd-text-base"
+			class="spd-px-5 spd-pt-4 spd-pb-3 spd-rounded-md spd-bg-black spd-resize-none spd-appearance-none placeholder:spd-text-zinc-500 focus:spd-outline-none focus:placeholder:spd-text-zinc-700 hover:spd-text-zinc-200 spd-text-base"
 			placeholder="Add a comment"
 		></textarea>
 
 		<div class="spd-flex spd-items-center spd-px-5 spd-py-3 spd-space-x-3 spd-self-end">
 			<button
 				type="button"
+				on:click={hideInput}
 				class="spd-px-3 spd-py-2 spd-transition-colors spd-space-x-1.5 spd-border spd-border-zinc-900 spd-text-zinc-500 spd-rounded-md hover:spd-text-white hover:spd-bg-zinc-900 spd-text-sm spd-flex spd-items-center"
 			>
 				Cancel
