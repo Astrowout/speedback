@@ -58,7 +58,7 @@
 	});
 </script>
 
-<svelte:window on:keydown|preventDefault={onKeyDown} />
+<svelte:window on:keydown={onKeyDown} />
 
 {#await getComments() then comments}
 	{#each comments as comment}
