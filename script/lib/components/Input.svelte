@@ -57,6 +57,10 @@
 			inputEl.style.display = "";
 			inputVisible = true;
 		}
+
+		if (e.target.closest("a, button, [role='button']")) {
+			e.preventDefault();
+		}
 	};
 
 	const hideInput = () => {
@@ -85,7 +89,7 @@
 	>
 		<textarea
 			bind:value={text}
-			class="spd-px-5 spd-pt-4 spd-pb-3 spd-rounded-md spd-transition-colors spd-bg-black spd-resize-none spd-appearance-none placeholder:spd-text-zinc-500 focus:spd-outline-none focus:placeholder:spd-text-zinc-700 hover:spd-text-zinc-200 spd-text-base"
+			class="spd-px-5 spd-pt-4 spd-pb-3 spd-rounded-md spd-transition-colors spd-bg-black spd-resize-none spd-appearance-none placeholder:spd-text-zinc-500 focus:spd-outline-none focus:placeholder:spd-text-zinc-700 spd-text-base"
 			placeholder="Add a comment..."
 			rows="3"
 		></textarea>
