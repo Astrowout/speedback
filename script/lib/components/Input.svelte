@@ -9,8 +9,7 @@
 	let pinEl;
 	let inputVisible: boolean = false;
 	const ANIM_DURATION = 300;
-
-	export let loading: boolean = false;
+	let loading: boolean = false;
 
 	const updateFloatingPosition = async ({ clientX, clientY }) => {
 		const virtualEl = {
@@ -84,6 +83,21 @@
 			}, ANIM_DURATION);
 		}
 	};
+
+	const postComment = async () => {
+		loading = true;
+
+		try {
+			await fetch("", {
+				method: "POST",
+				// ...
+			});
+		} catch (error) {
+			console.log(error);
+		} finally {
+			loading = false;
+		}
+	};
 </script>
 
 <svelte:window on:click|capture={showInput} />
@@ -121,7 +135,7 @@
 	class:spd-opacity-100={inputVisible}
 	class:spd-translate-y-0={inputVisible}
 	data-ignore-cursor
-	on:submit|preventDefault
+	on:submit|preventDefault={postComment}
 >
 	<textarea
 		bind:value={text}
@@ -134,7 +148,7 @@
 		<button
 			type="button"
 			on:click={hideInput}
-			class="spd-px-3 spd-py-2 spd-transition-colors spd-space-x-1.5 spd-border spd-border-zinc-900 spd-text-zinc-500 spd-rounded-md hover:spd-text-white hover:spd-bg-zinc-900 spd-text-sm spd-flex spd-items-center"
+			class="spd-px-3 spd-py-2 spd-transition-colors spd-space-x-1.5 spd-border spd-border-zinc-800 spd-text-zinc-500 spd-rounded-md hover:spd-text-white hover:spd-bg-zinc-800 spd-text-sm spd-flex spd-items-center"
 		>
 			Cancel
 		</button>
@@ -142,7 +156,7 @@
 		<button
 			type="submit"
 			disabled={loading}
-			class="spd-px-3 spd-py-2 spd-transition-colors spd-space-x-1.5 spd-border spd-border-zinc-700 spd-text-white spd-rounded-md hover:spd-bg-zinc-900 spd-text-sm spd-flex spd-items-center"
+			class="spd-px-3 spd-py-2 spd-transition-colors spd-space-x-1.5 spd-border spd-border-zinc-700 spd-text-white spd-rounded-md hover:spd-bg-zinc-800 spd-text-sm spd-flex spd-items-center"
 		>
 			<span>
 				Post

@@ -167,48 +167,50 @@
 	data-clickable
 >
 	<div class="spd-flex spd-flex-col">
-		<div class="spd-flex spd-items-center spd-space-x-3 spd-self-end">
+		<div class="spd-flex spd-items-center spd-justify-between spd-space-x-3">
 			<p class="spd-text-sm spd-text-zinc-500">
 				{formatRelative(new Date(createdAt), new Date())}
 			</p>
 
-			<button
-				type="button"
-				class="spd-p-1.5 spd-rounded-md spd-transition-colors hover:spd-bg-zinc-900 spd-text-sm spd-flex spd-items-center spd-self-end"
-				class:spd-text-zinc-500={!metainfoVisible}
-				class:spd-text-white={metainfoVisible}
-				class:spd-bg-zinc-900={metainfoVisible}
-				bind:this={metainfoTriggerEl}
-				on:click={toggleMetainfo}
-				use:clickOutside={hideMetainfo}
-				data-ignore-clickable
-			>
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					viewBox="0 0 20 20"
-					fill="currentColor"
-					class="spd-w-5 spd-h-5"
+			<div class="spd-flex spd-items-center spd-space-x-3">
+				<button
+					type="button"
+					class="spd-p-1.5 spd-rounded-md spd-transition-colors hover:spd-bg-zinc-800 spd-text-sm spd-flex spd-items-center spd-self-end"
+					class:spd-text-zinc-500={!metainfoVisible}
+					class:spd-text-white={metainfoVisible}
+					class:spd-bg-zinc-800={metainfoVisible}
+					bind:this={metainfoTriggerEl}
+					on:click={toggleMetainfo}
+					use:clickOutside={hideMetainfo}
+					data-ignore-clickable
 				>
-					<path fill-rule="evenodd" d="M2 4.25A2.25 2.25 0 014.25 2h11.5A2.25 2.25 0 0118 4.25v8.5A2.25 2.25 0 0115.75 15h-3.105a3.501 3.501 0 001.1 1.677A.75.75 0 0113.26 18H6.74a.75.75 0 01-.484-1.323A3.501 3.501 0 007.355 15H4.25A2.25 2.25 0 012 12.75v-8.5zm1.5 0a.75.75 0 01.75-.75h11.5a.75.75 0 01.75.75v7.5a.75.75 0 01-.75.75H4.25a.75.75 0 01-.75-.75v-7.5z" clip-rule="evenodd" />
-				</svg>
-			</button>
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						viewBox="0 0 20 20"
+						fill="currentColor"
+						class="spd-w-5 spd-h-5"
+					>
+						<path fill-rule="evenodd" d="M2 4.25A2.25 2.25 0 014.25 2h11.5A2.25 2.25 0 0118 4.25v8.5A2.25 2.25 0 0115.75 15h-3.105a3.501 3.501 0 001.1 1.677A.75.75 0 0113.26 18H6.74a.75.75 0 01-.484-1.323A3.501 3.501 0 007.355 15H4.25A2.25 2.25 0 012 12.75v-8.5zm1.5 0a.75.75 0 01.75-.75h11.5a.75.75 0 01.75.75v7.5a.75.75 0 01-.75.75H4.25a.75.75 0 01-.75-.75v-7.5z" clip-rule="evenodd" />
+					</svg>
+				</button>
 
-			<button
-				type="button"
-				class="spd-p-1.5 spd-rounded-md spd-text-zinc-500 hover:spd-bg-zinc-900 spd-transition-colors spd-text-sm spd-flex spd-items-center spd-self-end"
-			>
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					viewBox="0 0 20 20"
-					fill="currentColor"
-					class="spd-w-5 spd-h-5"
+				<button
+					type="button"
+					class="spd-p-1.5 spd-rounded-md spd-text-zinc-500 hover:spd-bg-zinc-800 spd-transition-colors spd-text-sm spd-flex spd-items-center spd-self-end"
 				>
-					<path d="M3 10a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0zM8.5 10a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0zM15.5 8.5a1.5 1.5 0 100 3 1.5 1.5 0 000-3z" />
-				</svg>
-			</button>
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						viewBox="0 0 20 20"
+						fill="currentColor"
+						class="spd-w-5 spd-h-5"
+					>
+						<path d="M3 10a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0zM8.5 10a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0zM15.5 8.5a1.5 1.5 0 100 3 1.5 1.5 0 000-3z" />
+					</svg>
+				</button>
+			</div>
 		</div>
 
-		<div class="spd-pt-2 spd-pb-4 spd-pr-8">
+		<div class="spd-pt-1 spd-pb-6 spd-pr-8">
 			<p class="spd-text-base {resolved ? 'spd-text-zinc-600 spd-line-through': 'spd-text-zinc-200'}">
 				{text}
 			</p>
@@ -222,7 +224,7 @@
 	{:else}
 		<button
 			type="button"
-			class="spd-px-3 spd-py-2 spd-transition-colors spd-space-x-1.5 spd-border spd-border-zinc-900 spd-text-zinc-500 spd-rounded-md hover:spd-text-white hover:spd-bg-zinc-900 spd-text-sm spd-flex spd-items-center spd-self-end"
+			class="spd-px-3 spd-py-2 spd-transition-colors spd-space-x-1.5 spd-border spd-border-zinc-800 spd-text-zinc-500 spd-rounded-md hover:spd-text-white hover:spd-bg-zinc-800 spd-text-sm spd-flex spd-items-center spd-self-end"
 		>
 			{#if resolved}
 				<svg
