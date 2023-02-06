@@ -1,39 +1,43 @@
-import Head from 'next/head';
 import Router from "next/router";
 import { useState } from 'react';
-import { useMutation, useQuery } from '@apollo/client';
 import { CollectionIcon, EyeIcon, PencilIcon, TrashIcon } from '@heroicons/react/outline';
 import type { GetStaticProps, InferGetStaticPropsType, NextPage } from "next";
 
-import { ConfirmDeleteModal, EmptyState, Heading, ProjectDataDisplay, Snippet, Comments, Loader, Button } from '../../../../components';
-import { AppLayout } from '../../../../layouts';
-import { ApolloClient, Mutations, Queries } from '../../../../helpers';
+import {
+	ConfirmDeleteModal,
+	EmptyState,
+	Heading,
+	ProjectDataDisplay,
+	Snippet,
+	Comments,
+	Loader,
+	Button,
+} from '../../../../components';
+import { Mutations, Queries } from '../../../../helpers';
+import client from "../../../../helpers/graphql-client";
 
 const AppProjectDetail: NextPage = ({ id }: InferGetStaticPropsType<typeof getStaticProps>) => {
-	const { loading, data } = useQuery(Queries.getProject, {
-		variables: { id },
-		fetchPolicy: "network-only",
+	const { loading, data } = client.query(Queries.getProject, {
+		id,
 	});
 	const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
-	const [deleteProject] = useMutation(Mutations.deleteProject, {
-		variables: { id },
-		onCompleted: () => {
-			Router.push("/app/projects");
-		}
-	});
 
-	const handleDeleteProject = (): void => {
+	const handleDeleteProject = async (): Promise<void> => {
 		setIsConfirmModalOpen(false);
 
-		deleteProject();
+		try {
+			await client.mutate(Mutations.deleteProject, {
+				id,
+			});
+
+			Router.push("/app/projects");
+		} catch (err) {
+			console.log(err);
+		}
 	}
 
 	return (
-		<AppLayout>
-			<Head>
-				<title>{data?.project?.name || "Unknown project"} - speedback</title>
-			</Head>
-
+		<>
 			<main>
 				<Heading title={data?.project?.name || "Unknown project"} backLink={{ url: "/app/projects", label: "Back to projects" }}>
 					{data?.project && (
@@ -94,14 +98,12 @@ const AppProjectDetail: NextPage = ({ id }: InferGetStaticPropsType<typeof getSt
 				closeAction={setIsConfirmModalOpen}
 				isOpen={isConfirmModalOpen}
 			/>
-		</AppLayout>
+		</>
 	)
 }
 
 export const getStaticPaths = async () => {
-	const { data: { projects } } = await ApolloClient.query({
-		query: Queries.getAllProjects,
-	});
+	const { data: { projects } } = await client.query(Queries.getAllProjects);
 
 	const paths = projects.map((project: any) => ({
 		params: { id: project.id },

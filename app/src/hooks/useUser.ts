@@ -1,25 +1,21 @@
 import { MagicUserMetadata } from 'magic-sdk';
-import { useQuery, useMutation } from '@apollo/client';
 
-import { ApolloClient, Queries, Mutations } from '../helpers';
+import { Queries, Mutations } from '../helpers';
 import { useState } from 'react';
+import client from '../helpers/graphql-client';
 
-const useUser = (user: MagicUserMetadata | null, setUser: (data: any) => void) => {
+const useUser = async (user: MagicUserMetadata | null, setUser: (data: any) => void) => {
 	const [isUserFromDb, setIsUserFromDb] = useState(false);
 
-	const { data } = useQuery(Queries.getUser, {
-		variables: { issuer: user?.issuer },
-		skip: !user || isUserFromDb,
-		client: ApolloClient,
-	});
-
-	const [createUser] = useMutation(Mutations.createUser, {
-		variables: { issuer: user?.issuer, email: user?.email },
-		client: ApolloClient,
+	const { data } = await client.query(Queries.getUser, {
+		issuer: user?.issuer,
 	});
 
 	if (data && !data.authUser) {
-		createUser();
+		await client.mutate(Mutations.createUser, {
+			issuer: user?.issuer,
+			email: user?.email,
+		});
 	} else if (data && data.authUser) {
 		setUser({
 			...user,

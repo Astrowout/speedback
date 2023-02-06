@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import Cors from 'cors';
-import { ApolloClient, initMiddleware, Mutations, Queries } from '../../../helpers';
+import { initMiddleware, Mutations, Queries } from '../../../helpers';
+import client from '../../../helpers/graphql-client';
 
 // Initialize the cors middleware
 const cors = initMiddleware(
@@ -14,14 +15,12 @@ const resolveComment = async (req: NextApiRequest, res: NextApiResponse) => {
 	await cors(req, res);
 
 	try {
-		const { data: { comment } } = await ApolloClient.query({
-			query: Queries.getCommentResolved,
-			fetchPolicy: "network-only",
-			variables: { id: req.body.id }
+		const { data: { comment } } = await client.query(Queries.getCommentResolved, {
+			id: req.body.id,
 		});
-		const { data: { publishComment: updatedComment } } = await ApolloClient.mutate({
-			mutation: Mutations.resolveComment,
-			variables: { id: req.body.id, resolved: !comment.resolved }
+		const { data: { publishComment: updatedComment } } = await client.mutate(Mutations.resolveComment, {
+			id: req.body.id,
+			resolved: !comment.resolved,
 		});
 
 		res.status(200).json(updatedComment);

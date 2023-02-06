@@ -130,8 +130,10 @@
 <form
 	class="spd-flex spd-flex-col spd-w-full spd-max-w-xs spd-shadow-lg spd-border spd-border-zinc-600 spd-bg-black spd-rounded-md spd-text-white spd-absolute spd-transition !spd-cursor-auto spd-top-0 spd-left-0 spd-delay-100 spd-duration-300 spd-ease-out !spd-z-[999999]"
 	bind:this={inputEl}
+	class:spd-pointer-events-none={!inputVisible}
 	class:spd-opacity-0={!inputVisible}
 	class:spd-translate-y-2={!inputVisible}
+	class:spd-pointer-events-auto={inputVisible}
 	class:spd-opacity-100={inputVisible}
 	class:spd-translate-y-0={inputVisible}
 	data-ignore-cursor

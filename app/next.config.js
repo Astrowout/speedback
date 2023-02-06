@@ -1,9 +1,16 @@
 /** @type {import('next').NextConfig} */
-module.exports = {
-    reactStrictMode: true,
-    images: {
-        domains: [
-            'media.graphassets.com',
-        ],
+const nextConfig = {
+	experimental: {
+		appDir: true,
+	},
+	images: {
+		remotePatterns: [
+			{
+				protocol: 'https',
+				hostname: 'media.graphassets.com',
+			},
+		],
     },
-}
+  };
+
+  module.exports = nextConfig;

@@ -47,14 +47,14 @@
 
 	commentModeActive.subscribe(value => {
 		if (value) {
-			document.body.classList.add("spd-cursor");
+			document.documentElement.classList.add("spd-cursor");
 		} else {
-			document.body.classList.remove("spd-cursor");
+			document.documentElement.classList.remove("spd-cursor");
 		}
 	});
 
 	onMount(() => {
-		document.body.style.position = "relative";
+		document.documentElement.style.position = "relative";
 	});
 </script>
 

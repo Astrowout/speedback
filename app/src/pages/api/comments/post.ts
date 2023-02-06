@@ -1,7 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import Cors from 'cors';
 
-import { ApolloClient, initMiddleware, Mutations } from '../../../helpers';
+import { initMiddleware, Mutations } from '../../../helpers';
+import client from '../../../helpers/graphql-client';
 
 // Initialize the cors middleware
 const cors = initMiddleware(
@@ -15,13 +16,11 @@ const postComment = async (req: NextApiRequest, res: NextApiResponse) => {
 	await cors(req, res);
 
 	try {
-		const { data: { createComment: comment } } = await ApolloClient.mutate({
-			mutation: Mutations.createComment,
-			variables: req.body
-		});
-		await ApolloClient.mutate({
-			mutation: Mutations.publishComment,
-			variables: { id: comment.id }
+		const { data: { createComment: comment } } = await client.mutate(Mutations.createComment,
+			req.body,
+		);
+		await client.mutate(Mutations.publishComment, {
+			id: comment.id,
 		});
 
 		res.status(200).json(comment);

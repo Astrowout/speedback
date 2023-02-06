@@ -1,6 +1,6 @@
-import { DocumentNode, gql } from "@apollo/client";
+import { gql } from "graphql-tag";
 
-const Mutations: { [key: string]: DocumentNode } = {};
+const Mutations: { [key: string]: any } = {};
 
 Mutations.createUser = gql`
 	 mutation ($issuer: String!, $email: String!) {

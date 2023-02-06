@@ -1,3 +1,6 @@
+const defaultTheme = require("tailwindcss/defaultTheme");
+
+/** @type {import('tailwindcss').Config} */
 module.exports = {
 	mode: 'jit',
 	purge: [
@@ -7,8 +10,8 @@ module.exports = {
 	theme: {
 		extend: {},
 		fontFamily: {
-			'brand': ['Strait', 'sans-serif'],
-			'body': ['Inter', 'sans-serif'],
+			'brand': ['var(--font-strait)', ...defaultTheme.fontFamily.serif],
+			'body': ['var(--font-inter)', ...defaultTheme.fontFamily.sans],
 		},
 		container: {
 			center: true,

@@ -1,6 +1,6 @@
-import { DocumentNode, gql } from "@apollo/client";
+import { gql } from "graphql-tag";
 
-const Queries: { [key: string]: DocumentNode } = {};
+const Queries: { [key: string]: any } = {};
 
 Queries.getLandingPage = gql`
 	query {
