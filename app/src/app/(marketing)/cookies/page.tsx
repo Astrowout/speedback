@@ -1,4 +1,3 @@
-import type { GetStaticProps, InferGetStaticPropsType, NextPage } from "next";
 import Link from "next/link";
 
 import { RichText } from '../../../components';
@@ -6,7 +5,11 @@ import { Queries } from '../../../helpers';
 import { ArrowSmLeftIcon } from '@heroicons/react/outline';
 import client from "../../../helpers/graphql-client";
 
-const Cookies: NextPage = ({ data }: InferGetStaticPropsType<typeof getStaticProps>) => {
+const Cookies = async () => {
+	const { data } = await client.query(Queries.getContentPage, {
+		id: "ckuef3btsevdf0b07qannyrzw",
+	});
+
 	return (
 		<main className="mx-auto w-full max-w-screen-xl section-spacing container-spacing">
 			<Link
@@ -27,24 +30,6 @@ const Cookies: NextPage = ({ data }: InferGetStaticPropsType<typeof getStaticPro
 			/>
 		</main>
 	)
-}
-
-export const getStaticProps: GetStaticProps = async () => {
-	const { data: { contentPage, global } } = await client.query({
-		query: Queries.getContentPage,
-		variables: {
-			id: "ckuef3btsevdf0b07qannyrzw",
-		}
-	});
-
-	return {
-		props: {
-			data: {
-				...contentPage,
-				...global
-			},
-		},
-	}
 }
 
 export default Cookies;

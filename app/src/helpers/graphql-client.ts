@@ -3,9 +3,8 @@ interface IOptions {
 }
 
 const request: any = async (query: any, variables: any, options: IOptions = { read: false }) => {
-	console.log(query);
-
 	const url: string = options.read ? process.env.NEXT_PUBLIC_GRAPHCMS_API_READ_ENDPOINT! : process.env.NEXT_PUBLIC_GRAPHCMS_API_ENDPOINT!;
+	console.log(process.env.NEXT_PUBLIC_GRAPHCMS_API_TOKEN);
 
 	const fetchOptions: any = {
 		method: "POST",
@@ -14,14 +13,15 @@ const request: any = async (query: any, variables: any, options: IOptions = { re
 			"Authorization": `Bearer ${process.env.NEXT_PUBLIC_GRAPHCMS_API_TOKEN}`,
 		},
 		body: JSON.stringify({
-			query: query.source.loc,
+			query: query.loc.source.body,
 			...variables && { variables },
 		}),
 	};
 
 	const res = await fetch(url, fetchOptions);
+	const data = await res.json();
 
-	return res.json();
+	return data;
 };
 
 const client = {

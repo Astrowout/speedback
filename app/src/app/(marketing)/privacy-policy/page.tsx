@@ -1,4 +1,3 @@
-import type { GetStaticProps, InferGetStaticPropsType, NextPage } from "next";
 import Link from "next/link";
 
 import { RichText } from '../../../components';
@@ -6,7 +5,11 @@ import { Queries } from '../../../helpers';
 import { ArrowSmLeftIcon } from '@heroicons/react/outline';
 import client from '../../../helpers/graphql-client';
 
-const PrivacyPolicy: NextPage = ({ data }: InferGetStaticPropsType<typeof getStaticProps>) => {
+const PrivacyPolicy = async () => {
+	const { data } = await client.query(Queries.getContentPage, {
+		id: "ckueeyxnczi3u0b593xgiby7z",
+	});
+
 	return (
 		<main className="mx-auto w-full max-w-screen-xl section-spacing container-spacing">
 			<Link
@@ -27,24 +30,6 @@ const PrivacyPolicy: NextPage = ({ data }: InferGetStaticPropsType<typeof getSta
 			/>
 		</main>
 	)
-}
-
-export const getStaticProps: GetStaticProps = async () => {
-	const { data: { contentPage, global } } = await client.query({
-		query: Queries.getContentPage,
-		variables: {
-			id: "ckueeyxnczi3u0b593xgiby7z",
-		}
-	});
-
-	return {
-		props: {
-			data: {
-				...contentPage,
-				...global
-			},
-		},
-	}
 }
 
 export default PrivacyPolicy;

@@ -1,14 +1,16 @@
-import { FunctionComponent, useContext, useEffect } from 'react';
+"use client";
+
+import { FunctionComponent, useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import cn from "classnames";
 import Router from 'next/router';
-import { useMutation } from '@apollo/client';
 import { LinkIcon } from '@heroicons/react/outline';
 
 import { Input } from '../index';
 import { Mutations } from '../../helpers';
 import { AuthContext } from '../../context';
 import Button from '../Button';
+import client from '../../helpers/graphql-client';
 
 interface IFormValues {
 	name: string;
@@ -24,23 +26,34 @@ type NewProjectFormProps = {
 
 const NewProjectForm: FunctionComponent<NewProjectFormProps> = ({ className, id, data = {} }) => {
 	const { user } = useContext(AuthContext);
-	const [upsertProject, { loading, error }] = useMutation(Mutations.upsertProject);
-	const [publishProject] = useMutation(Mutations.publishProject, {
-		onCompleted: ({ publishProject: project }) => {
-			Router.push(`/app/projects/${project.id}`);
-		}
-	});
+	const [error, setError] = useState<{ message: string } | null>(null);
+	const [loading, setLoading] = useState(false);
 	const { register, handleSubmit, reset, formState: { errors: formErrors } } = useForm<IFormValues>({
 		defaultValues: data
 	});
 
 	const onSubmit = async (data: IFormValues) => {
-		const { data: { upsertProject: project } } = await upsertProject({
-			variables: { issuer: user.issuer, id, ...data },
-		});
-		await publishProject({
-			variables: { id: project.id },
-		});
+		setLoading(true);
+
+		try {
+			const { data: { upsertProject: project } } = await client.mutate(Mutations.upsertProject, {
+				issuer: user.issuer,
+				id,
+				...data,
+			});
+
+			await client.mutate(Mutations.publishProject, {
+				id: project.id,
+			});
+
+			Router.push(`/app/projects/${project.id}`);
+		} catch (err: any) {
+			setError({
+				message: err.message,
+			});
+		} finally {
+			setLoading(false);
+		}
 	}
 
 	useEffect(() => {

@@ -1,10 +1,10 @@
-import type { GetStaticProps, InferGetStaticPropsType, NextPage } from "next";
-
 import { Cta, Features, Hero, Pricing, ForWhom } from '../../components';
 import { Queries } from '../../helpers';
 import client from "../../helpers/graphql-client";
 
-const Home: NextPage = ({ data }: InferGetStaticPropsType<typeof getStaticProps>) => {
+const Home = async () => {
+	const { data: { landingPage: data } } = await client.query(Queries.getLandingPage);
+
 	return (
 		<main>
 			<Hero
@@ -41,21 +41,6 @@ const Home: NextPage = ({ data }: InferGetStaticPropsType<typeof getStaticProps>
 			/>
 		</main>
 	)
-}
-
-export const getStaticProps: GetStaticProps = async () => {
-	const { data: { landingPage, global } } = await client.query({
-		query: Queries.getLandingPage,
-	});
-
-	return {
-		props: {
-			data: {
-				...landingPage,
-				...global
-			},
-		},
-	}
 }
 
 export default Home;

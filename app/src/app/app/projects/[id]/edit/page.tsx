@@ -1,12 +1,23 @@
-import type { GetStaticProps, InferGetStaticPropsType, NextPage } from "next";
+import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 
 import { Heading, NewProjectForm } from '../../../../../components';
 import { Queries } from '../../../../../helpers';
 import client from '../../../../../helpers/graphql-client';
 
-const AppEditProject: NextPage = async ({ id }: InferGetStaticPropsType<typeof getStaticProps>) => {
+export async function generateStaticParams() {
+	const { data: { projects } } = await client.query(Queries.getAllProjects);
+
+	const paths = projects.map((project: any) => ({
+		params: { id: project.id },
+	}));
+
+	return paths;
+}
+
+
+const AppEditProject = async ({ params }: { params: Params }) => {
 	const { data } = await client.query(Queries.getProject, {
-		id,
+		id: params.id,
 	});
 
 	const formData = data ? {
@@ -24,27 +35,6 @@ const AppEditProject: NextPage = async ({ id }: InferGetStaticPropsType<typeof g
 			</section>
 		</main>
 	)
-}
-
-export const getStaticPaths = async () => {
-	const { data: { projects } } = await client.query(Queries.getAllProjects);
-
-	const paths = projects.map((project: any) => ({
-		params: { id: project.id },
-	}));
-
-	return {
-		paths,
-		fallback: 'blocking'
-	};
-}
-
-export const getStaticProps: GetStaticProps = ({ params }) => {
-	return {
-		props: {
-			id: params?.id,
-		},
-	}
 }
 
 export default AppEditProject;

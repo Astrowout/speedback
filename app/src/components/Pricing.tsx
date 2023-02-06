@@ -1,7 +1,8 @@
-import { FunctionComponent, useState } from 'react';
+import { FunctionComponent } from 'react';
 import { CheckIcon, ClockIcon } from '@heroicons/react/outline';
 
-import { Button } from './index';
+import Button from './Button';
+
 interface IPricing {
 	id: string;
 	title: string;
@@ -17,7 +18,7 @@ type PricingProps = {
 }
 
 const Pricing: FunctionComponent<PricingProps> = ({ monthlyCost, yearlyCost, eyebrow, title, description }) => {
-	const [yearly, setYearly] = useState<boolean>(true);
+	// const [yearly, setYearly] = useState<boolean>(true);
 
 	return (
 		<div id="pricing" className="py-16 lg:py-32 bg-indigo-50">

@@ -1,3 +1,5 @@
+"use client";
+
 import { FunctionComponent, MouseEvent, useEffect } from "react";
 import cn from "classnames";
 import ClipboardJS from "clipboard";

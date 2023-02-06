@@ -1,5 +1,6 @@
+"use client";
+
 import { useContext } from 'react';
-import type { NextPage } from "next";
 import client from "../../../helpers/graphql-client";
 import { CollectionIcon, PlusIcon } from '@heroicons/react/outline';
 import get from "lodash/get";
@@ -8,13 +9,18 @@ import { Button, EmptyState, Heading, Loader, ProjectsTable } from '../../../com
 import { Queries } from '../../../helpers';
 import { AuthContext } from '../../../context';
 
-const AppProjects: NextPage = () => {
+const Projects = async () => {
 	const { isLoading: userLoading, user } = useContext(AuthContext);
-	const { data, loading } = client.query(Queries.getProjects, {
+
+	if (!user) {
+		return <p>No user</p>
+	}
+
+	const { data, loading } = await client.query(Queries.getProjects, {
 		issuer: user?.issuer,
 	});
 
-	const { data: globals } = client.query(Queries.getGlobals, {
+	const { data: globals } = await client.query(Queries.getGlobals, {
 		issuer: user?.issuer,
 	});
 
@@ -63,4 +69,4 @@ const AppProjects: NextPage = () => {
 	)
 }
 
-export default AppProjects;
+export default Projects;

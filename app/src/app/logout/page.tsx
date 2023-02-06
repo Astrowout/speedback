@@ -1,6 +1,7 @@
+"use client";
+
 import { useContext, useEffect } from 'react';
 import { NextPage } from 'next';
-import Head from 'next/head';
 
 import { Loader } from "../../components";
 import { AuthContext } from '../../context';
@@ -17,14 +18,7 @@ const AppCallback: NextPage = () => {
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	return (
-		<>
-			<Head>
-				<title>Loading speedback...</title>
-				<meta name="robots" content="noindex, nofollow" />
-			</Head>
-
-			<Loader fullscreen />
-		</>
+		<Loader fullscreen />
 	);
 }
 

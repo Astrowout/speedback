@@ -1,4 +1,6 @@
-import { FunctionComponent, Ref, useEffect, useRef } from "react";
+"use client";
+
+import { FunctionComponent, useEffect, useRef } from "react";
 import ClipboardJS from "clipboard";
 import cn from "classnames";
 

@@ -1,3 +1,5 @@
+"use client";
+
 import { FunctionComponent, Fragment, useState, forwardRef, Ref, useImperativeHandle } from 'react';
 import { Transition } from "@headlessui/react";
 

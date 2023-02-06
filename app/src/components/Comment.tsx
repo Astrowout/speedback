@@ -1,3 +1,5 @@
+"use client";
+
 import { Fragment, FunctionComponent, ReactElement, useState } from "react";
 import cn from "classnames";
 import { CheckCircleIcon, ChevronDownIcon } from "@heroicons/react/outline";
@@ -5,7 +7,7 @@ import { CheckCircleIcon as CheckCircleIconSolid } from "@heroicons/react/solid"
 
 import { DateUtils, Mutations } from "../helpers";
 import { Disclosure, Transition } from '@headlessui/react'
-import { useMutation } from "@apollo/client";
+import client from "../helpers/graphql-client";
 
 type CommentProps = {
 	data: any,
@@ -15,17 +17,26 @@ type CommentProps = {
 
 const Comment: FunctionComponent<CommentProps> = ({ className, data, index }) => {
 	const [comment, setComment] = useState(data);
-	const [resolveComment, { loading }] = useMutation(Mutations.resolveComment, {
-		variables: { id: comment.id, resolved: !comment.resolved },
-	});
+	const [loading, setLoading] = useState(false);
 
 	const handleResolveComment = async () => {
-		const { data: { publishComment: newComment } } = await resolveComment();
+		setLoading(true);
 
-		setComment({
-			...comment,
-			...newComment
-		});
+		try {
+			const { data: { publishComment: newComment } } = await client.mutate(Mutations.resolveComment, {
+				id: comment.id,
+				resolved: !comment.resolved,
+			});
+
+			setComment({
+				...comment,
+				...newComment
+			});
+		} catch (err) {
+			console.log(err);
+		} finally {
+			setLoading(false);
+		}
 	}
 
 	const renderMetainfo = (key: string, info: any): ReactElement => {

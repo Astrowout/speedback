@@ -1,7 +1,7 @@
 import Router from "next/router";
+import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 import { useState } from 'react';
 import { CollectionIcon, EyeIcon, PencilIcon, TrashIcon } from '@heroicons/react/outline';
-import type { GetStaticProps, InferGetStaticPropsType, NextPage } from "next";
 
 import {
 	ConfirmDeleteModal,
@@ -16,9 +16,19 @@ import {
 import { Mutations, Queries } from '../../../../helpers';
 import client from "../../../../helpers/graphql-client";
 
-const AppProjectDetail: NextPage = ({ id }: InferGetStaticPropsType<typeof getStaticProps>) => {
+export async function generateStaticParams() {
+	const { data: { projects } } = await client.query(Queries.getAllProjects);
+
+	const paths = projects.map((project: any) => ({
+		params: { id: project.id },
+	}));
+
+	return paths;
+}
+
+const AppProjectDetail = ({ params }: { params: Params }) => {
 	const { loading, data } = client.query(Queries.getProject, {
-		id,
+		id: params.id,
 	});
 	const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
 
@@ -27,7 +37,7 @@ const AppProjectDetail: NextPage = ({ id }: InferGetStaticPropsType<typeof getSt
 
 		try {
 			await client.mutate(Mutations.deleteProject, {
-				id,
+				id: params.id,
 			});
 
 			Router.push("/app/projects");
@@ -100,27 +110,6 @@ const AppProjectDetail: NextPage = ({ id }: InferGetStaticPropsType<typeof getSt
 			/>
 		</>
 	)
-}
-
-export const getStaticPaths = async () => {
-	const { data: { projects } } = await client.query(Queries.getAllProjects);
-
-	const paths = projects.map((project: any) => ({
-		params: { id: project.id },
-	}));
-
-	return {
-		paths,
-		fallback: 'blocking'
-	};
-}
-
-export const getStaticProps: GetStaticProps = ({ params }) => {
-	return {
-		props: {
-			id: params?.id,
-		},
-	}
 }
 
 export default AppProjectDetail;

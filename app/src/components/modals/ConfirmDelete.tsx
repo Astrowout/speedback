@@ -1,5 +1,6 @@
+"use client";
 
-import { FunctionComponent } from 'react';
+import { FC } from 'react';
 import { Dialog } from '@headlessui/react';
 import { ExclamationIcon } from '@heroicons/react/outline';
 import { Modal } from '../index';
@@ -12,7 +13,7 @@ type ConfirmDeleteModalProps = {
 	action?: () => void,
 }
 
-const ConfirmDeleteModal: FunctionComponent<ConfirmDeleteModalProps> = ({ title, description, action, closeAction, isOpen }) => {
+const ConfirmDeleteModal: FC<ConfirmDeleteModalProps> = ({ title, description, action, closeAction, isOpen }) => {
 	return (
 		<Modal isOpen={isOpen} action={action} closeAction={closeAction}>
 			<div className="sm:flex sm:items-start">

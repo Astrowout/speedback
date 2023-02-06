@@ -1,3 +1,4 @@
+"use client";
 
 import { FunctionComponent, useEffect } from 'react';
 import cn from "classnames";

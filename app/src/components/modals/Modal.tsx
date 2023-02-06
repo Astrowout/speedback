@@ -1,3 +1,4 @@
+"use client";
 
 import { Fragment, useRef, memo, FC, ReactNode } from 'react';
 import { createPortal } from "react-dom";

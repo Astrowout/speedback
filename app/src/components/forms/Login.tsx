@@ -1,3 +1,5 @@
+"use client";
+
 import { LockClosedIcon } from '@heroicons/react/outline';
 import { FunctionComponent, useContext } from 'react';
 import { useForm } from 'react-hook-form';

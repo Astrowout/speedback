@@ -1,3 +1,5 @@
+"use client";
+
 import { Dispatch, FunctionComponent, SetStateAction } from 'react';
 import cn from "classnames";
 import { Switch } from "@headlessui/react";
