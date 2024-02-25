@@ -11,9 +11,9 @@ export default defineConfig({
 		lib: {
 			// Could also be a dictionary or array of multiple entry points
 			entry: resolve(__dirname, "lib/main.ts"),
-			name: "Speedback script",
 			// the proper extensions will be added
-			fileName: "speedback"
+			fileName: "speedback",
+			formats: ["es"],
 		},
 	},
 	plugins: [
